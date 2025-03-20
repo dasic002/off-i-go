@@ -23,6 +23,7 @@ Social Users can register, share their wins and obstacles, learn of sites they m
 ## User Experience design
 <!-- UX design - wireframes, mockups and design diagrams -->
 ### **Strategy**
+<!-- What are you hoping to achieve and for whom? -->
 The intention of this project is to promote more inclusivity with businesses that are not catering to the needs of disabled people and to offer a more convenient tool to educate all parties and facilitate more interaction with our users.
 
 #### **Target Audience**
@@ -49,14 +50,45 @@ There are three distinct target users in this project will cater for.
       - [Scope for business](https://business.scope.org.uk/) - could create and update posts for their articles advising on items such as inclusive language in the workplace, digital accessibility, rights to transport.
       - [CILNI](https://cilni.org/) - Similarly, create and update posts for their articles and services to promote inclusivity and remove physical and social barriers.
 
+<!-- #### **Site Goals** -->
 
-### Scope
+### **Scope**
+<!-- Which features based on your strategy plane do you want to include in your design? What's on for production release and what's not, for now? -->
+Give the most value to our users by prioritising our Must have features to develop our MVP, before adding additional desirable features.
+
+#### **Must have features:**
+  - Users intuitively navigate the site with minimum learning and clicking/tapping effort needed.
+  - Users can sign up, differentiating social users from Service or Support providers as this must require some form of verification.
+  - Logged in users can populate their profile and edit later so others can learn more about them.
+  - Logged in users can view all published posts, like and comment.
+  - Logged in users can create a post adding photos or videos or map location or tags, as well as edit and delete.
+  - Users view most recent posts first, so they have the latest information.
+  - Users can configure the posts they see by filtering by profiles they follow, topics of interest or location.
+
+#### **Should have features:**
+  - Users can share a link to a post to raise awareness outside of the platform.
+  - On registration, users can provide information on their interests and needs, so users can see the benefit of the site soon after signing up.
+  - Service and Support provider users can add contact details for general enquiries, booking assistance and perhaps be location specific to make it easier for users to contact the most relevant department.
+  - Users can lookup locations provided on posts, profiles, comments to best aid them in journey planning on their chosen Online map resource.
+
+#### **Could have features:**
+  - Users can repost another user's post to raise more awareness.
+  - Users can express another reaction other than like
+
+#### **Won't have features:**
+  - Users can plan their next journey completely within the site, powered by a mapping service, likely Google Maps, where the site can break down the journey segments and recommend more accessible entries/exits, contacts for booking assistance at the given site and highlight what other users may have said in the past.
+
 
 ### Structure
+<!-- How is the information structured and how is it logically grouped? -->
+<!-- Describe how a user might navigate the page -->
 
 ### Skeleton
+<!-- How will our information be represented and how will the user navigate the information and features? -->
+<!-- include wireframes or mockups -->
 
 ### Surface
+<!-- What will the finished product look like? Colours, typography and design elements will we use? -->
 
 
 <!-- Security practices -->
@@ -118,8 +150,7 @@ There are three distinct target users in this project will cater for.
 | As a **user** I can **sign in with my account details**, so that **I can use the functionalities available to me**. | MUST have | [#6](https://github.com/dasic002/off-i-go/issues/6) |
 | As a **user** I can **see whether I'm logged in or not**, so that **I can log in if needed**. | MUST have | [#7](https://github.com/dasic002/off-i-go/issues/7) |
 | As a **user** I can **remain logged in**, so that **I can log out when I choose to and not have a frustrating experience of the website**. | MUST have | [#8](https://github.com/dasic002/off-i-go/issues/8) |
-| As a **user**, I can **enter a username on signup and get immediate feedback if the name is available**, so that **I can reduce the number of attempts at registering**.
- | COULD have | [#38](https://github.com/dasic002/off-i-go/issues/38) |
+| As a **user**, I can **enter a username on signup and get immediate feedback if the name is available**, so that **I can reduce the number of attempts at registering**. | COULD have | [#38](https://github.com/dasic002/off-i-go/issues/38) |
 | As a **logged in user**, I can **update my username and password and have my browser detect the change**, so that **I do not have to remember it on logging back in next time**. | COULD have | [#39](https://github.com/dasic002/off-i-go/issues/39) |
 | As a **user**, I can **select whether I want to remain logged in for 24hrs**, so that **my account is not as easily compromised when sharing a device**. | COULD have | [#40](https://github.com/dasic002/off-i-go/issues/40) |
 
