@@ -73,7 +73,9 @@ Give the most value to our users by prioritising our Must have features to devel
 
 #### **Could have features:**
   - Users can repost another user's post to raise more awareness.
-  - Users can express another reaction other than like
+  - Trending tags, most recently used tags, so users can follow a particular highlight.
+  - Most recently active Profiles, so users can easily have a look at profiles that are most engaging, frequently posting up-to-date content. 
+  - Users can express another reaction other than like.
 
 #### **Won't have features:**
   - Users can plan their next journey completely within the site, powered by a mapping service, likely Google Maps, where the site can break down the journey segments and recommend more accessible entries/exits, contacts for booking assistance at the given site and highlight what other users may have said in the past.
@@ -82,6 +84,29 @@ Give the most value to our users by prioritising our Must have features to devel
 ### Structure
 <!-- How is the information structured and how is it logically grouped? -->
 <!-- Describe how a user might navigate the page -->
+A reactive single page site powered by React and Django to provide the API. The page will not require refreshing between navigation of pages as it'll render the components and content, based on the user interactions. A consistent layout will be maintaned to make navigation predictable, this will be done with:
+
+Header/Nav Bar always available, either along the header or in a collapsed menu and will contain the following links:
+  - Logo or "Discover" - will display a feed of the latest posts without any filtering done, this will be the preset homepage.
+  - **If logged out**:
+    - "Sign in" - to present to the log in form.
+    - "Sign up" - to present the registration form, forwards user to sign in on submission.
+  - **If logged in**:
+    - "Following" - to display a feed of the latest posts filtered by profiles the user is following.
+    - "For me" - to display a feed of the latest posts filtered by tags the user is interested in.
+    - "Near me" - to display a feed of the latest posts filtered by a user's set location or current location.
+    - "Sign out" - to logout.
+    - "Profile" (Avatar) - for User to view own profile.
+
+In the main body, the content is displayed and it varies with each view:
+  - **About**, a short block above the Feed of posts in the homepage/"Discover" page, that appears if no user is logged in, briefly explaining the intent of site and how to use it.
+  - **Feeds of posts**, will present itself as a scrolling string of posts. In this view, posts will display, the author profile Avatar and name, time posted, Media content, title, content, a count of likes/reactions, a count of comments and button to share the URL to the post. Clicking on:
+    - Author Avatar - presents the auhor's profile.
+    - Media or comment icon - renders the single post alone with the thread of comments.
+    - Like button - Adds/removes a like from the viewing user, if it's a reactions button, it will open a dropdown menu to select reaction.
+  - **Profile** - User can see the Avatar, username, bio, statistics of followers/following, a feed of posts this profile has authored and a map view showing the locations tagged across comments. 
+  - **Own profile** - same as above, but user can make changes to avatar, bio and login details. The user can see a separate feed of posts they have authored but still as a draft or set private, as well as, posts they have reacted to or commented on.
+
 
 ### Skeleton
 <!-- How will our information be represented and how will the user navigate the information and features? -->
