@@ -76,9 +76,12 @@ Give the most value to our users by prioritising our Must have features to devel
   - Trending tags, most recently used tags, so users can follow a particular highlight.
   - Most recently active Profiles, so users can easily have a look at profiles that are most engaging, frequently posting up-to-date content. 
   - Users can express another reaction other than like.
+  - Users can direct message other users to discuss more specific information.
+  - Users can receive notifications of updates, such as new comments on a post, likes and follows.
 
 #### **Won't have features:**
   - Users can plan their next journey completely within the site, powered by a mapping service, likely Google Maps, where the site can break down the journey segments and recommend more accessible entries/exits, contacts for booking assistance at the given site and highlight what other users may have said in the past.
+  - Service providers can use the site's built in booking feature to book assistance requests, where social users can make a request and the provider can Approve, suggest adjustments or reject suspected spam requests.
 
 
 ### Structure
@@ -111,6 +114,18 @@ In the main body, the content is displayed and it varies with each view:
 ### Skeleton
 <!-- How will our information be represented and how will the user navigate the information and features? -->
 <!-- include wireframes or mockups -->
+#### Wireframes
+<details>
+    <summary><strong>Home</strong></summary>
+    <img src="documentation/images/Off-I-go_wireframes-home.png">
+</details>
+
+<details>
+    <summary><strong>Home - Menus expanded</strong></summary>
+    <img src="documentation/images/Off-I-go_wireframes-home-menus-desktop.png">
+    <img src="documentation/images/Off-I-go_wireframes-home-menus-mobile.png">
+</details>
+
 
 ### Surface
 <!-- What will the finished product look like? Colours, typography and design elements will we use? -->
@@ -126,11 +141,12 @@ In the main body, the content is displayed and it varies with each view:
 <!-- Step-by-step guide on how to deploy the Front-end application -->
 
 # Back-End docs
-<!-- API review -->
+API review
 <!-- A description of the API, including its functionality and how it integrates with the Front-End -->
 
-<!-- Database design -->
+Database design
 <!-- Structure of the database, including custom models used -->
+![Entity Relationship Diagram](documentation/images/Off-I-go_ERD-v0-1.png)
 
 <!-- Security Measures -->
 <!-- Details on security practices in the back-end, including handling of sensitive data -->
@@ -264,9 +280,19 @@ In the main body, the content is displayed and it varies with each view:
 <!-- Frontend Libraries -->
 <!-- Justifications for the choice of specific front-end libraries used in the project -->
 
-<!-- Credits -->
+## Credits
 <!-- List of tutorials or articles used while developing the project -->
-<!-- must mention the use of AI to help fill in user story issues, and the links we are referring to for advice on disabled users -->
+### Code
+- [Django Docs](https://docs.djangoproject.com/en/3.2/) frequently referred to throughout the development of this project.
+- Tutorial from Code Institute's Moments walkthrough project was referred to often to remind me how we implemented a feature and why.
+- [Django taggit docs](https://django-taggit.readthedocs.io/en/latest/getting_started.html) referred to for implementation steps and a youTube video by [BugBytes](https://youtu.be/iFE6nhst2r8?si=-P1Cp_u20TwoLs10) helped me understand the structure of the taggit models.
+- [Timmy O'Mahony Blog's](https://timmyomahony.com/blog/the-missing-gfk-model-manager-for-django-models/) article helped me understand what GFK was and how it could be used.
+- Copilot AI within gitHub was used to help generate the basis of Acceptance Criteria and Tasks of our User Stories issues.
+
+### Content
+Advice for promoting inclusivity for disabled people and people with impairments referred to, from sites such as [Scope](https://www.scope.org.uk/advice-and-support/finding-accessible-transport), various articles at [Scope for business](https://business.scope.org.uk/), [nidirect](https://www.nidirect.gov.uk/articles/planning-trip-if-you-have-disability) and [CILNI](https://cilni.org/travel-with-ease-essential-tips-for-travelers-with-disabilities/).
+
+### Media
 
 <!-- License -->
 <!-- Information about the software license (if applicable) -->
