@@ -287,6 +287,7 @@ Database design
 - Tutorial from Code Institute's Moments walkthrough project was referred to often to remind me how we implemented a feature and why.
 - [Django taggit docs](https://django-taggit.readthedocs.io/en/latest/getting_started.html) referred to for implementation steps and a youTube video by [BugBytes](https://youtu.be/iFE6nhst2r8?si=-P1Cp_u20TwoLs10) helped me understand the structure of the taggit models.
 - [Timmy O'Mahony Blog's](https://timmyomahony.com/blog/the-missing-gfk-model-manager-for-django-models/) article helped me understand what GFK was and how it could be used.
+- [Generic Relations](https://docs.djangoproject.com/en/3.2/ref/contrib/contenttypes/#generic-relations) helped me build models that needed to become more generic across the models.
 - Copilot AI within gitHub was used to help generate the basis of Acceptance Criteria and Tasks of our User Stories issues.
 
 ### Content

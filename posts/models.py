@@ -1,3 +1,4 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -23,6 +24,10 @@ class Post(models.Model):
         blank=True,
         null=True,
         related_name='reposts'
+    )
+    reactions = GenericRelation(
+        'reactions.Reaction',
+        related_query_name='post'
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
