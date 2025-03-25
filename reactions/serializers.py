@@ -1,6 +1,10 @@
 from django.db import IntegrityError
 from rest_framework import serializers
 from .models import Reaction
+from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
+from posts.models import Post
+from comments.models import Comment
 
 
 class ReactionSerializer(serializers.ModelSerializer):
@@ -11,6 +15,12 @@ class ReactionSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
+
+    content_type = serializers.PrimaryKeyRelatedField(
+        queryset=ContentType.objects.filter(
+            Q(app_label='posts', model='post') | Q(app_label='comments', model='comment')
+        )
+    )
 
     def get_is_owner(self, obj):
         request = self.context['request']
