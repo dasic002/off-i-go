@@ -41,7 +41,7 @@ class Comment(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return {self.body}
+        return f"{self.id}: {self.body}"
     
     # def get_post_comments(self):
     #     return self.post.comments.all()

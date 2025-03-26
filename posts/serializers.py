@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Post
-from reactions.models import Reaction
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -42,6 +41,5 @@ class PostSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'profile_id', 'profile_image', 'title', 'body',
             'listing_type', 'original_post', 'created_at', 'updated_at',
-            'is_owner', 'reaction_id', 'reaction_type_id',
-            'reaction_type'
+            'is_owner', 'reaction_id', 'reaction_type_id', 'reaction_type'
         ]
