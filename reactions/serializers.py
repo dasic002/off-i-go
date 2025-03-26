@@ -22,6 +22,12 @@ class ReactionSerializer(serializers.ModelSerializer):
         )
     )
 
+    # object_id = serializers.PrimaryKeyRelatedField(
+    #     queryset_post= Post.objects.all(),
+    #     queryset_comment= Comment.objects.all(),
+    #     queryset=queryset_post + queryset_comment
+    # )
+
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
