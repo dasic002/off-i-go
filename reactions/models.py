@@ -17,10 +17,6 @@ class Reaction(models.Model):
     )
     content_type = models.ForeignKey(
         ContentType,
-        choices=[
-            ('posts', 'Post'),
-            ('comments', 'Comment')
-        ],
         on_delete=models.CASCADE
     )
     object_id = models.PositiveIntegerField()
