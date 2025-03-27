@@ -18,7 +18,9 @@ class ReactionSerializer(serializers.ModelSerializer):
 
     content_type = serializers.PrimaryKeyRelatedField(
         queryset=ContentType.objects.filter(
-            Q(app_label='posts', model='post') | Q(app_label='comments', model='comment')
+            Q(app_label='posts', model='post') |
+            Q(app_label='comments', model='comment') |
+            Q(app_label='comment_reply', model='commentreply')
         )
     )
 
