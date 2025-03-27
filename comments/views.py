@@ -19,7 +19,11 @@ class CommentList(generics.ListCreateAPIView):
         replies_count=Count('replies', distinct=True)
     ).order_by('-created_at')
     filter_backends = [
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        filters.SearchFilter
+    ]
+    search_fields = [
+        'owner__username',
     ]
     ordering_fields = [
         'reactions_count',

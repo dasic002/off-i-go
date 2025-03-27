@@ -85,8 +85,5 @@ class CommentDetailSerializer(CommentSerializer):
 
     # returns a list of ids of replies to the comment
     def get_replies(self, obj):
-        replies = obj.replies.all()
-        reply_list = []
-        for reply in replies:
-            reply_list.append(reply.id)
-        return reply_list if replies else None
+        replies = obj.replies.values('id')
+        return replies if replies else None
