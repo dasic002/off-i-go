@@ -1,9 +1,12 @@
 from django.db.models import Count
 from rest_framework import serializers
 from .models import Post
+from taggit.serializers import (
+    TagListSerializerField, TaggitSerializer
+)
 
 
-class PostSerializer(serializers.ModelSerializer):
+class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
@@ -14,6 +17,7 @@ class PostSerializer(serializers.ModelSerializer):
     reactions_count = serializers.ReadOnlyField()
     popular_reactions = serializers.SerializerMethodField()
     comments_count = serializers.ReadOnlyField()
+    tags = TagListSerializerField(default=[])
 
     def get_reaction_id(self, obj):
         user = self.context['request'].user
@@ -52,5 +56,5 @@ class PostSerializer(serializers.ModelSerializer):
             'id', 'owner', 'profile_id', 'profile_image', 'title', 'body',
             'listing_type', 'original_post', 'created_at', 'updated_at',
             'is_owner', 'reaction_id', 'reaction_type_id', 'reaction_type',
-            'reactions_count', 'comments_count', 'popular_reactions'
+            'reactions_count', 'comments_count', 'popular_reactions', 'tags'
         ]

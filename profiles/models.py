@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 
 
 class Profile(models.Model):
@@ -24,6 +25,7 @@ class Profile(models.Model):
             (3, 'Verified')
         ], default=0
     )
+    interests = TaggableManager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
