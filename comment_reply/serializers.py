@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from rest_framework import serializers
 from .models import CommentReply
@@ -16,6 +17,8 @@ class CommentReplySerializer(serializers.ModelSerializer):
     reaction_id = serializers.SerializerMethodField()
     reaction_type_id = serializers.SerializerMethodField()
     reaction_type = serializers.SerializerMethodField()
+    reactions_count = serializers.ReadOnlyField()
+    popular_reactions = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -48,12 +51,19 @@ class CommentReplySerializer(serializers.ModelSerializer):
             return reaction.get_reaction_display() if reaction else None
         return None
     
+    def get_popular_reactions(self, obj):
+        reactions = obj.reactions.values('reaction').annotate(
+            count=Count('reaction')
+        ).order_by('-count')
+        return reactions
+    
     class Meta:
         model = CommentReply
         fields = [
             'id', 'owner', 'profile_id', 'profile_image', 'target', 'body',
             'created_at', 'updated_at', 'is_owner', 'reaction_id',
-            'reaction_type_id', 'reaction_type'
+            'reaction_type_id', 'reaction_type', 'reactions_count',
+            'popular_reactions'
         ]
 
 

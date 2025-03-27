@@ -1,4 +1,5 @@
-from rest_framework import generics, permissions
+from django.db.models import Count
+from rest_framework import generics, permissions, filters
 from off_i_go.permissions import IsOwnerOrReadOnly
 from .models import CommentReply
 from .serializers import (
@@ -13,7 +14,16 @@ class CommentReplyList(generics.ListCreateAPIView):
     """
     serializer_class = CommentReplySerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = CommentReply.objects.all()
+    queryset = CommentReply.objects.annotate(
+        reactions_count=Count('reactions', distinct=True)
+    ).order_by('-created_at')
+    filter_backends = [
+        filters.OrderingFilter
+    ]
+    ordering_fields = [
+        'reactions_count',
+        'reactions__created_at',
+    ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -25,4 +35,6 @@ class CommentReplyDetail(generics.RetrieveUpdateDestroyAPIView):
     """
     serializer_class = CommentReplyDetailSerializer
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = CommentReply.objects.all()
+    queryset = CommentReply.objects.annotate(
+        reactions_count=Count('reactions', distinct=True)
+    ).order_by('-created_at')

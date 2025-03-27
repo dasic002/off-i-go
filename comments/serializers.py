@@ -1,4 +1,5 @@
 from django.contrib.humanize.templatetags.humanize import naturaltime
+from django.db.models import Count
 from rest_framework import serializers
 from .models import Comment
 
@@ -17,6 +18,9 @@ class CommentSerializer(serializers.ModelSerializer):
     reaction_id = serializers.SerializerMethodField()
     reaction_type_id = serializers.SerializerMethodField()
     reaction_type = serializers.SerializerMethodField()
+    reactions_count = serializers.ReadOnlyField()
+    popular_reactions = serializers.SerializerMethodField()
+    comments_count = serializers.ReadOnlyField()
 
     # returns a boolean indicating if the user is the owner of the comment
     def get_is_owner(self, obj):
@@ -54,13 +58,21 @@ class CommentSerializer(serializers.ModelSerializer):
             reaction = obj.reactions.filter(owner=user).first()
             return reaction.get_reaction_display() if reaction else None
         return None
+    
+    # returns the number of reactions by type to the comment
+    def get_popular_reactions(self, obj):
+        reactions = obj.reactions.values('reaction').annotate(
+            count=Count('reaction')
+        ).order_by('-count')
+        return reactions
 
     class Meta:
         model = Comment
         fields = [
             'id', 'owner', 'profile_id', 'profile_image', 'post', 'body',
             'created_at', 'updated_at', 'is_owner', 'reaction_id',
-            'reaction_type_id', 'reaction_type', 'replies'
+            'reaction_type_id', 'reaction_type', 'replies', 'reactions_count',
+            'comments_count', 'popular_reactions'
         ]
 
 
