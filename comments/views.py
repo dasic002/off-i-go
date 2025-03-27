@@ -1,7 +1,10 @@
 from rest_framework import generics, permissions
 from off_i_go.permissions import IsOwnerOrReadOnly
 from .models import Comment
-from .serializers import CommentSerializer, CommentDetailSerializer
+from .serializers import (
+    CommentSerializer,
+    CommentDetailSerializer
+)
 
 
 class CommentList(generics.ListCreateAPIView):
