@@ -18,16 +18,20 @@ class CommentSerializer(serializers.ModelSerializer):
     reaction_type_id = serializers.SerializerMethodField()
     reaction_type = serializers.SerializerMethodField()
 
+    # returns a boolean indicating if the user is the owner of the comment
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
     
+    # returns a humanized representation of the time since the comment was created
     def get_created_at(self, obj):
         return naturaltime(obj.created_at)
     
+    # returns a humanized representation of the time since the comment was last updated
     def get_updated_at(self, obj):
         return naturaltime(obj.updated_at)
     
+    # returns the id of the user's reaction to the comment
     def get_reaction_id(self, obj):
         user = self.context['request'].user
         if user.is_authenticated:
@@ -35,6 +39,7 @@ class CommentSerializer(serializers.ModelSerializer):
             return reaction.id if reaction else None
         return None
     
+    # returns the id of the type of reaction the user has had to the comment
     def get_reaction_type_id(self, obj):
         user = self.context['request'].user
         if user.is_authenticated:
@@ -42,6 +47,7 @@ class CommentSerializer(serializers.ModelSerializer):
             return reaction.reaction if reaction else None
         return None
     
+    # returns the string of type of reaction the user has had to the comment
     def get_reaction_type(self, obj):
         user = self.context['request'].user
         if user.is_authenticated:
@@ -63,4 +69,12 @@ class CommentDetailSerializer(CommentSerializer):
     Serializer for comment detail view.
     """
     post = serializers.ReadOnlyField(source='post.id')
-    replies = serializers.ListSerializer(child=serializers.ReadOnlyField())
+    replies = serializers.SerializerMethodField()
+
+    # returns a list of ids of replies to the comment
+    def get_replies(self, obj):
+        replies = obj.replies.all()
+        reply_list = []
+        for reply in replies:
+            reply_list.append(reply.id)
+        return reply_list if replies else None
