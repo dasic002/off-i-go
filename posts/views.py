@@ -15,7 +15,10 @@ class PostList(generics.ListCreateAPIView):
     ]
     queryset = Post.objects.annotate(
         reactions_count=Count('reactions', distinct=True),
-        comments_count=Count('comments', distinct=True)
+        comments_count=(
+            Count('comments', distinct=True)
+            + Count('comments__replies', distinct=True)
+        )
     ).order_by('-created_at')
     filter_backends = [
         filters.OrderingFilter,
@@ -26,7 +29,10 @@ class PostList(generics.ListCreateAPIView):
         'owner__followed__owner__profile',
         'reactions__owner__profile',
         'owner__profile',
-        'tags__name',
+        'tags__id',
+        'tags__slug',
+        'comments__owner__profile',
+        'comments__replies__owner__profile',
     ]
     search_fields = [
         'title',
@@ -50,5 +56,8 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Post.objects.annotate(
         reactions_count=Count('reactions', distinct=True),
-        comments_count=Count('comments', distinct=True)
+        comments_count=(
+            Count('comments', distinct=True)
+            + Count('comments__replies', distinct=True)
+        )
     ).order_by('-created_at')

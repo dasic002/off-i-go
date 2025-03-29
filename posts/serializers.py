@@ -18,6 +18,7 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     popular_reactions = serializers.SerializerMethodField()
     comments_count = serializers.ReadOnlyField()
     tags = TagListSerializerField(default=[])
+    tagged_interest = serializers.SerializerMethodField()
 
     def get_reaction_id(self, obj):
         user = self.context['request'].user
@@ -49,6 +50,21 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
             count=Count('reaction')
         ).order_by('-count')
         return reactions
+    
+    def get_tagged_interest(self, obj):
+        """
+        Get list of matching tags between profile interests and post.
+        """
+        user = self.context['request'].user
+        if user.is_authenticated:
+            profile = user.profile
+            interests = [
+                tag for tag in obj.tags.names() if
+                tag in profile.interests.names()
+            ]
+            return interests if interests else None
+        return None
+    
 
     class Meta:
         model = Post
@@ -56,5 +72,6 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
             'id', 'owner', 'profile_id', 'profile_image', 'title', 'body',
             'listing_type', 'original_post', 'created_at', 'updated_at',
             'is_owner', 'reaction_id', 'reaction_type_id', 'reaction_type',
-            'reactions_count', 'comments_count', 'popular_reactions', 'tags'
+            'reactions_count', 'comments_count', 'popular_reactions', 'tags',
+            'tagged_interest'
         ]

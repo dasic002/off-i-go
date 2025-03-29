@@ -34,6 +34,15 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.owner}'s profile"
+    
+    @property
+    def interests_list(self):
+        """"
+        Returns a list of interests for the profile.
+        """
+        interests = self.interests.all()
+        if interests:
+            return [interest.name for interest in interests]
 
 
 def create_profile(sender, instance, created, **kwargs):
