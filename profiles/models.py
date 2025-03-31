@@ -47,7 +47,10 @@ class Profile(models.Model):
 
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(owner=instance)
+        self = Profile.objects.create(
+            owner=instance,
+        )
+        self.interests.add(f'@{instance.username.lower()}')
 
 
 post_save.connect(create_profile, sender=User)
