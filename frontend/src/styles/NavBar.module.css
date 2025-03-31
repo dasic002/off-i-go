@@ -1,0 +1,19 @@
+.NavBar {
+    background-color: #ffc20a;
+    border: 1px solid #dadadf;
+}
+
+.Brand {
+    font-family: "Aleo", serif;
+    font-size: 2rem;
+}
+
+.NavLink {
+    padding: 5px 10px 5px 5px;
+}
+
+.Active {
+    color: #0c7bdc;
+    background-color: #f8f8f8;
+    border-radius: 0.8rem;
+}

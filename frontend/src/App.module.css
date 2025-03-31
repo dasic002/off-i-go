@@ -1,0 +1,41 @@
+.App {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+
+.Main {
+    padding-top: 81px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: #555555;
+  transition: color ease-in-out 0.3s;
+}
+
+a:hover {
+  color: #0c7bdc;
+  transition: color ease-in-out 0.3s;
+  text-decoration: none;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+i {
+  font-size: 1.6rem;
+  padding: 7px;
+  vertical-align: middle;
+}
+
+i:hover {
+  cursor: pointer;
+  transition: color ease-in-out 0.3s;
+  color: #0c7bdc;
+}
