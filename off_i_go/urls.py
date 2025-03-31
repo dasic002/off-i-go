@@ -15,21 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 from .views import root_route, logout_route
 
 urlpatterns = [
-    path('', root_route),
+    path('', TemplateView.as_view(template_name='index.html')),
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('dj-rest-auth/logout/', logout_route),
-    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('api/', root_route),
+    path('api/api-auth/', include('rest_framework.urls')),
+    # the logout route has to be above the default route to be matched first
+    path('api/dj-rest-auth/logout/', logout_route),
+    path('api/dj-rest-auth/', include('dj_rest_auth.urls')),
     path(
-        'dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')
+        'api/dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')
     ),
-    path('', include('comment_reply.urls')),
-    path('', include('comments.urls')),
-    path('', include('followers.urls')),
-    path('', include('posts.urls')),
-    path('', include('profiles.urls')),
-    path('', include('reactions.urls')),
+    path('api/', include('comment_reply.urls')),
+    path('api/', include('comments.urls')),
+    path('api/', include('followers.urls')),
+    path('api/', include('posts.urls')),
+    path('api/', include('profiles.urls')),
+    path('api/', include('reactions.urls')),
 ]
+
+handler404 = TemplateView.as_view(
+    template_name='index.html',
+)
