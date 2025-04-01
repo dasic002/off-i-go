@@ -30,7 +30,7 @@
   }
   
   .Link span {
-    color: #ff9254;
+    color: #ff820a;
   }
   
   .Container {
@@ -39,6 +39,11 @@
   
   .SignInCol {
     height: 320px;
+  }
+
+  .SignInImage,
+  .SignUpImage {
+    object-position: 0% 20%;
   }
   
   .SignUpCol {
