@@ -2,11 +2,33 @@ import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
 import styles from "./App.module.css";
 import NavBar from "./components/NavBar";
 import Container from "react-bootstrap/Container";
+import React, { useState, useEffect } from "react";
+import BaseWidget from "./components/BaseWidget";
 
 function App() {
+  const [deviceSize, setDeviceSize] = useState("mobile");
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 500) {
+        setDeviceSize("mobile");
+      } else {
+        setDeviceSize("desktop");
+      }
+    };
+
+    handleResize(); // Set initial device size
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }
+  , []);
+
   return (
     <div className={styles.App}>
-      <NavBar />
+      <NavBar device={deviceSize}/>
       <Container className={styles.Main}>
         <Switch>
           <Route
@@ -123,6 +145,7 @@ function App() {
           <Route render={() => <p>Page not found!</p>} />
         </Switch>
       </Container>
+      <BaseWidget device={deviceSize} />
     </div>
   );
 }

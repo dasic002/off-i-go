@@ -1,0 +1,37 @@
+.BaseWidget {
+    background-color: #ffc20a;
+    margin: 0px 5vw;
+    position: fixed;
+    bottom: 10px;
+    border-radius: 1rem;
+    width: 90vw;
+}
+
+.MessageWidget {
+    width: auto;
+}
+
+.btn-DropNav {
+    background-color: transparent;
+}
+
+/* is not hiding the dropdown arrow from bootstrap */
+.btn-DropNav .dropup .dropdown-toggle::after,
+#widget-nav-bar > .dropdown-toggle::after,
+.btn-DropNav::after {
+    display: none !important;
+    background-image: none;
+}
+
+.NavLink,
+.btn-DropNav {
+    padding: 5px 10px 5px 5px;
+    margin: 3px
+}
+
+.Active,
+.btn-DropNav:active {
+    color: #0c7bdc;
+    background-color: #f8f8f8;
+    border-radius: 0.8rem;
+}
