@@ -4,6 +4,8 @@ import NavBar from "./components/NavBar";
 import Container from "react-bootstrap/Container";
 import React, { useState, useEffect } from "react";
 import BaseWidget from "./components/BaseWidget";
+import "./api/axiosDefaults";
+import SignUpForm from "./pages/auth/SignUpForm";
 
 function App() {
   const [deviceSize, setDeviceSize] = useState("mobile");
@@ -141,7 +143,7 @@ function App() {
             }}
           />
           <Route exact path="/signin" render={() => <h1>Sign in</h1>} />
-          <Route exact path="/signup" render={() => <h1>Sign up</h1>} />
+          <Route exact path="/signup" render={() => <SignUpForm />} />
           <Route render={() => <p>Page not found!</p>} />
         </Switch>
       </Container>

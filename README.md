@@ -168,6 +168,9 @@ Database design
 <!-- Version control -->
 <!-- Usage of git and github for version control, inc an explanation of commit message conventions and branch mgmt -->
 
+# Known bugs
+- **dropdown menu on widget** - in trying to use a dropdown button from react-bootstrap, cannot seem to configure the visibility of the *::after* feature of the button so we do not get the little arrow displayed. It is not major, but it is visually unnecessary and there will be another way of doing this, probably using a regular bootstrap button that toggles the visibility of the menu, just hopefully we can still configure the menu to display upwards. 
+
 # Agile Project Management
 ## User Stories
 <!-- List of all user stories and how they map to the project goals -->
@@ -294,6 +297,6 @@ Database design
 Advice for promoting inclusivity for disabled people and people with impairments referred to, from sites such as [Scope](https://www.scope.org.uk/advice-and-support/finding-accessible-transport), various articles at [Scope for business](https://business.scope.org.uk/), [nidirect](https://www.nidirect.gov.uk/articles/planning-trip-if-you-have-disability) and [CILNI](https://cilni.org/travel-with-ease-essential-tips-for-travelers-with-disabilities/).
 
 ### Media
-
+- [Vector images of disabled characters](https://www.freevector.com/set-of-empowering-disabled-people-character-57686#) used in Sign up and Sign in Forms.
 <!-- License -->
 <!-- Information about the software license (if applicable) -->
