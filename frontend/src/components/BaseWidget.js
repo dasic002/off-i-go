@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import { ButtonGroup, DropdownButton } from "react-bootstrap";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
 import styles from "../styles/BaseWidget.module.css";
 import { Nav } from "react-bootstrap";
-import { DeviceSizeContext } from "../App";
 import { useCurrentUser } from "../contexts/CurrentUserContext";
+import { useDeviceSize } from "../contexts/DeviceSizeContext";
 
 const BaseWidget = () => {
   const currentUser = useCurrentUser();
-  const device = useContext(DeviceSizeContext);
+  const device = useDeviceSize();
   const loggedInIcons = <>{currentUser?.username}</>;
   const loggedOutIcons = (
     <>
@@ -37,7 +37,9 @@ const BaseWidget = () => {
           : styles.BaseWidget + " " + styles.MessageWidget
       }
     >
-      <ButtonGroup className={`d-flex flex-row justify-content-between ${styles.ButtonGroup}`}>
+      <ButtonGroup
+        className={`d-flex flex-row justify-content-between ${styles.ButtonGroup}`}
+      >
         <NavLink
           className={styles.NavLink}
           activeClassName={styles.Active}
