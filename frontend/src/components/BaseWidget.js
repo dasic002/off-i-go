@@ -3,10 +3,11 @@ import { ButtonGroup, DropdownButton } from "react-bootstrap";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
 import styles from "../styles/BaseWidget.module.css";
 import { Nav } from "react-bootstrap";
-import { CurrentUserContext, DeviceSizeContext } from "../App";
+import { DeviceSizeContext } from "../App";
+import { useCurrentUser } from "../contexts/CurrentUserContext";
 
 const BaseWidget = () => {
-  const currentUser = useContext(CurrentUserContext);
+  const currentUser = useCurrentUser();
   const device = useContext(DeviceSizeContext);
   const loggedInIcons = <>{currentUser?.username}</>;
   const loggedOutIcons = (
