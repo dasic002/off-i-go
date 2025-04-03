@@ -3,7 +3,6 @@ import styles from "./App.module.css";
 import NavBar from "./components/NavBar";
 import Container from "react-bootstrap/Container";
 import React from "react";
-import BaseWidget from "./components/BaseWidget";
 import "./api/axiosDefaults";
 import SignUpForm from "./pages/auth/SignUpForm";
 import SignInForm from "./pages/auth/SignInForm";
@@ -128,7 +127,6 @@ function App() {
           <Route render={() => <p>Page not found!</p>} />
         </Switch>
       </Container>
-      <BaseWidget />
     </div>
   );
 }

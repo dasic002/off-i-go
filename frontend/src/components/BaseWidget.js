@@ -1,33 +1,18 @@
 import React from "react";
-import { ButtonGroup, DropdownButton } from "react-bootstrap";
+import {
+  ButtonGroup,
+  Col,
+  Container,
+  DropdownButton,
+  Row,
+} from "react-bootstrap";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
 import styles from "../styles/BaseWidget.module.css";
 import { Nav } from "react-bootstrap";
-import { useCurrentUser } from "../contexts/CurrentUserContext";
 import { useDeviceSize } from "../contexts/DeviceSizeContext";
 
-const BaseWidget = () => {
-  const currentUser = useCurrentUser();
+const BaseWidget = ({ NavBarLinks, AddPostLink }) => {
   const device = useDeviceSize();
-  const loggedInIcons = <>{currentUser?.username}</>;
-  const loggedOutIcons = (
-    <>
-      <NavLink
-        className={styles.NavLink}
-        activeClassName={styles.Active}
-        to="/signin"
-      >
-        <i className="fas fa-sign-in-alt"></i>Sign in
-      </NavLink>
-      <NavLink
-        className={styles.NavLink}
-        activeClassName={styles.Active}
-        to="/signup"
-      >
-        <i className="fas fa-user-plus"></i>Sign up
-      </NavLink>
-    </>
-  );
 
   return (
     <div
@@ -38,41 +23,44 @@ const BaseWidget = () => {
       }
     >
       <ButtonGroup
-        className={`d-flex flex-row justify-content-between ${styles.ButtonGroup}`}
+        className={`d-flex flex-row justify-space-between ${styles.ButtonGroup}`}
       >
-        <NavLink
-          className={styles.NavLink}
-          activeClassName={styles.Active}
-          to="/signin"
-        >
-          <i className="fas fa-sign-in-alt"></i>Sign in
-        </NavLink>
-        {device === "mobile" ? (
-          <>
-            <DropdownButton
-              as={ButtonGroup}
-              key="widget-nav-bar"
-              id="widget-nav-bar"
-              drop="up"
-              title={<i class="fa-solid fa-bars"></i>}
-              variant="DropNav"
-            >
-              <Nav className={`ml-auto text-right`}>
-                <NavLink
-                  exact
-                  className={styles.NavLink}
-                  activeClassName={styles.Active}
-                  to="/"
-                >
-                  <i className="fas fa-home"></i>Home
-                </NavLink>
-                {currentUser ? loggedInIcons : loggedOutIcons}
-              </Nav>
-            </DropdownButton>
-          </>
-        ) : (
-          ""
-        )}
+        <Container>
+          <Row>
+            <Col className="d-flex p-0">
+              <NavLink
+                className={styles.NavLink}
+                activeClassName={styles.Active}
+                to="/messages"
+              >
+                <i class="fa-solid fa-envelope"></i>
+                <span className="d-none d-md-inline">Messages</span>
+              </NavLink>
+            </Col>
+            {device === "mobile" ? (
+              <>
+                <Col className="d-flex p-0">{AddPostLink}</Col>
+                <Col className="d-flex p-0">
+                  <DropdownButton
+                    as={ButtonGroup}
+                    key="widget-nav-bar"
+                    id="widget-nav-bar"
+                    drop="up"
+                    title={<i class="fa-solid fa-bars"></i>}
+                    variant="DropNav"
+                    className="ml-auto"
+                  >
+                    <Nav className={`ml-auto text-left`}>
+                      {NavBarLinks}
+                    </Nav>
+                  </DropdownButton>
+                </Col>
+              </>
+            ) : (
+              ""
+            )}
+          </Row>
+        </Container>
       </ButtonGroup>
     </div>
   );

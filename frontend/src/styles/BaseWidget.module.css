@@ -25,14 +25,26 @@
 
 .NavLink,
 .btn-DropNav {
-    padding: 5px 10px 5px 5px;
+    padding: 5px;
     margin: 3px;
-    width: 100%;
+    /* width: 100%; */
+}
+
+.NavLink span,
+.btn-DropNav span {
+    padding-right: 5px;
+}
+
+.NavLink:hover,
+.NavLink:focus {
+    color: #f8f8f8;
+    background-color: #0c7bdc;
+    border-radius: 0.8rem;
 }
 
 .Active,
 .btn-DropNav:active {
-    color: #f8f8f8;
-    background-color: #0c7bdc;
+    color: #0c7bdc;
+    background-color: #f8f8f8;
     border-radius: 0.8rem;
 }

@@ -9,7 +9,18 @@
 }
 
 .NavLink {
-    padding: 5px 10px 5px 5px;
+    padding: 5px;
+}
+
+.NavLink:hover,
+.NavLink:focus {
+    color: #f8f8f8;
+    background-color: #0c7bdc;
+    border-radius: 0.8rem;
+}
+
+.NavLink span {
+    padding-right: 5px;
 }
 
 .Active {
