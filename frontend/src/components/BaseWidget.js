@@ -3,16 +3,19 @@ import {
   ButtonGroup,
   Col,
   Container,
-  DropdownButton,
+  Navbar,
   Row,
 } from "react-bootstrap";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
 import styles from "../styles/BaseWidget.module.css";
 import { Nav } from "react-bootstrap";
 import { useDeviceSize } from "../contexts/DeviceSizeContext";
+import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
 
 const BaseWidget = ({ NavBarLinks, AddPostLink }) => {
   const device = useDeviceSize();
+
+  const { expanded, setExpanded, ref } = useClickOutsideToggle();
 
   return (
     <div
@@ -41,19 +44,22 @@ const BaseWidget = ({ NavBarLinks, AddPostLink }) => {
               <>
                 <Col className="d-flex p-0">{AddPostLink}</Col>
                 <Col className="d-flex p-0">
-                  <DropdownButton
-                    as={ButtonGroup}
-                    key="widget-nav-bar"
+                  <Navbar
+                    expand="lg"
+                    expanded={expanded}
+                    className={styles.NavBar}
                     id="widget-nav-bar"
-                    drop="up"
-                    title={<i class="fa-solid fa-bars"></i>}
-                    variant="DropNav"
-                    className="ml-auto"
                   >
-                    <Nav className={`ml-auto text-left`}>
-                      {NavBarLinks}
-                    </Nav>
-                  </DropdownButton>
+                    <Navbar.Collapse id="basic-navbar-nav">
+                      <Nav className={`ml-auto text-left`}>{NavBarLinks}</Nav>
+                    </Navbar.Collapse>
+                    <Navbar.Toggle
+                      ref={ref}
+                      onClick={() => setExpanded(!expanded)}
+                      aria-controls="basic-navbar-nav"
+                      className={styles.Toggle}
+                    ><i class="fa-solid fa-bars"></i></Navbar.Toggle>
+                  </Navbar>
                 </Col>
               </>
             ) : (

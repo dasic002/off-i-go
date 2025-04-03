@@ -23,6 +23,22 @@
     background-image: none;
 }
 
+.NavBar {
+    background-color: #ffc20a;
+    position: fixed;
+    bottom: 10px;
+    right:5vw;
+    border-radius: 1rem;
+    justify-content: end;
+}
+
+.Toggle {
+    right: 0px;
+    border: none;
+    color: #555555;
+    padding: 0px;
+}
+
 .NavLink,
 .btn-DropNav {
     padding: 5px;
