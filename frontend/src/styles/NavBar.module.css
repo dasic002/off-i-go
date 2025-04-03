@@ -13,7 +13,7 @@
 }
 
 .NavLink:hover,
-.NavLink:focus {
+.Toggle:hover {
     color: #f8f8f8;
     background-color: #0c7bdc;
     border-radius: 0.8rem;
@@ -27,4 +27,17 @@
     color: #0c7bdc;
     background-color: #f8f8f8;
     border-radius: 0.8rem;
+}
+
+.Toggle {
+    border: none;
+    padding: 5px;
+}
+
+.Toggle i {
+    color: #555555;
+}
+
+.Toggle:hover i {
+    color: #f8f8f8;
 }

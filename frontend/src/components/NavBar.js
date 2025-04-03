@@ -19,6 +19,9 @@ const NavBar = () => {
 
   const { expanded, setExpanded, ref } = useClickOutsideToggle();
 
+  const [pathname, setPathname] = React.useState(window.location.pathname);
+  
+
   const handleSignOut = async () => {
     try {
       await axios.post("/dj-rest-auth/logout/");
@@ -45,33 +48,37 @@ const NavBar = () => {
         className={styles.NavLink}
         activeClassName={styles.Active}
         to="/discover"
+        onClick={() => setPathname('/discover')}
       >
         <i class="fa-solid fa-earth-europe"></i>
-        <span className="d-md-none d-lg-inline">Discover</span>
+        <span className={`${pathname !== '/discover' && 'd-md-none'} d-lg-inline`}>Discover</span>
       </NavLink>
       <NavLink
         className={styles.NavLink}
         activeClassName={styles.Active}
         to="/feed"
+        onClick={() => setPathname('/feed')}
       >
         <i className="fas fa-stream"></i>
-        <span className="d-md-none d-lg-inline">Feed</span>
+        <span className={`${pathname !== '/feed' && 'd-md-none'} d-lg-inline`}>Feed</span>
       </NavLink>
       <NavLink
         className={styles.NavLink}
         activeClassName={styles.Active}
         to="/for-me"
+        onClick={() => setPathname('/for-me')}
       >
         <i class="fa-solid fa-hashtag"></i>
-        <span className="d-md-none d-lg-inline">For me</span>
+        <span className={`${pathname !== '/for-me'  && 'd-md-none'} d-lg-inline`}>For me</span>
       </NavLink>
       <NavLink
         className={styles.NavLink}
         activeClassName={styles.Active}
         to="/near-me"
+        onClick={() => setPathname('/near-me')}
       >
         <i class="fa-solid fa-location-dot"></i>
-        <span className="d-md-none d-lg-inline">Near me</span>
+        <span className={`${pathname !== '/near-me' && 'd-md-none'} d-lg-inline`}>Near me</span>
       </NavLink>
       <NavLink className={styles.NavLink} to="/" onClick={handleSignOut}>
         <i className="fas fa-sign-out-alt"></i>
@@ -139,7 +146,10 @@ const NavBar = () => {
                 ref={ref}
                 onClick={() => setExpanded(!expanded)}
                 aria-controls="basic-navbar-nav"
-              />
+                className={styles.Toggle}
+              >
+                <i class="fa-solid fa-bars"></i>
+              </Navbar.Toggle>
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto text-right">
                   {currentUser ? loggedInIcons : loggedOutIcons}

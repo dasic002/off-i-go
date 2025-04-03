@@ -30,36 +30,43 @@
     right:5vw;
     border-radius: 1rem;
     justify-content: end;
+    padding: 0px;
+    margin: 3px;
 }
 
 .Toggle {
     right: 0px;
     border: none;
     color: #555555;
-    padding: 0px;
+    padding: 5px;
 }
 
-.NavLink,
-.btn-DropNav {
+.Toggle i {
+    color: #555555;
+}
+
+.Toggle:hover i {
+    color: #f8f8f8;
+}
+
+.NavLink {
     padding: 5px;
     margin: 3px;
     /* width: 100%; */
 }
 
-.NavLink span,
-.btn-DropNav span {
+.NavLink span {
     padding-right: 5px;
 }
 
 .NavLink:hover,
-.NavLink:focus {
+.Toggle:hover {
     color: #f8f8f8;
     background-color: #0c7bdc;
     border-radius: 0.8rem;
 }
 
-.Active,
-.btn-DropNav:active {
+.Active{
     color: #0c7bdc;
     background-color: #f8f8f8;
     border-radius: 0.8rem;
