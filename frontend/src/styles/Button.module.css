@@ -11,7 +11,7 @@
   
   .Button:hover {
     opacity: 0.8;
-    border-color: transparent;
+    border-color: 1px solid #0c7bdc;
     cursor: pointer;
   }
   

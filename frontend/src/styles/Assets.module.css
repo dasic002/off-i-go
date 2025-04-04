@@ -1,0 +1,12 @@
+.Asset {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+  }
+
+.Icon i {
+  color: #0c7bdc;
+  font-size: 96px;
+}
