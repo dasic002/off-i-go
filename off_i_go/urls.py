@@ -38,6 +38,7 @@ urlpatterns = [
     path('api/', include('posts.urls')),
     path('api/', include('profiles.urls')),
     path('api/', include('reactions.urls')),
+    path('api/', include('medias.urls')),
 ]
 
 handler404 = TemplateView.as_view(

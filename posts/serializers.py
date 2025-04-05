@@ -1,6 +1,8 @@
-from django.db.models import Count
+from django.db.models import Count, Q
+from itertools import chain
 from rest_framework import serializers
-from .models import Post
+from .models import Post, PostMedia
+from medias.models import Media
 from taggit.serializers import (
     TagListSerializerField, TaggitSerializer
 )
@@ -17,8 +19,22 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     reactions_count = serializers.ReadOnlyField()
     popular_reactions = serializers.SerializerMethodField()
     comments_count = serializers.ReadOnlyField()
-    tags = TagListSerializerField(default=[])
+
+
+    tags = TagListSerializerField(
+        required=False,
+        default=[],
+    )
+    
     tagged_interest = serializers.SerializerMethodField()
+
+    media = serializers.PrimaryKeyRelatedField(
+        queryset = Media.objects.all(),
+        many=True,
+        required=False,
+        default=None,
+        allow_null=True,
+    )
 
     def get_reaction_id(self, obj):
         user = self.context['request'].user
@@ -56,7 +72,7 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
         Get list of matching tags between profile interests and post.
         """
         user = self.context['request'].user
-        if user.is_authenticated:
+        if user.is_authenticated and obj.tags.exists():
             profile = user.profile
             interests = [
                 tag for tag in obj.tags.names() if
@@ -70,6 +86,7 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
         model = Post
         fields = [
             'id', 'owner', 'profile_id', 'profile_image', 'title', 'body',
+            'media',
             'listing_type', 'original_post', 'created_at', 'updated_at',
             'is_owner', 'reaction_id', 'reaction_type_id', 'reaction_type',
             'reactions_count', 'comments_count', 'popular_reactions', 'tags',

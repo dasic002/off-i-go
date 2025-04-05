@@ -11,6 +11,12 @@ class Post(models.Model):
     )
     title = models.CharField(max_length=255)
     body = models.TextField(blank=True)
+    media = models.ManyToManyField(
+        'medias.Media',
+        blank=True,
+        through='posts.PostMedia',
+        related_name='posts'
+    )
     listing_type = models.IntegerField(
         choices=[
             (0, 'Draft'),
@@ -30,7 +36,10 @@ class Post(models.Model):
         'reactions.Reaction',
         related_query_name='post'
     )
-    tags = TaggableManager()
+    tags = TaggableManager(
+        help_text="A comma-separated list of tags.",
+        blank=True,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -39,3 +48,23 @@ class Post(models.Model):
 
     def __str__(self):
         return f"{self.id}: {self.title}"
+    
+
+class PostMedia(models.Model):
+    """
+    Model for media attached to a post
+    """
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='post_media'
+    )
+    media = models.ForeignKey(
+        'medias.Media',
+        on_delete=models.CASCADE,
+        related_name='post_media'
+    )
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['post', 'order', '-id']

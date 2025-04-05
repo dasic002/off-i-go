@@ -96,6 +96,7 @@ INSTALLED_APPS = [
     'comment_reply',
     'comments',
     'followers',
+    'medias',
     'posts',
     'profiles',
     'reactions',
@@ -161,6 +162,7 @@ DATABASES = {
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
+TAGGIT_CASE_INSENSITIVE = True
 
 
 # Password validation
