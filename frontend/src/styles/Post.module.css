@@ -1,0 +1,28 @@
+.Post {
+    background-color: #ffffff;
+    border: 1px solid #dadadf;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  
+  .Post figure,
+  h5 {
+    margin: 0 0;
+  }
+  
+  .Reaction {
+    color: #ff820a;
+  }
+  
+  .Reaction:hover {
+    color: #0c7bdc;
+  }
+  
+  .ReactionOutline:hover {
+    color: #ff820a;
+  }
+
+  .PopularReactions {
+    margin: 0 0 0 -10px;
+  }
