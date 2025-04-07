@@ -36,7 +36,7 @@ const BaseWidget = ({ NavBarLinks, AddPostLink }) => {
                 activeClassName={styles.Active}
                 to="/messages"
               >
-                <i class="fa-solid fa-envelope"></i>
+                <i className="fa-solid fa-envelope"></i>
                 <span className="d-none d-md-inline">Messages</span>
               </NavLink>
             </Col>
@@ -58,7 +58,7 @@ const BaseWidget = ({ NavBarLinks, AddPostLink }) => {
                       onClick={() => setExpanded(!expanded)}
                       aria-controls="basic-navbar-nav"
                       className={styles.Toggle}
-                    ><i class="fa-solid fa-bars"></i></Navbar.Toggle>
+                    ><i className="fa-solid fa-bars"></i></Navbar.Toggle>
                   </Navbar>
                 </Col>
               </>

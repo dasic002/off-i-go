@@ -12,15 +12,16 @@ import axios from "axios";
 import BaseWidget from "./BaseWidget";
 import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
 
+
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
   const device = useDeviceSize();
+  const mobile = device === "mobile" ? true : false;
 
   const { expanded, setExpanded, ref } = useClickOutsideToggle();
 
   const [pathname, setPathname] = React.useState(window.location.pathname);
-  
 
   const handleSignOut = async () => {
     try {
@@ -32,14 +33,16 @@ const NavBar = () => {
   };
 
   const addPostIcon = (
-    <NavLink
-      className={`${styles.NavLink} ${device === "mobile" && "m-auto"}`}
-      activeClassName={styles.Active}
-      to="/posts/create"
-    >
-      <i class="fa-solid fa-square-plus"></i>
-      <span className={device === "mobile" && "d-none"}>Add Post</span>
-    </NavLink>
+    <>
+      <NavLink
+        className={`${styles.NavLink} ${mobile ? "m-auto" : ""}`}
+        activeClassName={styles.Active}
+        to="/posts/create"
+      >
+        <i className="fa-solid fa-square-plus"></i>
+        <span className={mobile ? "d-none" : ""}>Add Post</span>
+      </NavLink>
+    </>
   );
 
   const loggedInIcons = (
@@ -48,37 +51,41 @@ const NavBar = () => {
         className={styles.NavLink}
         activeClassName={styles.Active}
         to="/discover"
-        onClick={() => setPathname('/discover')}
+        onClick={() => setPathname("/discover")}
       >
-        <i class="fa-solid fa-earth-europe"></i>
+        <i className="fa-solid fa-earth-europe"></i>
         <span className={`${pathname !== '/discover' && 'd-md-none'} d-lg-inline`}>Discover</span>
+        {/* <span className="d-md-none d-lg-inline">Discover</span> */}
       </NavLink>
       <NavLink
         className={styles.NavLink}
         activeClassName={styles.Active}
         to="/feed"
-        onClick={() => setPathname('/feed')}
+        onClick={() => setPathname("/feed")}
       >
         <i className="fas fa-stream"></i>
         <span className={`${pathname !== '/feed' && 'd-md-none'} d-lg-inline`}>Feed</span>
+        {/* <span className="d-md-none d-lg-inline">Feed</span> */}
       </NavLink>
       <NavLink
         className={styles.NavLink}
         activeClassName={styles.Active}
         to="/for-me"
-        onClick={() => setPathname('/for-me')}
+        onClick={() => setPathname("/for-me")}
       >
-        <i class="fa-solid fa-hashtag"></i>
+        <i className="fa-solid fa-hashtag"></i>
         <span className={`${pathname !== '/for-me'  && 'd-md-none'} d-lg-inline`}>For me</span>
+        {/* <span className="d-md-none d-lg-inline">For me</span> */}
       </NavLink>
       <NavLink
         className={styles.NavLink}
         activeClassName={styles.Active}
         to="/near-me"
-        onClick={() => setPathname('/near-me')}
+        onClick={() => setPathname("/near-me")}
       >
-        <i class="fa-solid fa-location-dot"></i>
+        <i className="fa-solid fa-location-dot"></i>
         <span className={`${pathname !== '/near-me' && 'd-md-none'} d-lg-inline`}>Near me</span>
+        {/* <span className="d-md-none d-lg-inline">Near me</span> */}
       </NavLink>
       <NavLink className={styles.NavLink} to="/" onClick={handleSignOut}>
         <i className="fas fa-sign-out-alt"></i>
@@ -135,9 +142,9 @@ const NavBar = () => {
           <NavLink to="/">
             <Navbar.Brand className={styles.Brand}>Off I Go</Navbar.Brand>
           </NavLink>
-          {device === "mobile" ? (
+          {mobile ? (
             <>
-              <i class="fa-solid fa-magnifying-glass"></i>
+              <i className="fa-solid fa-magnifying-glass"></i>
             </>
           ) : (
             <>
@@ -148,7 +155,7 @@ const NavBar = () => {
                 aria-controls="basic-navbar-nav"
                 className={styles.Toggle}
               >
-                <i class="fa-solid fa-bars"></i>
+                <i className="fa-solid fa-bars"></i>
               </Navbar.Toggle>
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto text-right">

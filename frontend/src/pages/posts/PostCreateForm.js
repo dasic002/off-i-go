@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -10,9 +10,11 @@ import styles from "../../styles/PostCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import Assets from "../../components/Assets";
-import { Image } from "react-bootstrap";
+import { Alert, Image } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { axiosReq } from "../../api/axiosDefaults";
 
-const Upload = <i class="fa-solid fa-cloud-arrow-up"></i>;
+const Upload = <i className="fa-solid fa-cloud-arrow-up"></i>;
 
 function PostCreateForm() {
   const [errors, setErrors] = useState({});
@@ -21,9 +23,14 @@ function PostCreateForm() {
     title: "",
     content: "",
     image: "",
+    tags: "",
+    listing_type: 3,
   });
 
-  const { title, content, image } = postData;
+  const { title, content, image, tags, listing_type } = postData;
+
+  const imageInput = useRef(null);
+  const history = useHistory();
 
   const handleChange = (event) => {
     setPostData({
@@ -42,9 +49,51 @@ function PostCreateForm() {
     }
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (imageInput.current.files.length < 1) {
+      handlePostSubmit();
+    } else {
+      const mediaData = new FormData();
+      mediaData.append("image", imageInput.current.files[0]);
+
+      try {
+        const { data } = await axiosReq.post("/medias/", mediaData);
+        console.log(data);
+        handlePostSubmit(data.id);
+      } catch (err) {
+        console.log(err);
+        if (err.response?.status !== 401) {
+          setErrors(err.response?.data);
+        }
+      }
+    }
+  };
+
+  const handlePostSubmit = async (medias) => {
+    const formData = new FormData();
+
+    formData.append("title", title);
+    formData.append("content", content);
+    if (medias) formData.append("media", medias);
+    if (tags) formData.append("tags", tags);
+    formData.append("listing_type", listing_type);
+
+    try {
+      const { data } = await axiosReq.post("/posts/", formData);
+      console.log(data);
+      history.push(`/posts/${data.id}`);
+    } catch (err) {
+      console.log(err);
+      if (err.response?.status !== 401) {
+        setErrors(err.response?.data);
+      }
+    }
+  };
+
   const textFields = (
     <div className="text-center">
-      {/* Add your form fields here */}
       <Form.Group controlId="title">
         <Form.Label>Title</Form.Label>
         <Form.Control
@@ -55,6 +104,11 @@ function PostCreateForm() {
           placeholder="Title goes here"
         />
       </Form.Group>
+      {errors?.title?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
       <Form.Group controlId="Content">
         <Form.Label>Content</Form.Label>
         <Form.Control
@@ -66,21 +120,74 @@ function PostCreateForm() {
           placeholder="Post content here"
         />
       </Form.Group>
+      {errors?.content?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
+      <Form.Group as={Row} controlId="tags">
+        <Form.Label column sm={2}>
+          Tags
+        </Form.Label>
+        <Col sm={10}>
+          <Form.Control
+            type="text"
+            name="tags"
+            value={tags}
+            onChange={handleChange}
+            placeholder="separate tags with spaces"
+          />
+        </Col>
+      </Form.Group>
+      {errors?.tags?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
+      <Form.Group as={Row} controlId="listing_type">
+        <Form.Label column sm={5}>
+          Listing Type
+        </Form.Label>
+        <Col sm={7}>
+          <Form.Control
+            as="select"
+            defaultValue={3}
+            name="listing_type"
+            value={listing_type}
+            onChange={handleChange}
+          >
+            <option value={0}>Draft</option>
+            <option value={1}>Private</option>
+            <option value={2}>Unlisted</option>
+            <option value={3}>Public</option>
+          </Form.Control>
+        </Col>
+      </Form.Group>
+      {errors?.listing_type?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
 
       <Button
         className={`${btnStyles.Button} ${btnStyles.Blue}`}
-        onClick={() => {}}
+        onClick={() => history.goBack()}
       >
         cancel
       </Button>
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
         create
       </Button>
+      {errors?.non_field_errors?.map((message, idx) => (
+        <Alert variant="warning" key={idx} className="mt-3">
+          {message}
+        </Alert>
+      ))}
     </div>
   );
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Row>
         <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
           <Container
@@ -91,13 +198,14 @@ function PostCreateForm() {
                 <>
                   <figure>
                     <Image className={appStyles.Image} src={image} rounded />
+                    <video className={appStyles.Image} src={image} controls />
                   </figure>
                   <div>
                     <Form.Label
-                      className={`${btnStyles.Button} ${btnStyles.Blue} btn`}
+                      className={`${btnStyles.Button} ${btnStyles.Blue} btn btn-primary`}
                       htmlFor="image-upload"
                     >
-                        Change the image
+                      Change the image
                     </Form.Label>
                   </div>
                 </>
@@ -117,6 +225,7 @@ function PostCreateForm() {
                 id="image-upload"
                 accept="image/*"
                 onChange={handleChangeImage}
+                ref={imageInput}
               />
             </Form.Group>
             <div className="d-md-none">{textFields}</div>
