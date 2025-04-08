@@ -4,13 +4,15 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import appStyles from "../../App.module.css";
 import styles from "../../styles/PostsPage.module.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { axiosReq } from "../../api/axiosDefaults";
 import Post from "./Post";
-import Assets from "../../components/Assets";
+import Asset from "../../components/Asset";
+import { fetchMoreData } from "../../utils/utils";
 
 const NoResults = <i className="fa-solid fa-ghost"></i>;
 
@@ -58,18 +60,24 @@ function PostsPage({ message, filter = "" }) {
         {hasLoaded ? (
           <>
             {posts.results.length ? (
-              posts.results.map((post) => (
-                <Post key={post.id} {...post} setPosts={setPosts} />
-              ))
+              <InfiniteScroll
+                children={posts.results.map((post) => (
+                  <Post key={post.id} {...post} setPosts={setPosts} />
+                ))}
+                dataLength={posts.results.length}
+                loader={<Asset spinner />}
+                hasMore={!!posts.next}
+                next={() => fetchMoreData(posts, setPosts)}
+              />
             ) : (
               <Container className={appStyles.Content}>
-                <Assets icon={NoResults} message={message} />
+                <Asset icon={NoResults} message={message} />
               </Container>
             )}
           </>
         ) : (
           <Container className={appStyles.Content}>
-            <Assets spinner />
+            <Asset spinner />
           </Container>
         )}
       </Col>

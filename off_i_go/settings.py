@@ -66,8 +66,9 @@ DEBUG = 'DEBUG' in os.environ
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
+    '127.0.0.1',
     'localhost',
-    ]
+]
 
 
 # Application definition
@@ -90,8 +91,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
-    'corsheaders',
     'taggit',
+    'corsheaders',
 
     'comment_reply',
     'comments',

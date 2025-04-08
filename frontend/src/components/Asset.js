@@ -1,8 +1,8 @@
 import React from "react";
 import { Spinner } from "react-bootstrap";
-import styles from "../styles/Assets.module.css";
+import styles from "../styles/Asset.module.css";
 
-const Assets = ({ spinner, src, icon, message }) => {
+const Asset = ({ spinner, src, icon, message }) => {
   return (
     <div className={`${styles.Asset} p-4`}>
       {spinner && (
@@ -17,4 +17,4 @@ const Assets = ({ spinner, src, icon, message }) => {
   );
 };
 
-export default Assets;
+export default Asset;

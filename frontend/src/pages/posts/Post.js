@@ -14,7 +14,6 @@ import Avatar from "../../components/Avatar";
 import PopularReactions from "../../components/PopularReactions";
 import { axiosRes } from "../../api/axiosDefaults";
 
-
 const Post = (props) => {
   const {
     content_type,
@@ -24,19 +23,19 @@ const Post = (props) => {
     profile_image,
     title,
     body,
-    media,
-    listing_type,
-    original_post,
-    created_at,
+    // media,
+    // listing_type,
+    // original_post,
+    // created_at,
     updated_at,
     reaction_id,
     reaction_type_id,
-    reaction_type,
+    // reaction_type,
     reactions_count,
     comments_count,
     popular_reactions,
-    tags,
-    tagged_interest,
+    // tags,
+    // tagged_interest,
     postPage,
     setPosts,
   } = props;
@@ -78,8 +77,7 @@ const Post = (props) => {
                   },
                   post.popular_reactions.length
                     ? null
-                    : (popular_reactions[post.popular_reactions.length] = {
-                      })
+                    : (popular_reactions[post.popular_reactions.length] = {})
                 ),
               }
             : post;
@@ -134,7 +132,8 @@ const Post = (props) => {
         </Media>
       </Card.Body>
       <Link to={`/posts/${id}`}>
-        <Card.Img src={media} alt={title} />
+        media
+        {/* <Card.Img src={media} alt={title} /> */}
       </Link>
       <Card.Body>
         <Row className="justify-content-between">
@@ -174,7 +173,7 @@ const Post = (props) => {
                 className={`fa-regular fa-thumbs-up ${styles.ReactionOutline}`}
               />
             </span>
-            
+          ) : (
             // <Dropdown as={ButtonGroup}>
             //   <Dropdown.Toggle variant="success" id="dropdown-split-basic">
             //     <i
@@ -188,7 +187,6 @@ const Post = (props) => {
             //     <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
             //   </Dropdown.Menu>
             // </Dropdown>
-          ) : (
             <OverlayTrigger
               placement="top"
               overlay={<Tooltip>You need to login to react!</Tooltip>}

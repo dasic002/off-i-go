@@ -9,7 +9,7 @@ import Container from "react-bootstrap/Container";
 import styles from "../../styles/PostCreateEditForm.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
-import Assets from "../../components/Assets";
+import Asset from "../../components/Asset";
 import { Alert, Image } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { axiosReq } from "../../api/axiosDefaults";
@@ -214,7 +214,7 @@ function PostCreateForm() {
                   className="d-flex justify-content-center"
                   htmlFor="image-upload"
                 >
-                  <Assets
+                  <Asset
                     icon={Upload}
                     message="Click or tap to upload an image"
                   />

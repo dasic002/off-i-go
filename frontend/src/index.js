@@ -8,15 +8,13 @@ import { CurrentUserProvider } from "./contexts/CurrentUserContext";
 import { DeviceSizeProvider } from "./contexts/DeviceSizeContext";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <CurrentUserProvider>
-        <DeviceSizeProvider>
-          <App />
-        </DeviceSizeProvider>
-      </CurrentUserProvider>
-    </Router>
-  </React.StrictMode>,
+  <Router>
+    <CurrentUserProvider>
+      <DeviceSizeProvider>
+        <App />
+      </DeviceSizeProvider>
+    </CurrentUserProvider>
+  </Router>,
   document.getElementById("root")
 );
 
