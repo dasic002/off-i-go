@@ -1,58 +1,68 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "../styles/Post.module.css";
 
-const PopularReactions = (props) => {
-  const { popular_reactions, count } = props;
+// Helper function to map reaction types to FontAwesome icons
+// This function takes a reaction type (number) and returns the
+// corresponding FontAwesome icon class name
+const reactionToIcon = (reaction) => {
+  switch (reaction) {
+    case 0:
+      return "fa-thumbs-up"; // Like
+    case 1:
+      return "fa-heart"; // Love
+    case 2:
+      return "fa-face-grin-tears"; // Funny
+    case 3:
+      return "fa-face-grin-stars"; // Amazing
+    case 4:
+      return "fa-hand-holding-heart"; // Care
+    case 5:
+      return "fa-face-sad-tear"; // Sad
+    case 6:
+      return "fa-thumbs-down"; // Dislike
+    case 7:
+      return "fa-face-angry"; // Angry
+    default:
+      return null;
+  }
+};
 
-  const [reactionsData, setReactionsData] = useState({
-    emojis: [],
-  });
+const concatReactionStyles = (index) => {
+  switch (index) {
+    case 0:
+      return styles.PopularReactions1;
+    case 1:
+      return styles.PopularReactions2;
+    case 2:
+      return styles.PopularReactions3;
+    default:
+      return styles.PopularReactions;
+  }
+};
 
-  //   const { first, second, third } = reactionsData.emojis;
-  const { emojis } = reactionsData;
-
-  useEffect(() => {
-    const handleMount = async () => {
-      if (popular_reactions.length > 0) {
-        setReactionsData({
-          emojis: popular_reactions.map(({ reaction }) =>
-            reaction === 0 ? ( // Like
-              <i className="fa-solid fa-thumbs-up"></i>
-            ) : reaction === 1 ? ( // Love
-              <i className="fa-solid fa-heart"></i>
-            ) : reaction === 2 ? ( // Funny
-              <i className="fa-solid fa-face-grin-tears"></i>
-            ) : reaction === 3 ? ( // Amazing
-              <i className="fa-solid fa-face-grin-stars"></i>
-            ) : reaction === 4 ? ( // Care
-              <i className="fa-solid fa-hand-holding-heart"></i>
-            ) : reaction === 5 ? ( // Sad
-              <i className="fa-solid fa-face-sad-tear"></i>
-            ) : reaction === 6 ? ( // Dislike
-              <i className="fa-solid fa-thumbs-down"></i>
-            ) : reaction === 7 ? ( // Angry
-              <i className="fa-solid fa-face-angry"></i>
-            ) : null
-          ),
-
-          count: popular_reactions.length,
-        });
-      }
-    };
-    handleMount();
-  }, [popular_reactions]);
-
+// PopularReactions component
+// This component displays the popular reactions for a post
+const PopularReactions = ({ popular_reactions = [], count = 0 }) => {
   return (
-    <div className="d-flex justify-content-between align-items-center">
-      <div className="d-flex align-items-center">
-        {emojis.map((emoji, index) => (
-          <span key={`emoji_${index}`} className={styles.PopularReactions}>
-            {emoji}
-          </span>
-        ))}
+    <>
+      <div className="d-flex align-items-center justify-content-center">
+        {popular_reactions.map(({ reaction }, index) => {
+          // Only show the first three reactions
+          const icon = index < 3 ? reactionToIcon(reaction) : null;
+
+          // Only render the icon if it exists
+          return icon ? (
+            <span
+              key={`emoji_${index}`}
+              className={concatReactionStyles(index)}
+            >
+              <i className={`fa-solid ${icon}`} />
+            </span>
+          ) : null;
+        })}
       </div>
       <span>{count}</span>
-    </div>
+    </>
   );
 };
 

@@ -51,7 +51,7 @@ const BaseWidget = ({ NavBarLinks, AddPostLink }) => {
                     id="widget-nav-bar"
                   >
                     <Navbar.Collapse id="basic-navbar-nav">
-                      <Nav className={`ml-auto text-left p-0`}>{NavBarLinks}</Nav>
+                      <Nav className={`ml-auto text-left p-1`}>{NavBarLinks}</Nav>
                     </Navbar.Collapse>
                     <Navbar.Toggle
                       ref={ref}

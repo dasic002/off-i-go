@@ -2,8 +2,12 @@ import React from "react";
 import styles from "../../styles/Post.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import {
+  Button,
+  ButtonGroup,
   Card,
   Col,
+  Dropdown,
+  DropdownButton,
   Media,
   OverlayTrigger,
   Row,
@@ -11,10 +15,13 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import Avatar from "../../components/Avatar";
-// import PopularReactions from "../../components/PopularReactions";
+import PopularReactions from "../../components/PopularReactions";
+import { axiosRes } from "../../api/axiosDefaults";
+
 
 const Post = (props) => {
   const {
+    content_type,
     id,
     owner,
     profile_id,
@@ -41,6 +48,81 @@ const Post = (props) => {
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
 
+  const handleReaction = async () => {
+    try {
+      const { data } = await axiosRes.post("/reactions/", {
+        content_type: content_type,
+        object_id: id,
+        reaction: 0,
+      });
+      setPosts((prevPosts) => ({
+        ...prevPosts,
+        results: prevPosts.results.map((post) => {
+          return post.id === id
+            ? {
+                ...post,
+                reactions_count: post.reactions_count + 1,
+                reaction_id: data.id,
+                reaction_type_id: data.reaction,
+
+                popular_reactions: post.popular_reactions.map(
+                  (item, index) => {
+                    return item.reaction === reaction_type_id &&
+                      reaction_type_id !== null &&
+                      item.count > 0
+                      ? {
+                          count: item.count + 1,
+                        }
+                      : index === post.popular_reactions.length - 1
+                      ? (popular_reactions[popular_reactions.length] = {
+                          reaction: data.reaction,
+                          count: 1,
+                        })
+                      : item;
+                  },
+                  post.popular_reactions.length
+                    ? null
+                    : (popular_reactions[post.popular_reactions.length] = {
+                      })
+                ),
+              }
+            : post;
+        }),
+      }));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleNoReaction = async () => {
+    try {
+      await axiosRes.delete(`/reactions/${reaction_id}/`);
+      setPosts((prevPosts) => ({
+        ...prevPosts,
+        results: prevPosts.results.map((post) => {
+          return post.id === id
+            ? {
+                ...post,
+                reactions_count: post.reactions_count - 1,
+                reaction_id: null,
+                reaction_type_id: null,
+
+                popular_reactions: post.popular_reactions.map((item, index) => {
+                  return item.reaction === reaction_type_id && item.count > 1
+                    ? {
+                        count: item.count - 1,
+                      }
+                    : item.reaction === reaction_type_id && item.count === 1
+                    ? post.popular_reactions.pop(index)
+                    : item;
+                }),
+              }
+            : post;
+        }),
+      }));
+    } catch (err) {}
+  };
+
   return (
     <Card className={styles.Post}>
       <Card.Body>
@@ -60,20 +142,20 @@ const Post = (props) => {
       </Link>
       <Card.Body>
         <Row className="justify-content-between">
-          <Col sm={2}>
-            {/* <PopularReactions
+          <Col xs={2}>
+            <PopularReactions
               popular_reactions={popular_reactions}
               count={reactions_count}
-            /> */}
+            />
           </Col>
-          <Col sm={8}>
+          <Col xs={8}>
             {title && <Card.Title className="text-center">{title}</Card.Title>}
           </Col>
-          <Col sm={2}>
+          <Col xs={2}>
             <Link to={`/posts/${id}`}>
               <i className="far fa-comment" />
             </Link>
-            {comments_count}
+            <div>{comments_count}</div>
           </Col>
         </Row>
 
@@ -87,24 +169,41 @@ const Post = (props) => {
               <i className="fa-regular fa-thumbs-up"></i>
             </OverlayTrigger>
           ) : reaction_id ? (
-            <span onClick={() => {}}>
+            <span onClick={handleNoReaction}>
               <i className={`fa-solid fa-thumbs-up ${styles.Reaction}`} />
             </span>
           ) : currentUser ? (
-            <i className={`fa-regular fa-thumbs-up ${styles.ReactionOutline}`} />
+            <span onClick={handleReaction}>
+              <i
+                className={`fa-regular fa-thumbs-up ${styles.ReactionOutline}`}
+              />
+            </span>
           ) : (
+            // <Dropdown as={ButtonGroup}>
+            //   <Dropdown.Toggle variant="success" id="dropdown-split-basic">
+            //     <i
+            //       className={`fa-regular fa-thumbs-up ${styles.ReactionOutline}`}
+            //     />
+            //   </Dropdown.Toggle>
+
+            //   <Dropdown.Menu>
+            //     <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+            //     <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+            //     <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+            //   </Dropdown.Menu>
+            // </Dropdown>
             <OverlayTrigger
               placement="top"
               overlay={<Tooltip>You need to login to react!</Tooltip>}
             >
-              <i className={`fa-regular fa-thumbs-up ${styles.ReactionOutline}`} />
+              <i
+                className={`fa-regular fa-thumbs-up ${styles.ReactionOutline}`}
+              />
             </OverlayTrigger>
           )}
-          {reactions_count}
           <Link to={`/posts/${id}`}>
             <i className="far fa-comment" />
           </Link>
-          {comments_count}
         </div>
       </Card.Body>
     </Card>

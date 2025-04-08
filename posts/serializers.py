@@ -1,7 +1,8 @@
 from django.db.models import Count, Q
 from itertools import chain
 from rest_framework import serializers
-from .models import Post, PostMedia
+from .models import Post
+from django.contrib.contenttypes.models import ContentType
 from medias.models import Media
 from taggit.serializers import (
     TagListSerializerField, TaggitSerializer
@@ -19,7 +20,13 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     reactions_count = serializers.ReadOnlyField()
     popular_reactions = serializers.SerializerMethodField()
     comments_count = serializers.ReadOnlyField()
+    content_type = serializers.SerializerMethodField()
 
+    def get_content_type(self, obj):
+        """
+        Get the content type of the post.
+        """
+        return ContentType.objects.get_for_model(obj).id
 
     tags = TagListSerializerField(
         required=False,
@@ -81,14 +88,12 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
             return interests if interests else None
         return None
     
-
     class Meta:
         model = Post
         fields = [
-            'id', 'owner', 'profile_id', 'profile_image', 'title', 'body',
-            'media',
-            'listing_type', 'original_post', 'created_at', 'updated_at',
-            'is_owner', 'reaction_id', 'reaction_type_id', 'reaction_type',
-            'reactions_count', 'comments_count', 'popular_reactions', 'tags',
-            'tagged_interest'
+            'content_type', 'id', 'owner', 'profile_id', 'profile_image',
+            'title', 'body', 'media', 'listing_type', 'original_post',
+            'created_at','updated_at', 'is_owner', 'reaction_id',
+            'reaction_type_id', 'reaction_type', 'reactions_count',
+            'comments_count', 'popular_reactions', 'tags', 'tagged_interest'
         ]

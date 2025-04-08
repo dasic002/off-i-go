@@ -1,28 +1,55 @@
 .Post {
-    background-color: #ffffff;
-    border: 1px solid #dadadf;
-    border-radius: 2px;
-    margin-bottom: 16px;
-    text-align: center;
-  }
-  
-  .Post figure,
-  h5 {
-    margin: 0 0;
-  }
-  
-  .Reaction {
-    color: #ff820a;
-  }
-  
-  .Reaction:hover {
-    color: #0c7bdc;
-  }
-  
-  .ReactionOutline:hover {
-    color: #ff820a;
-  }
+  background-color: #ffffff;
+  border: 1px solid #dadadf;
+  border-radius: 2px;
+  margin-bottom: 16px;
+  text-align: center;
+}
 
-  .PopularReactions {
-    margin: 0 0 0 -10px;
-  }
+.Post figure,
+h5 {
+  margin: 0 0;
+}
+
+.Reaction {
+  color: #ff820a;
+}
+
+.Reaction:hover {
+  color: #0c7bdc;
+}
+
+.ReactionOutline:hover {
+  color: #ff820a;
+}
+
+.PopularReactions,
+.PopularReactions1,
+.PopularReactions2,
+.PopularReactions3 {
+  margin: 0 -10px;
+  font-size: 1rem;
+}
+
+.PopularReactions>i:hover,
+.PopularReactions1>i:hover,
+.PopularReactions2>i:hover,
+.PopularReactions3>i:hover {
+  cursor:default;
+  transition:none;
+}
+
+.PopularReactions1 {
+  color: #00325f;
+  z-index: 3;
+}
+
+.PopularReactions2 {
+  color: #0c7bdc;
+  z-index: 2;
+}
+
+.PopularReactions3 {
+  color: #001b33;
+  z-index: 1;
+}
