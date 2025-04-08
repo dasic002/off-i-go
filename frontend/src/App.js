@@ -8,8 +8,13 @@ import SignUpForm from "./pages/auth/SignUpForm";
 import SignInForm from "./pages/auth/SignInForm";
 import PostCreateForm from "./pages/posts/PostCreateForm";
 import PostPage from "./pages/posts/PostPage";
+import PostsPage from "./pages/posts/PostsPage";
+import { useCurrentUser } from "./contexts/CurrentUserContext";
 
 function App() {
+  const currentUser = useCurrentUser();
+  const profile_id = currentUser?.profile_id || "";
+
   return (
     <div className={styles.App}>
       <NavBar />
@@ -123,6 +128,50 @@ function App() {
                 </div>
               );
             }}
+          />
+          <Route
+            exact
+            path="/discover"
+            render={() => (
+              <PostsPage message="No results found. Adjust the search keyword." />
+            )}
+          />
+          <Route
+            exact
+            path="/feed"
+            render={() => (
+              <PostsPage
+                message="No results found. Adjust the search keyword or follow a user."
+                filter={`owner__followed__owner__profile=${profile_id}&`}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/for-me"
+            render={() => (
+              <PostsPage message="No results found. Adjust the search keyword or add tags to your interests." />
+            )}
+          />
+          <Route
+            exact
+            path="/near-me"
+            render={() => (
+              <PostsPage
+                message="No results found. Adjust the search keyword or add a location to your profile."
+                filter="location__owner__profile"
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/profiles/:id/reactions"
+            render={() => (
+              <PostsPage
+                message="No results found. Adjust the search keyword or react to a post."
+                filter={`likes__owner__profile=${profile_id}&ordering=-likes__created_at&`}
+              />
+            )}
           />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
