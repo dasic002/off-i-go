@@ -2,12 +2,8 @@ import React from "react";
 import styles from "../../styles/Post.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import {
-  Button,
-  ButtonGroup,
   Card,
   Col,
-  Dropdown,
-  DropdownButton,
   Media,
   OverlayTrigger,
   Row,
@@ -178,7 +174,7 @@ const Post = (props) => {
                 className={`fa-regular fa-thumbs-up ${styles.ReactionOutline}`}
               />
             </span>
-          ) : (
+            
             // <Dropdown as={ButtonGroup}>
             //   <Dropdown.Toggle variant="success" id="dropdown-split-basic">
             //     <i
@@ -192,6 +188,7 @@ const Post = (props) => {
             //     <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
             //   </Dropdown.Menu>
             // </Dropdown>
+          ) : (
             <OverlayTrigger
               placement="top"
               overlay={<Tooltip>You need to login to react!</Tooltip>}

@@ -22,34 +22,3 @@ h5 {
 .ReactionOutline:hover {
   color: #ff820a;
 }
-
-.PopularReactions,
-.PopularReactions1,
-.PopularReactions2,
-.PopularReactions3 {
-  margin: 0 -10px;
-  font-size: 1rem;
-}
-
-.PopularReactions>i:hover,
-.PopularReactions1>i:hover,
-.PopularReactions2>i:hover,
-.PopularReactions3>i:hover {
-  cursor:default;
-  transition:none;
-}
-
-.PopularReactions1 {
-  color: #00325f;
-  z-index: 3;
-}
-
-.PopularReactions2 {
-  color: #0c7bdc;
-  z-index: 2;
-}
-
-.PopularReactions3 {
-  color: #001b33;
-  z-index: 1;
-}

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/Post.module.css";
+import styles from "../styles/PopularReactions.module.css";
 
 // Helper function to map reaction types to FontAwesome icons
 // This function takes a reaction type (number) and returns the
@@ -60,6 +60,11 @@ const PopularReactions = ({ popular_reactions = [], count = 0 }) => {
             </span>
           ) : null;
         })}
+        {count === 0 && (
+          <span key={`emoji_0`} className={concatReactionStyles(0)}>
+            <i className={`fa-regular fa-thumbs-up`} />
+          </span>
+        )}
       </div>
       <span>{count}</span>
     </>
