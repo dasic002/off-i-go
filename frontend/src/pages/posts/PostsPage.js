@@ -19,10 +19,12 @@ function PostsPage({ message, filter = "" }) {
   const [hasLoaded, setHasLoaded] = useState(false);
   const { pathname } = useLocation();
 
+  const [query, setQuery] = useState("");
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const { data } = await axiosReq.get(`/posts/?${filter}`);
+        const { data } = await axiosReq.get(`/posts/?${filter}search=${query}`);
         setPosts(data);
         setHasLoaded(true);
       } catch (err) {
@@ -31,27 +33,44 @@ function PostsPage({ message, filter = "" }) {
     };
 
     setHasLoaded(false);
-    fetchPosts();
-  }, [filter, pathname]);
+    const timer = setTimeout(() => {
+      fetchPosts();
+    }, 1000); // 1 second delay
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [filter, pathname, query]);
 
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <p>Popular profiles mobile</p>
+        <i className={`fas fa-search ${styles.SearchIcon}`} />
+        <Form className={styles.SearchBar} onSubmit={(e) => e.preventDefault()}>
+          <Form.Control
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            type="text"
+            className="mr-sm-2"
+            placeholder="Search posts"
+          />
+        </Form>
         {hasLoaded ? (
           <>
-            {posts.results.length
-              ? posts.results.map((post) => (
-                  <Post key={post.id} {...post} setPosts={setPosts} />
-                ))
-              : <Container className={appStyles.Content}>
+            {posts.results.length ? (
+              posts.results.map((post) => (
+                <Post key={post.id} {...post} setPosts={setPosts} />
+              ))
+            ) : (
+              <Container className={appStyles.Content}>
                 <Assets icon={NoResults} message={message} />
-                </Container>}
+              </Container>
+            )}
           </>
         ) : (
-            <Container className={appStyles.Content}>
-                <Assets spinner />
-            </Container>
+          <Container className={appStyles.Content}>
+            <Assets spinner />
+          </Container>
         )}
       </Col>
       <Col md={4} className="d-none d-lg-block p-0 p-lg-2">
