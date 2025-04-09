@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/Post.module.css";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import {
   Card,
   Col,
+  Container,
   Media,
   OverlayTrigger,
   Row,
@@ -12,9 +13,10 @@ import {
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import Avatar from "../../components/Avatar";
 import PopularReactions from "../../components/PopularReactions";
-import { axiosRes } from "../../api/axiosDefaults";
+import { axiosReq, axiosRes } from "../../api/axiosDefaults";
 import { MoreDropdown } from "../../components/MoreDropdown";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Asset from "../../components/Asset";
 
 const Post = (props) => {
   const {
@@ -25,7 +27,7 @@ const Post = (props) => {
     profile_image,
     title,
     body,
-    // media,
+    media,
     // listing_type,
     // original_post,
     // created_at,
@@ -46,6 +48,14 @@ const Post = (props) => {
   const is_owner = currentUser?.username === owner;
   const history = useHistory();
 
+  const [mediaData, setMediaData] = useState({
+    media_id: 0,
+    media_type: 0,
+    image: "",
+    video: "",
+  });
+  const [mediaLoaded, setMediaLoaded] = useState(false);
+
   const handleEdit = () => {
     history.push(`/posts/${id}/edit`);
   };
@@ -58,6 +68,22 @@ const Post = (props) => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    const getMedia = async () => {
+      try {
+        const { data } = await axiosReq.get(`/medias/${media[0]}/`);
+        const { id: media_id, media_type, image, video } = data;
+        setMediaData({ media_id, media_type, image, video });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    if (media.length) {
+      getMedia();
+      setMediaLoaded(true);
+    }
+  }, [media]);
 
   const handleReaction = async () => {
     try {
@@ -152,10 +178,25 @@ const Post = (props) => {
           </div>
         </Media>
       </Card.Body>
-      <Link to={`/posts/${id}`}>
-        media
-        {/* <Card.Img src={media} alt={title} /> */}
-      </Link>
+      {mediaLoaded ? (
+        media.length ? (
+          <>
+            <Link to={`/posts/${id}`}>
+              {mediaData.media_type === 1 ? (
+                <video controls src={mediaData.video} />
+              ) : (
+                <Card.Img src={mediaData.image} alt={title} />
+              )}
+            </Link>
+          </>
+        ) : (
+          <Container>
+            <Asset spinner />
+          </Container>
+        )
+      ) : (
+        ""
+      )}
       <Card.Body>
         <Row className="justify-content-between">
           <Col xs={2}>

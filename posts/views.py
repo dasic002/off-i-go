@@ -5,6 +5,7 @@ from .models import Post
 from .serializers import PostSerializer
 from off_i_go.permissions import IsOwnerOrReadOnly
 
+
 class PostList(generics.ListCreateAPIView):
     """
     List all posts or create a new post.

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -13,24 +13,69 @@ import Asset from "../../components/Asset";
 import { Alert, Image } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { axiosReq } from "../../api/axiosDefaults";
+import { useParams } from "react-router-dom/cjs/react-router-dom";
 
 const Upload = <i className="fa-solid fa-cloud-arrow-up"></i>;
 
-function PostCreateForm() {
+function PostEditForm() {
   const [errors, setErrors] = useState({});
 
   const [postData, setPostData] = useState({
     title: "",
-    content: "",
+    body: "",
     media: "",
     tags: "",
     listing_type: 3,
   });
 
-  const { title, content, media, tags, listing_type } = postData;
+  const { title, body, media, tags, listing_type } = postData;
+
+  const [mediaData, setMediaData] = useState({
+    media_id: 0,
+    media_type: 0,
+    image: "",
+    video: "",
+  });
 
   const imageInput = useRef(null);
   const history = useHistory();
+  const { id } = useParams();
+
+  useEffect(() => {
+    const handleMount = async () => {
+      try {
+        const { data } = await axiosReq.get(`/posts/${id}/`);
+        const { title, body, media, tags, listing_type, is_owner } = data;
+
+        is_owner
+          ? setPostData({ title, body, media, tags, listing_type })
+          : history.push("/discover");
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    handleMount();
+  }, [id, history]);
+
+  useEffect(() => {
+    const getMedia = async () => {
+      try {
+        const { data } = await axiosReq.get(`/medias/${media[0]}/`);
+        const { id: media_id, media_type, image, video, is_owner } = data;
+
+        is_owner
+          ? setMediaData({ media_id, media_type, image, video })
+          : history.push("/discover");
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    if (media.length) {
+      getMedia();
+    }
+  }, [media, history]);
 
   const handleChange = (event) => {
     setPostData({
@@ -41,10 +86,10 @@ function PostCreateForm() {
 
   const handleChangeImage = (event) => {
     if (event.target.files.length) {
-      URL.revokeObjectURL(media);
-      setPostData({
-        ...postData,
-        media: URL.createObjectURL(event.target.files[0]),
+      URL.revokeObjectURL(mediaData.image);
+      setMediaData({
+        ...mediaData,
+        image: URL.createObjectURL(event.target.files[0]),
       });
     }
   };
@@ -52,16 +97,20 @@ function PostCreateForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (imageInput.current.files.length < 1) {
-      handlePostSubmit();
+    if (imageInput?.current?.files[0] === undefined) {
+      console.log("no files to upload, submitting post");
+      handlePostSubmit(mediaData.media_id);
     } else {
-      const mediaData = new FormData();
-      mediaData.append("image", imageInput.current.files[0]);
+      const formData = new FormData();
+      if (imageInput?.current?.files[0]) {
+        console.log("seeing a file to upload");
+        formData.append("image", imageInput.current.files[0]);
+      }
 
       try {
-        const { data } = await axiosReq.post("/medias/", mediaData);
-        console.log(data);
-        handlePostSubmit(data.id);
+        const { data } = await axiosReq.post("/medias/", formData);
+        console.log("media uploaded: ", data);
+        handlePostSubmit(data?.id);
       } catch (err) {
         console.log(err);
         if (err.response?.status !== 401) {
@@ -75,15 +124,16 @@ function PostCreateForm() {
     const formData = new FormData();
 
     formData.append("title", title);
-    formData.append("content", content);
+    formData.append("body", body);
+    console.log(medias);
     if (medias) formData.append("media", medias);
-    if (tags) formData.append("tags", tags);
+    if (tags.length) formData.append("tags", tags);
     formData.append("listing_type", listing_type);
 
     try {
-      const { data } = await axiosReq.post("/posts/", formData);
-      console.log(data);
-      history.push(`/posts/${data.id}`);
+      console.log("submitting post data: ", formData);
+      await axiosReq.put(`/posts/${id}/`, formData);
+      history.push(`/posts/${id}`);
     } catch (err) {
       console.log(err);
       if (err.response?.status !== 401) {
@@ -109,18 +159,18 @@ function PostCreateForm() {
           {message}
         </Alert>
       ))}
-      <Form.Group controlId="Content">
-        <Form.Label>Content</Form.Label>
+      <Form.Group controlId="body">
+        <Form.Label>body</Form.Label>
         <Form.Control
           as="textarea"
-          name="content"
+          name="body"
           rows={6}
-          value={content}
+          value={body}
           onChange={handleChange}
-          placeholder="Post content here"
+          placeholder="Post body here"
         />
       </Form.Group>
-      {errors?.content?.map((message, idx) => (
+      {errors?.body?.map((message, idx) => (
         <Alert variant="warning" key={idx}>
           {message}
         </Alert>
@@ -175,7 +225,7 @@ function PostCreateForm() {
         cancel
       </Button>
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
-        create
+        save
       </Button>
       {errors?.non_field_errors?.map((message, idx) => (
         <Alert variant="warning" key={idx} className="mt-3">
@@ -193,10 +243,14 @@ function PostCreateForm() {
             className={`${appStyles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
           >
             <Form.Group className="text-center">
-              {media ? (
+              {(media.length || imageInput?.current?.files[0])? (
                 <>
                   <figure>
-                    <Image className={appStyles.Image} src={media} rounded />
+                    <Image
+                      className={appStyles.Image}
+                      src={mediaData.image}
+                      rounded
+                    />
                     {/* <video className={appStyles.Image} src={media} controls /> */}
                   </figure>
                   <div>
@@ -238,4 +292,4 @@ function PostCreateForm() {
   );
 }
 
-export default PostCreateForm;
+export default PostEditForm;

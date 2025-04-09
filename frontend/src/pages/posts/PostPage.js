@@ -8,10 +8,15 @@ import appStyles from "../../App.module.css";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { axiosReq } from "../../api/axiosDefaults";
 import Post from "./Post";
+import Asset from "../../components/Asset";
+
+const NoResults = <i className="fa-solid fa-ghost"></i>;
+const message = "Post not found";
 
 function PostPage() {
   const { id } = useParams();
   const [post, setPost] = useState({ results: [] });
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
     const handleMount = async () => {
@@ -20,11 +25,12 @@ function PostPage() {
           axiosReq.get(`/posts/${id}/`),
         ]);
         setPost({ results: [post] });
+        setHasLoaded(true);
         console.log(post);
       } catch (err) {
         console.log(err);
       }
-    }
+    };
     handleMount();
   }, [id]);
 
@@ -32,8 +38,22 @@ function PostPage() {
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <p>Popular profiles for mobile</p>
-        <Post {...post.results[0]} setPosts={setPost} postPage/>
-        <Container className={appStyles.Content}>Comments</Container>
+        {hasLoaded ? (
+          post.results.length ? (
+            <>
+              <Post {...post.results[0]} setPosts={setPost} postPage />
+              <Container className={appStyles.Content}>Comments</Container>
+            </>
+          ) : (
+            <Container className={appStyles.Content}>
+              <Asset icon={NoResults} message={message} />
+            </Container>
+          )
+        ) : (
+          <Container className={appStyles.Content}>
+            <Asset spinner />
+          </Container>
+        )}
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
         Popular profiles for desktop
