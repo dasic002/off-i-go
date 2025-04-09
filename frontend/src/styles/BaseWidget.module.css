@@ -1,73 +1,85 @@
 .BaseWidget {
-    background-color: #ffc20a;
-    margin: 0px 5vw;
-    position: fixed;
-    bottom: 10px;
-    border-radius: 1rem;
-    width: 90vw;
+  background-color: #ffc20a;
+  margin: 0px 5vw;
+  position: fixed;
+  bottom: 10px;
+  border-radius: 1rem;
+  width: 90vw;
+  z-index: 99;
 }
 
 .MessageWidget {
-    width: auto;
+  width: auto;
+}
+
+.dropShadow {
+  width: 100%;
+  height: 4.5rem;
+  position: fixed;
+  z-index: 98;
+  bottom: 0px;
+  left: 0px;
+  background-color: #ffffff;
+  box-shadow: 0 0 15px 5px #ffffff;
 }
 
 .btn-DropNav {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 /* is not hiding the dropdown arrow from bootstrap */
 .btn-DropNav .dropup .dropdown-toggle::after,
 #widget-nav-bar > .dropdown-toggle::after,
 .btn-DropNav::after {
-    display: none !important;
-    background-image: none;
+  display: none !important;
+  background-image: none;
 }
 
 .NavBar {
-    background-color: #ffc20a;
-    position: fixed;
-    bottom: 10px;
-    right:5vw;
-    border-radius: 1rem;
-    justify-content: end;
-    padding: 0px;
-    margin: 3px;
+  background-color: #ffc20a;
+  position: fixed;
+  bottom: 10px;
+  right: 5vw;
+  border-radius: 1rem;
+  justify-content: end;
+  padding: 0px;
+  margin: 3px;
 }
 
 .Toggle {
-    right: 0px;
-    border: none;
-    color: #555555;
-    padding: 5px;
+  right: 0px;
+  border: none;
+  color: #555555;
+  padding: 5px;
 }
 
 .Toggle i {
-    color: #555555;
+  color: #555555;
 }
 
 .Toggle:hover i {
-    color: #f8f8f8;
+  color: #f8f8f8;
 }
 
 .NavLink {
-    padding: 5px;
-    margin: 3px;
-    /* width: 100%; */
+  padding: 5px;
+  margin: 3px;
+  /* width: 100%; */
 }
 
 .NavLink span {
-    padding-right: 5px;
+  padding-right: 5px;
 }
 
 .NavLink:hover,
 .Toggle:hover {
-    color: #f8f8f8;
-    background-color: #0c7bdc;
-    border-radius: 0.8rem;
+  color: #f8f8f8;
+  background-color: #0c7bdc;
+  border-radius: 0.8rem;
 }
 
-.Active{
-    color: #0c7bdc;
-    background-color: #f8f8f8;
-    border-radius: 0.8rem;
+.Active {
+  color: #0c7bdc;
+  background-color: #f8f8f8;
+  border-radius: 0.8rem;
 }

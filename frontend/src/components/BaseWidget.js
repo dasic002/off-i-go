@@ -18,6 +18,7 @@ const BaseWidget = ({ NavBarLinks, AddPostLink }) => {
   const { expanded, setExpanded, ref } = useClickOutsideToggle();
 
   return (
+    <>
     <div
       className={
         device === "mobile"
@@ -69,6 +70,8 @@ const BaseWidget = ({ NavBarLinks, AddPostLink }) => {
         </Container>
       </ButtonGroup>
     </div>
+    <div className={styles.dropShadow}></div>
+    </>
   );
 };
 
