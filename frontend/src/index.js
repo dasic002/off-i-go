@@ -6,14 +6,17 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 import { CurrentUserProvider } from "./contexts/CurrentUserContext";
 import { DeviceSizeProvider } from "./contexts/DeviceSizeContext";
+import { ProfileDataProvider } from "./contexts/ProfileDataContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <CurrentUserProvider>
-        <DeviceSizeProvider>
-          <App />
-        </DeviceSizeProvider>
+        <ProfileDataProvider>
+          <DeviceSizeProvider>
+            <App />
+          </DeviceSizeProvider>
+        </ProfileDataProvider>
       </CurrentUserProvider>
     </Router>
   </React.StrictMode>,
