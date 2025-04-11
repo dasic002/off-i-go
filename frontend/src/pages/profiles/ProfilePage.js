@@ -21,7 +21,8 @@ import {
 import { Button, Image } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Post from "../posts/Post";
-import { fetchMoreData } from "../../utils/utils";
+import { fetchMoreData, possessionHelper } from "../../utils/utils";
+import { ProfileEditDropdown } from "../../components/MoreDropdown";
 
 const NoResults = <i className="fa-solid fa-ghost"></i>;
 
@@ -60,6 +61,7 @@ function ProfilePage() {
 
   const mainProfile = (
     <>
+      {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
       <Row noGutters className="px-3 text-center">
         <Col lg={3} className="text-lg-left">
           <Image
@@ -112,7 +114,9 @@ function ProfilePage() {
   const mainProfilePosts = (
     <>
       <hr />
-      <p className="text-center">{`${profile?.owner}${profile?.owner[-1] !== 's' ? "'s" : "'"} posts`}</p>
+      <p className="text-center">
+        {possessionHelper(`${profile?.owner}`)} posts
+      </p>
       <hr />
       {profilePosts.results.length ? (
         <InfiniteScroll

@@ -46,3 +46,7 @@ export const unfollowHelper = (profile, clickedProfile) => {
     : // if neither, return current profile data as is
       profile;
 };
+
+export const possessionHelper = (noun) => {
+  return noun.toString().endsWith("s") ? `${noun}'` : `${noun}'s`;
+};
