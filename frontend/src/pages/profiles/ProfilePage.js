@@ -11,9 +11,18 @@ import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 
 import PopularProfiles from "./PopularProfiles";
-import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { axiosReq } from "../../api/axiosDefaults";
+import {
+  useCurrentUser,
+  //   useSetCurrentUser,
+} from "../../contexts/CurrentUserContext";
+import {
+  //   useHistory,
+  useParams,
+} from "react-router-dom/cjs/react-router-dom.min";
+import {
+  axiosReq,
+  // axiosRes
+} from "../../api/axiosDefaults";
 import {
   useProfileData,
   useSetProfileData,
@@ -23,6 +32,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Post from "../posts/Post";
 import { fetchMoreData, possessionHelper } from "../../utils/utils";
 import { ProfileEditDropdown } from "../../components/MoreDropdown";
+// import axios from "axios";
 
 const NoResults = <i className="fa-solid fa-ghost"></i>;
 
@@ -35,6 +45,8 @@ function ProfilePage() {
   const [profile] = pageProfile.results;
   const is_owner = currentUser?.username === profile?.owner;
   const [profilePosts, setProfilePosts] = useState({ results: [] });
+  //   const setCurrentUser = useSetCurrentUser();
+  //   const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,9 +71,32 @@ function ProfilePage() {
     fetchData();
   }, [id, setProfileData]);
 
+  //   Attempted to delete user and profile at the same time, but it didn't work
+  //   const handleDelete = async () => {
+  //     try {
+  //       await Promise.all([
+  //         // axiosRes.delete(`/profiles/${id}/`),
+  //         // axios.post("/dj-rest-auth/logout/"),
+  //         axios.delete(`/dj-rest-auth/user/${id}/`),
+  //       ]);
+  //       setProfileData((prevState) => ({
+  //         ...prevState,
+  //         pageProfile: { results: [] },
+  //       }));
+  //       setProfilePosts({ results: [] });
+  //       setCurrentUser(null);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //     history.push("/discover");
+  //   };
+
   const mainProfile = (
     <>
-      {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
+      {profile?.is_owner && (
+        // <ProfileEditDropdown id={profile?.id} handleDelete={handleDelete} />
+        <ProfileEditDropdown id={profile?.id} />
+      )}
       <Row noGutters className="px-3 text-center">
         <Col lg={3} className="text-lg-left">
           <Image
