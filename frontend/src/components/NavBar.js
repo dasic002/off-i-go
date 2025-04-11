@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import styles from "../styles/NavBar.module.css";
 import { NavLink } from "react-router-dom";
@@ -21,7 +21,7 @@ const NavBar = () => {
 
   const { expanded, setExpanded, ref } = useClickOutsideToggle();
 
-  const [pathname, setPathname] = React.useState(window.location.pathname);
+  const [pathname, setPathname] = useState(window.location.pathname);
 
   const handleSignOut = async () => {
     try {

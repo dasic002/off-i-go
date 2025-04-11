@@ -11,30 +11,16 @@ import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 
 import PopularProfiles from "./PopularProfiles";
-import {
-  useCurrentUser,
-  //   useSetCurrentUser,
-} from "../../contexts/CurrentUserContext";
-import {
-  //   useHistory,
-  useParams,
-} from "react-router-dom/cjs/react-router-dom.min";
-import {
-  axiosReq,
-  // axiosRes
-} from "../../api/axiosDefaults";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { axiosReq } from "../../api/axiosDefaults";
 import {
   useProfileData,
   useSetProfileData,
 } from "../../contexts/ProfileDataContext";
-import { Button, Image } from "react-bootstrap";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Post from "../posts/Post";
-import { fetchMoreData, possessionHelper } from "../../utils/utils";
+import { Button, Image, Nav } from "react-bootstrap";
 import { ProfileEditDropdown } from "../../components/MoreDropdown";
-// import axios from "axios";
-
-const NoResults = <i className="fa-solid fa-ghost"></i>;
+import ProfilePosts from "./ProfilePosts";
 
 function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -45,8 +31,7 @@ function ProfilePage() {
   const [profile] = pageProfile.results;
   const is_owner = currentUser?.username === profile?.owner;
   const [profilePosts, setProfilePosts] = useState({ results: [] });
-  //   const setCurrentUser = useSetCurrentUser();
-  //   const history = useHistory();
+  const [profileView, setProfileView] = useState("posts");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +39,11 @@ function ProfilePage() {
         const [{ data: pageProfile }, { data: profilePosts }] =
           await Promise.all([
             axiosReq.get(`/profiles/${id}/`),
+            profileView === "posts"
+              ? axiosReq.get(`/posts/?owner__profile=${id}`)
+              : profileView === "comments"
+              ? axiosReq.get(`/posts/?comments__owner__profile=${id}`)
+              : axiosReq.get(`/posts/?reactions__owner__profile=${id}`),
             axiosReq.get(`/posts/?owner__profile=${id}`),
           ]);
         setProfileData((prevState) => ({
@@ -69,34 +59,11 @@ function ProfilePage() {
       }
     };
     fetchData();
-  }, [id, setProfileData]);
-
-  //   Attempted to delete user and profile at the same time, but it didn't work
-  //   const handleDelete = async () => {
-  //     try {
-  //       await Promise.all([
-  //         // axiosRes.delete(`/profiles/${id}/`),
-  //         // axios.post("/dj-rest-auth/logout/"),
-  //         axios.delete(`/dj-rest-auth/user/${id}/`),
-  //       ]);
-  //       setProfileData((prevState) => ({
-  //         ...prevState,
-  //         pageProfile: { results: [] },
-  //       }));
-  //       setProfilePosts({ results: [] });
-  //       setCurrentUser(null);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //     history.push("/discover");
-  //   };
+  }, [id, profileView, setProfileData]);
 
   const mainProfile = (
     <>
-      {profile?.is_owner && (
-        // <ProfileEditDropdown id={profile?.id} handleDelete={handleDelete} />
-        <ProfileEditDropdown id={profile?.id} />
-      )}
+      {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
       <Row noGutters className="px-3 text-center">
         <Col lg={3} className="text-lg-left">
           <Image
@@ -146,26 +113,31 @@ function ProfilePage() {
     </>
   );
 
-  const mainProfilePosts = (
+  const profileViewSelector = (
     <>
-      <hr />
-      <p className="text-center">
-        {possessionHelper(`${profile?.owner}`)} posts
-      </p>
-      <hr />
-      {profilePosts.results.length ? (
-        <InfiniteScroll
-          children={profilePosts.results.map((post) => (
-            <Post key={post.id} {...post} setPosts={setProfilePosts} />
-          ))}
-          dataLength={profilePosts.results.length}
-          loader={<Asset spinner />}
-          hasMore={!!profilePosts.next}
-          next={() => fetchMoreData(profilePosts, setProfilePosts)}
-        />
-      ) : (
-        <Asset icon={NoResults} message="No posts to display" />
-      )}
+      <Nav justify variant="tabs" defaultActiveKey="posts">
+        <Nav.Item>
+          <Nav.Link eventKey="posts" onClick={() => setProfileView("posts")}>
+            Posts created
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link
+            eventKey="comments"
+            onClick={() => setProfileView("comments")}
+          >
+            Posts commented on
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link
+            eventKey="reactions"
+            onClick={() => setProfileView("reactions")}
+          >
+            Posts reacted to
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>
     </>
   );
 
@@ -177,7 +149,13 @@ function ProfilePage() {
           {hasLoaded ? (
             <>
               {mainProfile}
-              {mainProfilePosts}
+              {profileViewSelector}
+              <ProfilePosts
+                profile={profile}
+                profilePosts={profilePosts}
+                setProfilePosts={setProfilePosts}
+                profileView={`${profileView}`}
+              />
             </>
           ) : (
             <Asset spinner />
