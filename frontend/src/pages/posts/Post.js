@@ -17,6 +17,7 @@ import { axiosReq, axiosRes } from "../../api/axiosDefaults";
 import { MoreDropdown } from "../../components/MoreDropdown";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Asset from "../../components/Asset";
+import { ReactionDropdown, ReactionIcon } from "../../components/ReactionDropdown";
 
 const Post = (props) => {
   const {
@@ -85,12 +86,12 @@ const Post = (props) => {
     }
   }, [media]);
 
-  const handleReaction = async () => {
+  const handleReaction = async (reactionDigit) => {
     try {
       const { data } = await axiosRes.post("/reactions/", {
         content_type: content_type,
         object_id: id,
-        reaction: 0,
+        reaction: reactionDigit,
       });
       setPosts((prevPosts) => ({
         ...prevPosts,
@@ -227,28 +228,17 @@ const Post = (props) => {
             </OverlayTrigger>
           ) : reaction_id ? (
             <span onClick={handleNoReaction}>
-              <i className={`fa-solid fa-thumbs-up ${styles.Reaction}`} />
+              <ReactionIcon reaction={reaction_type_id} />
+              {/* <i className={`fa-solid fa-thumbs-up ${styles.Reaction}`} /> */}
             </span>
           ) : currentUser ? (
-            <span onClick={handleReaction}>
-              <i
-                className={`fa-regular fa-thumbs-up ${styles.ReactionOutline}`}
-              />
-            </span>
+            // <span onClick={handleReaction}>
+            //   <i
+            //     className={`fa-regular fa-thumbs-up ${styles.ReactionOutline}`}
+            //   />
+            // </span>
+            <ReactionDropdown reaction={reaction_type_id} handleReaction={handleReaction} />
           ) : (
-            // <Dropdown as={ButtonGroup}>
-            //   <Dropdown.Toggle variant="success" id="dropdown-split-basic">
-            //     <i
-            //       className={`fa-regular fa-thumbs-up ${styles.ReactionOutline}`}
-            //     />
-            //   </Dropdown.Toggle>
-
-            //   <Dropdown.Menu>
-            //     <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            //     <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            //     <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-            //   </Dropdown.Menu>
-            // </Dropdown>
             <OverlayTrigger
               placement="top"
               overlay={<Tooltip>You need to login to react!</Tooltip>}
