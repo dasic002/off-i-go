@@ -13,10 +13,12 @@ import Asset from "../../components/Asset";
 import { Alert, Image } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { axiosReq } from "../../api/axiosDefaults";
+import { useRedirect } from "../../hooks/useRedirect";
 
 const Upload = <i className="fa-solid fa-cloud-arrow-up"></i>;
 
 function PostCreateForm() {
+  useRedirect("loggedOut");
   const [errors, setErrors] = useState({});
 
   const [postData, setPostData] = useState({

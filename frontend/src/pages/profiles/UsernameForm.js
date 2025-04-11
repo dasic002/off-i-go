@@ -16,8 +16,10 @@ import {
 
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
+import { useRedirect } from "../../hooks/useRedirect";
 
 const UsernameForm = () => {
+  useRedirect("loggedOut");
   const [username, setUsername] = useState("");
   const [errors, setErrors] = useState({});
 
