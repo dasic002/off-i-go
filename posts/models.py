@@ -2,6 +2,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
+from math import radians, sin, cos, sqrt, asin
 
 
 class Post(models.Model):
@@ -40,6 +41,8 @@ class Post(models.Model):
         help_text="A comma-separated list of tags.",
         blank=True,
     )
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

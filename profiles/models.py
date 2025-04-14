@@ -25,7 +25,12 @@ class Profile(models.Model):
             (3, 'Verified')
         ], default=0
     )
-    interests = TaggableManager()
+    interests = TaggableManager(
+        help_text="A comma-separated list of interests.",
+        blank=True,
+    )
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

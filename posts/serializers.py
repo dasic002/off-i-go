@@ -1,12 +1,13 @@
-from django.db.models import Count, Q
-from itertools import chain
 from rest_framework import serializers
+from django.db.models import Count
 from .models import Post
 from django.contrib.contenttypes.models import ContentType
 from medias.models import Media
 from taggit.serializers import (
     TagListSerializerField, TaggitSerializer
 )
+import json
+from math import radians, sin, cos, sqrt, asin
 
 
 class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
@@ -21,6 +22,7 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     popular_reactions = serializers.SerializerMethodField()
     comments_count = serializers.ReadOnlyField()
     content_type = serializers.SerializerMethodField()
+    distance = serializers.SerializerMethodField()
 
     def get_content_type(self, obj):
         """
@@ -88,6 +90,47 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
             return interests if interests else None
         return None
     
+    def distance_to_user(self, obj, latitude, longitude):
+        """
+        Calculate the distance between two points on the earth.
+        """
+        if not (latitude and longitude):
+            return None
+        R = 6371  # Radius of the Earth in kilometers
+        lat1 = radians(latitude)
+        lon1 = radians(longitude)
+        lat2 = radians(obj.latitude)
+        lon2 = radians(obj.longitude)
+        dlat = lat2 - lat1
+        dlon = lon2 - lon1
+        # square of half the chord length between the points
+        a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+        # Haversine formula to calculate the distance
+        distance = 2 * R * asin(sqrt(a))  # Distance in kilometers
+        return distance
+    
+    def get_distance(self, obj):
+        """
+        Get the distance between the post and the user's location.
+        """
+        data = self.context['request'].query_params.get('nearby', None)
+        user = self.context['request'].user
+        print(f"User: {user}, Data: {data}")
+        
+        if data and obj.latitude and obj.longitude:
+            data = json.loads(data)
+            latitude = float(data.get('latitude'))
+            longitude = float(data.get('longitude'))
+            print(f"Latitude: {latitude}, Longitude: {longitude}")
+            return self.distance_to_user(obj, latitude, longitude)
+        
+        elif user.is_authenticated and obj.latitude and obj.longitude:
+            latitude = user.profile.latitude
+            longitude = user.profile.longitude
+            return self.distance_to_user(obj, latitude, longitude) if latitude and longitude else None
+        else:
+            return None
+         
     class Meta:
         model = Post
         fields = [
@@ -95,5 +138,6 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
             'title', 'body', 'media', 'listing_type', 'original_post',
             'created_at','updated_at', 'is_owner', 'reaction_id',
             'reaction_type_id', 'reaction_type', 'reactions_count',
-            'comments_count', 'popular_reactions', 'tags', 'tagged_interest'
+            'comments_count', 'popular_reactions', 'tags', 'tagged_interest',
+            'latitude', 'longitude', 'distance'
         ]
