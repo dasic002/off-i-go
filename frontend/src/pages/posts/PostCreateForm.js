@@ -27,9 +27,12 @@ function PostCreateForm() {
     media: "",
     tags: "",
     listing_type: 3,
+    latitude: null,
+    longitude: null,
   });
 
-  const { title, content, media, tags, listing_type } = postData;
+  const { title, content, media, tags, listing_type, latitude, longitude } =
+    postData;
 
   const imageInput = useRef(null);
   const history = useHistory();
@@ -50,6 +53,26 @@ function PostCreateForm() {
       });
     }
   };
+
+  function handleLiveLocationClick() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+  }
+
+  function success(position) {
+    setPostData({
+      ...postData,
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+    });
+  }
+
+  function error() {
+    console.log("Unable to retrieve your location.");
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -81,6 +104,8 @@ function PostCreateForm() {
     if (medias) formData.append("media", medias);
     if (tags) formData.append("tags", tags);
     formData.append("listing_type", listing_type);
+    formData.append("latitude", latitude);
+    formData.append("longitude", longitude);
 
     try {
       const { data } = await axiosReq.post("/posts/", formData);
@@ -127,6 +152,45 @@ function PostCreateForm() {
           {message}
         </Alert>
       ))}
+      <Form.Group>
+        <Form.Label>Home - latitude</Form.Label>
+        <Form.Control
+          type="text"
+          value={latitude}
+          onChange={handleChange}
+          name="latitude"
+          placeholder="Latitude"
+        />
+        <Form.Label>Home - longitude</Form.Label>
+        <Form.Control
+          type="text"
+          value={longitude}
+          onChange={handleChange}
+          name="longitude"
+          placeholder="Longitude"
+        />
+        {errors?.latitude?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
+        {errors?.longitude?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
+        <div className="my-2">
+          <Button
+            onClick={() => {
+              handleLiveLocationClick();
+            }}
+            className={`${btnStyles.Button} ${btnStyles.Blue}`}
+            aria-label="Get Live Location"
+          >
+            Get Live Location
+          </Button>
+        </div>
+      </Form.Group>
       <Form.Group as={Row} controlId="tags">
         <Form.Label column sm={2}>
           Tags

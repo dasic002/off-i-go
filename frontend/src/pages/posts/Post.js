@@ -17,7 +17,10 @@ import { axiosReq, axiosRes } from "../../api/axiosDefaults";
 import { MoreDropdown } from "../../components/MoreDropdown";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Asset from "../../components/Asset";
-import { ReactionDropdown, ReactionIcon } from "../../components/ReactionDropdown";
+import {
+  ReactionDropdown,
+  ReactionIcon,
+} from "../../components/ReactionDropdown";
 
 const Post = (props) => {
   const {
@@ -43,6 +46,8 @@ const Post = (props) => {
     // tagged_interest,
     postPage,
     setPosts,
+    longitude,
+    latitude,
   } = props;
 
   const currentUser = useCurrentUser();
@@ -237,7 +242,10 @@ const Post = (props) => {
             //     className={`fa-regular fa-thumbs-up ${styles.ReactionOutline}`}
             //   />
             // </span>
-            <ReactionDropdown reaction={reaction_type_id} handleReaction={handleReaction} />
+            <ReactionDropdown
+              reaction={reaction_type_id}
+              handleReaction={handleReaction}
+            />
           ) : (
             <OverlayTrigger
               placement="top"
@@ -251,6 +259,15 @@ const Post = (props) => {
           <Link to={`/posts/${id}`}>
             <i className="far fa-comment" />
           </Link>
+          {latitude && longitude && (
+            <a
+              href={`https://www.google.com/maps/place/${latitude},${longitude}`}
+              target="_blank"
+              aria-label="View location on Google Maps"
+            >
+              <i className="fas fa-map-marker-alt" />
+            </a>
+          )}
         </div>
       </Card.Body>
     </Card>
