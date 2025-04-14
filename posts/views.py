@@ -57,6 +57,8 @@ class PostList(generics.ListCreateAPIView):
     def get_queryset(self):
         """
         Filter posts based on latitude and longitude.
+        If 'nearby' is provided in the query parameters,
+        distance is calculated.
         """
         data = self.request.query_params.get('nearby', None)
         if data:

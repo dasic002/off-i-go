@@ -32,18 +32,12 @@ const Post = (props) => {
     title,
     body,
     media,
-    // listing_type,
-    // original_post,
-    // created_at,
     updated_at,
     reaction_id,
     reaction_type_id,
-    // reaction_type,
     reactions_count,
     comments_count,
     popular_reactions,
-    // tags,
-    // tagged_interest,
     postPage,
     setPosts,
     longitude,
@@ -234,14 +228,8 @@ const Post = (props) => {
           ) : reaction_id ? (
             <span onClick={handleNoReaction}>
               <ReactionIcon reaction={reaction_type_id} />
-              {/* <i className={`fa-solid fa-thumbs-up ${styles.Reaction}`} /> */}
             </span>
           ) : currentUser ? (
-            // <span onClick={handleReaction}>
-            //   <i
-            //     className={`fa-regular fa-thumbs-up ${styles.ReactionOutline}`}
-            //   />
-            // </span>
             <ReactionDropdown
               reaction={reaction_type_id}
               handleReaction={handleReaction}
@@ -263,6 +251,7 @@ const Post = (props) => {
             <a
               href={`https://www.google.com/maps/place/${latitude},${longitude}`}
               target="_blank"
+              rel="opener noreferrer"
               aria-label="View location on Google Maps"
             >
               <i className="fas fa-map-marker-alt" />

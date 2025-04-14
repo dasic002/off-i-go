@@ -6,10 +6,16 @@
   border-radius: 1rem;
   width: 90vw;
   z-index: 99;
+  min-height: 3.75rem;
 }
 
 .MessageWidget {
   width: auto;
+}
+
+.NavMenu {
+  background-color: #ffc20a;
+  border-radius: 1rem 1rem 0px 0px;
 }
 
 .dropShadow {
@@ -36,7 +42,7 @@
 }
 
 .NavBar {
-  background-color: #ffc20a;
+  background-color: transparent;
   position: fixed;
   bottom: 10px;
   right: 5vw;
@@ -50,7 +56,8 @@
   right: 0px;
   border: none;
   color: #555555;
-  padding: 5px;
+  padding: 3px;
+  margin: 5px;
 }
 
 .Toggle i {

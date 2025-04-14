@@ -129,7 +129,7 @@ export const GeoPositionProvider = ({ children }) => {
     };
 
     handleMount();
-  }, []);
+  });
 
   return (
     <GeoPositionContext.Provider value={geoPosition}>

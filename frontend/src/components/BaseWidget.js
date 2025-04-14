@@ -6,7 +6,7 @@ import {
   Navbar,
   Row,
 } from "react-bootstrap";
-import { NavLink } from "react-router-dom/cjs/react-router-dom";
+// import { NavLink } from "react-router-dom/cjs/react-router-dom";
 import styles from "../styles/BaseWidget.module.css";
 import { Nav } from "react-bootstrap";
 import { useDeviceSize } from "../contexts/DeviceSizeContext";
@@ -32,18 +32,18 @@ const BaseWidget = ({ NavBarLinks, AddPostLink }) => {
         <Container>
           <Row>
             <Col className="d-flex p-0">
-              <NavLink
+              {/* <NavLink
                 className={styles.NavLink}
                 activeClassName={styles.Active}
                 to="/messages"
               >
                 <i className="fa-solid fa-envelope"></i>
                 <span className="d-none d-md-inline">Messages</span>
-              </NavLink>
+              </NavLink> */}
             </Col>
             {device === "mobile" ? (
               <>
-                <Col className="d-flex p-0">{AddPostLink}</Col>
+                <Col className="d-flex p-0 mt-1">{AddPostLink}</Col>
                 <Col className="d-flex p-0">
                   <Navbar
                     expand="lg"
@@ -51,8 +51,8 @@ const BaseWidget = ({ NavBarLinks, AddPostLink }) => {
                     className={styles.NavBar}
                     id="widget-nav-bar"
                   >
-                    <Navbar.Collapse id="basic-navbar-nav">
-                      <Nav className={`ml-auto text-left p-1`}>{NavBarLinks}</Nav>
+                    <Navbar.Collapse id="basic-navbar-nav" className={styles.NavMenu}>
+                      <Nav className="ml-auto text-left p-1">{NavBarLinks}</Nav>
                     </Navbar.Collapse>
                     <Navbar.Toggle
                       ref={ref}

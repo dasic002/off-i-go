@@ -12,7 +12,6 @@ import axios from "axios";
 import BaseWidget from "./BaseWidget";
 import useClickOutsideToggle from "../hooks/useClickOutsideToggle";
 
-
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
@@ -54,7 +53,11 @@ const NavBar = () => {
         onClick={() => setPathname("/discover")}
       >
         <i className="fa-solid fa-earth-europe"></i>
-        <span className={`${pathname !== '/discover' && 'd-md-none'} d-lg-inline`}>Discover</span>
+        <span
+          className={`${pathname !== "/discover" && "d-md-none"} d-lg-inline`}
+        >
+          Discover
+        </span>
         {/* <span className="d-md-none d-lg-inline">Discover</span> */}
       </NavLink>
       <NavLink
@@ -64,7 +67,9 @@ const NavBar = () => {
         onClick={() => setPathname("/feed")}
       >
         <i className="fas fa-stream"></i>
-        <span className={`${pathname !== '/feed' && 'd-md-none'} d-lg-inline`}>Feed</span>
+        <span className={`${pathname !== "/feed" && "d-md-none"} d-lg-inline`}>
+          Feed
+        </span>
         {/* <span className="d-md-none d-lg-inline">Feed</span> */}
       </NavLink>
       <NavLink
@@ -74,7 +79,11 @@ const NavBar = () => {
         onClick={() => setPathname("/for-me")}
       >
         <i className="fa-solid fa-hashtag"></i>
-        <span className={`${pathname !== '/for-me'  && 'd-md-none'} d-lg-inline`}>For me</span>
+        <span
+          className={`${pathname !== "/for-me" && "d-md-none"} d-lg-inline`}
+        >
+          For me
+        </span>
         {/* <span className="d-md-none d-lg-inline">For me</span> */}
       </NavLink>
       <NavLink
@@ -84,7 +93,11 @@ const NavBar = () => {
         onClick={() => setPathname("/near-me")}
       >
         <i className="fa-solid fa-location-dot"></i>
-        <span className={`${pathname !== '/near-me' && 'd-md-none'} d-lg-inline`}>Near me</span>
+        <span
+          className={`${pathname !== "/near-me" && "d-md-none"} d-lg-inline`}
+        >
+          Near me
+        </span>
         {/* <span className="d-md-none d-lg-inline">Near me</span> */}
       </NavLink>
       <NavLink className={styles.NavLink} to="/" onClick={handleSignOut}>
@@ -142,11 +155,7 @@ const NavBar = () => {
           <NavLink to="/">
             <Navbar.Brand className={styles.Brand}>Off I Go</Navbar.Brand>
           </NavLink>
-          {mobile ? (
-            <>
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </>
-          ) : (
+          {!mobile && (
             <>
               {currentUser && addPostIcon}
               <Navbar.Toggle
@@ -166,10 +175,12 @@ const NavBar = () => {
           )}
         </Container>
       </Navbar>
-      <BaseWidget
-        NavBarLinks={currentUser ? loggedInIcons : loggedOutIcons}
-        AddPostLink={addPostIcon}
-      />
+      {mobile && (
+        <BaseWidget
+          NavBarLinks={currentUser ? loggedInIcons : loggedOutIcons}
+          AddPostLink={addPostIcon}
+        />
+      )}
     </>
   );
 };

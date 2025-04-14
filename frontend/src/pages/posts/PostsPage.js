@@ -28,8 +28,8 @@ function PostsPage({ message, filter = "", nearMe }) {
 
   const { handleGeoPosUpdate, handleGeoPosReset, handleRadiusUpdate } =
     useSetGeoPosition();
-  
-  const [ isHome, setIsHome ] = useState(false);
+
+  const [isHome, setIsHome] = useState(false);
 
   const [query, setQuery] = useState("");
 
@@ -50,13 +50,12 @@ function PostsPage({ message, filter = "", nearMe }) {
 
     setHasLoaded(false);
     const timer = setTimeout(() => {
-      handleRadiusUpdate(radius);
       fetchPosts();
     }, 1000); // 1 second delay
     return () => {
       clearTimeout(timer);
     };
-  }, [filter, pathname, query, radius]);
+  }, [filter, pathname, query]);
 
   function handleLiveLocationClick() {
     if (navigator.geolocation) {
@@ -103,7 +102,10 @@ function PostsPage({ message, filter = "", nearMe }) {
                 <Form.Label className="mt-2">Radius (km)</Form.Label>
                 <Form.Control
                   value={radius}
-                  onChange={(e) => setRadius(e.target.value)}
+                  onChange={(e) => {
+                    setRadius(e.target.value);
+                    handleRadiusUpdate(e.target.value);
+                  }}
                   type="number"
                   min="1"
                 />

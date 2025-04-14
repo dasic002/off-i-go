@@ -22,3 +22,7 @@ h5 {
 .ReactionOutline:hover {
   color: #ff820a;
 }
+
+video {
+  max-width: 100%;
+}
