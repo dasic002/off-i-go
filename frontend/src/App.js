@@ -15,10 +15,13 @@ import ProfilePage from "./pages/profiles/ProfilePage";
 import UsernameForm from "./pages/profiles/UsernameForm";
 import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
+import { useGeoPosition } from "./contexts/GeoPositionContext";
 
 function App() {
   const currentUser = useCurrentUser();
   const profile_id = currentUser?.profile_id || "";
+
+  const { reach } = useGeoPosition();
 
   return (
     <div className={styles.App}>
@@ -163,8 +166,9 @@ function App() {
             path="/near-me"
             render={() => (
               <PostsPage
-                message="No results found. Adjust the search keyword or add a location to your profile."
-                filter="location__owner__profile"
+                message="No results found. Adjust the search keyword or select your live location or add a location to your profile."
+                filter={`latitude__range=${reach.latSouth},${reach.latNorth}&longitude__range=${reach.lonWest},${reach.lonEast}`}
+                nearMe
               />
             )}
           />

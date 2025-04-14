@@ -7,15 +7,18 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { CurrentUserProvider } from "./contexts/CurrentUserContext";
 import { DeviceSizeProvider } from "./contexts/DeviceSizeContext";
 import { ProfileDataProvider } from "./contexts/ProfileDataContext";
+import { GeoPositionProvider } from "./contexts/GeoPositionContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <CurrentUserProvider>
         <ProfileDataProvider>
-          <DeviceSizeProvider>
-            <App />
-          </DeviceSizeProvider>
+          <GeoPositionProvider>
+            <DeviceSizeProvider>
+              <App />
+            </DeviceSizeProvider>
+          </GeoPositionProvider>
         </ProfileDataProvider>
       </CurrentUserProvider>
     </Router>
