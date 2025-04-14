@@ -14,6 +14,8 @@ class ProfileSerializer(TaggitSerializer, serializers.ModelSerializer):
     followers_count = serializers.ReadOnlyField()
     following_count = serializers.ReadOnlyField()
     interests = TagListSerializerField(default=[])
+    latitude = serializers.SerializerMethodField()
+    longitude = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -28,10 +30,25 @@ class ProfileSerializer(TaggitSerializer, serializers.ModelSerializer):
             return following.id if following else None
         return None
     
+    def get_latitude(self, obj):
+        user = self.context['request'].user
+        is_owner = user == obj.owner
+        if (user.is_authenticated and is_owner and obj.latitude):
+            return obj.latitude
+        return None
+    
+    def get_longitude(self, obj):
+        user = self.context['request'].user
+        is_owner = user == obj.owner
+        if (user.is_authenticated and is_owner and obj.longitude):
+            return obj.longitude
+        return None
+    
     class Meta:
         model = Profile
         fields = [
             'id', 'owner', 'image', 'content', 'account_type', 'verified',
             'created_at', 'updated_at', 'is_owner', 'following_id',
-            'posts_count', 'followers_count', 'following_count', 'interests'
+            'posts_count', 'followers_count', 'following_count', 'interests',
+            'latitude', 'longitude'
         ]
