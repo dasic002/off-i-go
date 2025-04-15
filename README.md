@@ -227,11 +227,16 @@ The site validates user input and presents error messages to provide feedback on
 # Back-End documentation
 ## API Overview
 <!-- A description of the API, including its functionality and how it integrates with the Front-End -->
-
+Off I Go has a Django API backend responsible for managing CRUD functions on our PostgreSQL database.
 
 ## Database design
 <!-- Structure of the database, including custom models used -->
-![Entity Relationship Diagram](documentation/images/Off-I-go_ERD-v0-1.png)
+The database schematic was drawn up as soon as we had the User Stories defined and Wireframes drafted, as they provide direction on what information we want users to have access to, how they can create, read, update and delete it.
+
+Visualising how a user might go about planning their journey, what considerations they need to make and still be inspired on what things to do and see, I pictured the site being based on posts with photos, videos and a location on a map.
+
+The ERD below illustrates the intended database design for our site, those with a checkmark represent the models and fields built into our application.
+![Entity Relationship Diagram](documentation/images/off-i-go_erd-v0-2.png)
 
 <!-- ## Security Measures -->
 <!-- Details on security practices in the back-end, including handling of sensitive data -->
@@ -423,6 +428,11 @@ However, building milestones, I'm an optimistic planner and underestimate the ti
 
 ### Content
 Advice for promoting inclusivity for disabled people and people with impairments referred to, from sites such as [Scope](https://www.scope.org.uk/advice-and-support/finding-accessible-transport), various articles at [Scope for business](https://business.scope.org.uk/), [nidirect](https://www.nidirect.gov.uk/articles/planning-trip-if-you-have-disability) and [CILNI](https://cilni.org/travel-with-ease-essential-tips-for-travelers-with-disabilities/).
+- Inspiration of functions for social media platforms:
+  - [Facebook](https://www.facebook.com/) and [Instagram](https://www.instagram.com/) - for adding reactions, Reposting posts, replying to comments, tagging profiles to a post, notifications and messaging.
+  - [TikTok](https://www.tiktok.com/) - for the profile page content, how an owner can see their history and private content through panels.
+
+
 
 ### Media
 - [Vector images of disabled characters](https://www.freevector.com/set-of-empowering-disabled-people-character-57686#) used in Sign up and Sign in Forms.
