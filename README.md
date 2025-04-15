@@ -19,7 +19,7 @@ View the deployed site [here.](https://off-i-go-704488bbd793.herokuapp.com/)<br>
 
 ***
 
-# Front-End docs
+# Front-End documentation
 ## User Experience design
 <!-- UX design - wireframes, mock-ups and design diagrams -->
 ### **Strategy**
@@ -224,18 +224,19 @@ The site validates user input and presents error messages to provide feedback on
 <!-- Deployment Process -->
 <!-- Step-by-step guide on how to deploy the Front-end application -->
 
-# Back-End docs
-<!-- API review -->
+# Back-End documentation
+## API Overview
 <!-- A description of the API, including its functionality and how it integrates with the Front-End -->
 
-Database design
+
+## Database design
 <!-- Structure of the database, including custom models used -->
 ![Entity Relationship Diagram](documentation/images/Off-I-go_ERD-v0-1.png)
 
-<!-- Security Measures -->
+<!-- ## Security Measures -->
 <!-- Details on security practices in the back-end, including handling of sensitive data -->
 
-<!-- Deployment Process -->
+<!-- ## Deployment Process -->
 <!-- Instructions for deploying the Back-end application -->
 
 # Code Standards and Practices
@@ -250,9 +251,9 @@ Database design
 <!-- Documentation of manual testing procedures and results for both front end and back end -->
 
 <!-- Version control -->
-<!-- Usage of git and GitHub for version control, inc an explanation of commit message conventions and branch mgmt. -->
+<!-- Usage of Git and GitHub for version control, inc an explanation of commit message conventions and branch mgmt. -->
 
-# Known bugs
+## Known bugs
 - **FIXED - dropdown menu on widget** - in trying to use a dropdown button from react-bootstrap, cannot seem to configure the visibility of the *::after* feature of the button so we do not get the little arrow displayed. It is not major, but it is visually unnecessary and there will be another way of doing this, probably using a regular bootstrap button that toggles the visibility of the menu, just hopefully we can still configure the menu to display upwards. 
  - Fix was simple, I was able to use React-Bootstrap's basic NavBar and rearrange the NavBar.Toggle element so it is below the NavBar.Collapse element, that way it expands the menu above it. Once I figured that out, it was pretty simple to configure the stylings. Also, found a [link to a fix on Stack Overflow](https://stackoverflow.com/a/61134859) for using your own icon or text rather than bootstrap's generic icon that is hard to configure the style of.
 
