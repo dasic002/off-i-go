@@ -21,7 +21,6 @@ import { Button } from "react-bootstrap";
 const NoResults = <i className="fa-solid fa-ghost"></i>;
 
 function PostsPage({ message, filter = "", nearMe }) {
-  console.log(filter);
   const [posts, setPosts] = useState({ results: [] });
   const [hasLoaded, setHasLoaded] = useState(false);
   const { pathname } = useLocation();

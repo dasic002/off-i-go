@@ -8,9 +8,9 @@ Service Providers can register, share what facilities they have to support visit
 Support Providers can register, share the latest information on rights and supporting schemes available, as well as advice such as on staying healthy or gaining further independence.
 Social Users can register, share their wins and obstacles, learn of sites they may wish to visit on a journey or commute and reach out to Providers.
 
-<!-- View the deployed site [here.]()<br>
+View the deployed site [here.](https://off-i-go-704488bbd793.herokuapp.com/)<br>
 
-![Responsive design mock-up](documentation/responsive-design.PNG) -->
+![Responsive design mock-up](documentation/images/am-i-responsive.png)
 
 ***
 
@@ -168,8 +168,55 @@ For a modern and fun apparel and still compatible for colour blindness a palette
     <img src="documentation/images/adobe-colour-blindness-simulator.PNG">
 </details>
 
-<!-- Security practices -->
+#### Typography
+Used Google Fonts [Aleo](https://fonts.google.com/specimen/Aleo) and [Roboto](https://fonts.google.com/specimen/Roboto). Aleo for a bolder stylized typeface, to be used only on larger text, namely the logo. Whilst Roboto was used for remaining text as for best legibility.
+
+#### Logo
+The static logo uses Google Fonts' Aleo mentioned above. 
+
+#### Favicon
+Created with [Favicon generator](https://favicon.io/favicon-generator/), I was able to select the same font and highlight colours of my palette. Didn't think there was a symbol or emoji that encapsulated the intention and style of the website, so opted for text. It has to be brief given the size the icon is, so it include the 'iGo' to include the subject and verb, to promote the action. the I was lowercased to help distinguish from potentially being read as an L.
+
+<details>
+    <summary><strong>Favicon</strong></summary>
+    <img src="documentation/images/android-chrome-192x192.png">
+</details>
+
+## Technologies
+- Languages used:
+  - [HTML5](https://en.wikipedia.org/wiki/HTML5)
+  - [CSS3](https://en.wikipedia.org/wiki/CSS)
+  - [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
+- [GitPod](https://www.gitpod.io/) - Cloud-based IDE to edit code and Git version control.
+- [GitHub](https://github.com/) - to store and publish the project.
+- [Google Fonts](https://fonts.google.com/) - to import fonts "Bree Serif" and "Patua One" into the website's CSS.
+- [Font Awesome](https://fontawesome.com/) - to import icons for more recognizable action buttons. It has been used in:
+  - The expandable Nav bar on narrow displays.
+  - The X icon in expandable projects section.
+  - The clear and submit form.
+  - The contact platforms in the footer.
+- [FavIcon generator](https://favicon.io/) - used to create the favicons to embed on our site.
+- [Am I Responsive](https://ui.dev/amiresponsive) - to visualise the website in various display sizes.
+- [Contrast grid](https://contrast-grid.eightshapes.com/) - to verify colour contrast for legibility
+- [Adobe Color](https://color.adobe.com/create/color-wheel) - to generate the colour palette and Accessibility tools checking for contrast for legibility and colour-blind viewing.
+- [W3C HTML Validator](https://validator.w3.org/) - to validate the HTML code.
+- [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) - to validate the CSS code.
+- [JS hint](https://jshint.com/) - to validate the JS code.
+
+## Security practices
 <!-- Explanation of measures implemented in front-end, like handling secret keys -->
+Following the practices learnt in the project walkthrough, I implemented similar features.
+
+### Authentication and Permissions
+Implemented with Django AllAuth to include user sign up and sign in. As standard, new users are not given superuser status so they do not have access to the admin panel where they could have access to some private content or able to delete or chaneg other user details.
+
+With the implementation of Django signals too, on creation of the user, a profile is also generated automatically.
+
+### CSRF Tokens
+Cross-Site Request Forgery (CSRF) tokens were used to prevent unauthorized requests from potentially malicious websites. Though this is intended for cross-site use, due to a bug in logging in on the site on mobile devices, our project is setup as a unified server, so it only refers back to the API in the same domain and circumvents some of the issues seen with some browsers incompatibility.
+
+### Defensive Design
+The site validates user input and presents error messages to provide feedback on the error. Users whose CSRF Token has expired cannot navigate to an edit form and are redirected to the Sign in page.
 
 <!-- Component Usage -->
 <!-- Details on the use of React components, inc Architecture and component composition -->
@@ -178,7 +225,7 @@ For a modern and fun apparel and still compatible for colour blindness a palette
 <!-- Step-by-step guide on how to deploy the Front-end application -->
 
 # Back-End docs
-API review
+<!-- API review -->
 <!-- A description of the API, including its functionality and how it integrates with the Front-End -->
 
 Database design
@@ -217,7 +264,7 @@ Database design
 ## User Stories
 <!-- List of all user stories and how they map to the project goals -->
 
-### EPIC: Navigation
+### EPIC: Navigation [#4](https://github.com/dasic002/off-i-go/issues/4)
 
 | User Story | Priority | Link |
 |------------|----------|------|
@@ -227,7 +274,7 @@ Database design
 | As a **user** I can **see other profiles' Avatar and username**, so that **can easily identify and view their profile page**. | MUST have | [#10](https://github.com/dasic002/off-i-go/issues/10) |
 | As a **logged out user** I can **see sign in/sign up links on the nav bar**, so that **I can sign back in or sign up**. | MUST have | [#11](https://github.com/dasic002/off-i-go/issues/11) |
 
-### EPIC: Authentication
+### EPIC: Authentication [#9](https://github.com/dasic002/off-i-go/issues/9)
 
 | User Story | Priority | Link |
 |------------|----------|------|
@@ -235,11 +282,8 @@ Database design
 | As a **user** I can **sign in with my account details**, so that **I can use the functionalities available to me**. | MUST have | [#6](https://github.com/dasic002/off-i-go/issues/6) |
 | As a **user** I can **see whether I'm logged in or not**, so that **I can log in if needed**. | MUST have | [#7](https://github.com/dasic002/off-i-go/issues/7) |
 | As a **user** I can **remain logged in**, so that **I can log out when I choose to and not have a frustrating experience of the website**. | MUST have | [#8](https://github.com/dasic002/off-i-go/issues/8) |
-| As a **user**, I can **enter a username on signup and get immediate feedback if the name is available**, so that **I can reduce the number of attempts at registering**. | COULD have | [#38](https://github.com/dasic002/off-i-go/issues/38) |
-| As a **logged in user**, I can **update my username and password and have my browser detect the change**, so that **I do not have to remember it on logging back in next time**. | COULD have | [#39](https://github.com/dasic002/off-i-go/issues/39) |
-| As a **user**, I can **select whether I want to remain logged in for 24hrs**, so that **my account is not as easily compromised when sharing a device**. | COULD have | [#40](https://github.com/dasic002/off-i-go/issues/40) |
 
-### EPIC: Basics of posts
+### EPIC: Basics of posts [#15](https://github.com/dasic002/off-i-go/issues/15)
 
 | User Story | Priority | Link |
 |------------|----------|------|
@@ -247,7 +291,7 @@ Database design
 | As a **user** I can **view the details of a single post**, so that **I can learn more about it**. | MUST have | [#13](https://github.com/dasic002/off-i-go/issues/13) |
 | As a **logged in user** I can **like a post**, so that **I can show my support for the posts that interest me**. | MUST have | [#14](https://github.com/dasic002/off-i-go/issues/14) |
 
-### EPIC: Feeds View
+### EPIC: Feeds View [#48](https://github.com/dasic002/off-i-go/issues/48)
 
 | User Story | Priority | Link |
 |------------|----------|------|
@@ -257,7 +301,7 @@ Database design
 | As a **logged in user** I can **view all the posts from profiles I follow**, so that **I can stay updated on posts from the sources I enjoy the most**. | MUST have | [#19](https://github.com/dasic002/off-i-go/issues/19) |
 | As a **user** I can **keep scrolling through the posts and more are loaded for me automatically** so that **I don't have to click on "next page"**. | MUST have | [#20](https://github.com/dasic002/off-i-go/issues/20) |
 
-### EPIC: Post detail view
+### EPIC: Post detail view [#49](https://github.com/dasic002/off-i-go/issues/49)
 
 | User Story | Priority | Link |
 |------------|----------|------|
@@ -269,21 +313,35 @@ Database design
 | As an **owner of a comment** I can **delete my comment** so that **I can control removal of my comment from the application**. | MUST have | [#26](https://github.com/dasic002/off-i-go/issues/26) |
 | As an **owner of a comment** I can **edit my comment** so that **I can fix or update my existing comment**. | MUST have | [#27](https://github.com/dasic002/off-i-go/issues/27) |
 
-### EPIC: Profile CRUD
+### EPIC: Profile CRUD [#50](https://github.com/dasic002/off-i-go/issues/50)
 
 | User Story | Priority | Link |
 |------------|----------|------|
 | As a **user** I can **view other users profiles** so that **I can see their posts and learn more about them**. | MUST have | [#28](https://github.com/dasic002/off-i-go/issues/28) |
-| As a **user** I can **see a list of the recently most active profiles** so that **I can discover new profiles that may interest me**. | SHOULD have | [#29](https://github.com/dasic002/off-i-go/issues/29) |
 | As a **user** I can **view statistics about a specific user: bio, number of posts, follows and users followed** so that **I can learn more about them**. | MUST have | [#30](https://github.com/dasic002/off-i-go/issues/30) |
-| As a **social user** I can **view statistics about a specific Service provider user: ratings on the platform, certification and verification** so that **I can gauge the commitment to providing accessibility**. | COULD have | [#31](https://github.com/dasic002/off-i-go/issues/31) |
 | As a **logged in user** I can **follow and unfollow other users** so that **I can see and remove posts by specific users in my posts feed**. | MUST have | [#32](https://github.com/dasic002/off-i-go/issues/32) |
 | As a **user** I can **view all the posts by a specific user** so that **I can catch up on their latest posts, or decide I want to follow them**. | MUST have | [#33](https://github.com/dasic002/off-i-go/issues/33) |
 | As a **logged in user** I can **edit my profile**, so that **I can change my profile picture and bio**. | MUST have | [#34](https://github.com/dasic002/off-i-go/issues/34) |
 | As a **logged in user** I can **update my username and password**, so that **I can change my display name and keep my profile secure**. | MUST have | [#35](https://github.com/dasic002/off-i-go/issues/35) |
+
+
+### EPIC: Profile Additional CRUD [#64](https://github.com/dasic002/off-i-go/issues/64)
+
+| User Story | Priority | Link |
+|------------|----------|------|
+| As a **user** I can **see a list of the recently most active profiles** so that **I can discover new profiles that may interest me**. | SHOULD have | [#29](https://github.com/dasic002/off-i-go/issues/29) |
+| As a **social user** I can **view statistics about a specific Service provider user: ratings on the platform, certification and verification** so that **I can gauge the commitment to providing accessibility**. | COULD have | [#31](https://github.com/dasic002/off-i-go/issues/31) |
 | As a **user**, I can **select subjects and/or locations that interest me on signing up**, so that **I can see a feed of posts tailored to my interests and needs**. | SHOULD have | [#37](https://github.com/dasic002/off-i-go/issues/37) |
 
-### EPIC: Further Post interactions
+### EPIC: Further Authentication Features [#65](https://github.com/dasic002/off-i-go/issues/65)
+
+| User Story | Priority | Link |
+|------------|----------|------|
+| As a **user**, I can **enter a username on signup and get immediate feedback if the name is available**, so that **I can reduce the number of attempts at registering**. | COULD have | [#38](https://github.com/dasic002/off-i-go/issues/38) |
+| As a **logged in user**, I can **update my username and password and have my browser detect the change**, so that **I do not have to remember it on logging back in next time**. | COULD have | [#39](https://github.com/dasic002/off-i-go/issues/39) |
+| As a **user**, I can **select whether I want to remain logged in for 24hrs**, so that **my account is not as easily compromised when sharing a device**. | COULD have | [#40](https://github.com/dasic002/off-i-go/issues/40) |
+
+### EPIC: Further Post interactions [#56](https://github.com/dasic002/off-i-go/issues/56)
 
 | User Story | Priority | Link |
 |------------|----------|------|
@@ -292,7 +350,7 @@ Database design
 | As a **logged in user**, I can **generate a post myself to share another user’s post**, so that **I can make my followers aware of this piece of information**. | COULD have | [#43](https://github.com/dasic002/off-i-go/issues/43) |
 | As a **logged in user**, I can **view the posts I have commented on**, so that **I can follow-up of further responses**. | COULD have | [#44](https://github.com/dasic002/off-i-go/issues/44) |
 
-### EPIC: Contact details
+### EPIC: Contact details [#57](https://github.com/dasic002/off-i-go/issues/57)
 
 | User Story | Priority | Link |
 |------------|----------|------|
@@ -300,7 +358,7 @@ Database design
 | As a **service provider**, I can **add contact information**, so that **a user can easily find the best means to book assistance or find out more information**. | SHOULD have | [#53](https://github.com/dasic002/off-i-go/issues/53) |
 | As a **Service Provider**, I can **add sites to my profile**, so that **posts specific to location can be tagged and specific contact details can be linked to the post**. | SHOULD have | [#54](https://github.com/dasic002/off-i-go/issues/54) |
 
-### EPIC: Map integration
+### EPIC: Map integration [#55](https://github.com/dasic002/off-i-go/issues/55)
 
 | User Story | Priority | Link |
 |------------|----------|------|
@@ -310,8 +368,41 @@ Database design
 | As a **Google Maps user**, I can **toggle visibility of lists depending on my needs**, so that **I can see pins relevant to my journey**. | SHOULD have | [#47](https://github.com/dasic002/off-i-go/issues/47) |
 | As a **social user**, I can **plan my route within an integrated map on the site**, so that **I can benefit from the accessibility considerations on this site**. | WON'T have | [#51](https://github.com/dasic002/off-i-go/issues/51) |
 
-<!-- Agile Practices -->
+## Agile Practices
 <!-- Explanation of Agile methodologies used, such as sprint planning and tracking with GitHub projects -->
+Applying an agile approach to the development of my project, I took the following steps:
+- Created Issue cards for each User story.
+- Applied Must have / Should have / Could have / Won't have labels, based on how crucial they were for an MVP.
+- Created Issue cards for Epics, to lish the User Stories issues inside. The Epics were built to group User stories that built on the same feature.
+- Created Milestones for Sprints, adding issues and epics to it.
+- Added all isues and epics to a [GitHub project board](https://github.com/users/dasic002/projects/9/views/1) where I could track my progress using it in the method of a Kanban board.
+
+<details>
+    <summary><strong>Screenshot of Project board</strong></summary>
+    <img src="documentation/images/agile-board.PNG">
+</details>
+
+Focused on building the Must have User Stories in the first Sprint, reviewing the priority of User Stories at the end of each sprint, having to split Epics when they had been too big or when certain User stories weren't feasible to build in the given time.
+
+### Sprint #1 - Focusing on similar features to the walkthrough project - [Due by Mar 25, 2025](https://github.com/dasic002/off-i-go/milestone/1)
+Did not complete within the timeframe, so continued the build based on the user stories here. Has been completed for submission.
+
+### Sprint #2 - Building the MVP app to satisfy Pass criteria - [Due by Apr 1, 2025](https://github.com/dasic002/off-i-go/milestone/2)
+Did not start it on time, once the items from Sprint 1 were completed, began working through these.
+
+### Sprint #3 - Further features to enrich the Experience - [Due by Apr 7, 2025](https://github.com/dasic002/off-i-go/milestone/3)
+Did not get to these.
+
+<details>
+    <summary><strong>Screenshot of Milestones</strong></summary>
+    <img src="documentation/images/milestones-for-sprints.PNG">
+</details>
+
+### Conclusion
+Starting the project with this level of planning does help prioritise the work needed for MVP and switching between User stories and User Experience helped build a fuller picture of the intention for the website.
+
+However, building milestones, I'm an optimistic planner and underestimate the time-effort required for certain tasks, so I struggle to estimate User Story points to effectively plan the sprints to a more realistic timeframe. In hindsight, had I given my agile planning some more time, at the time that they were due and actually reviewed the user stories and epics into new sprints, it may have given me more focus on which features to build on next.
+
 
 # Additional Information
 <!-- Frontend Libraries -->
@@ -326,6 +417,7 @@ Database design
 - [Timmy O'Mahony Blog's](https://timmyomahony.com/blog/the-missing-gfk-model-manager-for-django-models/) article helped me understand what GFK was and how it could be used.
 - [Generic Relations](https://docs.djangoproject.com/en/3.2/ref/contrib/contenttypes/#generic-relations) helped me build models that needed to become more generic across the models.
 - [PawfectMatch project](https://github.com/Julia-Wagner/PawfectMatch-API/blob/main/medias/models.py) taught me about the simple implementation of CloudinaryVideoStorage to be able to upload videos without a lot more prep work like finding another library or implementing Cloudinary's Python SDK.
+- [Video on building User Stories](https://www.youtube.com/watch?v=7hoGqhb6qAs) - a different reference to help me get the mindset of the user story building.
 - Copilot AI within GitHub was used to help generate the basis of Acceptance Criteria and Tasks of our User Stories issues.
 
 ### Content
