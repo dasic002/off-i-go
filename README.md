@@ -1,5 +1,5 @@
 # Off I go
-**The journey planning platform for peopled with a condition or impairment**
+**The journey planning platform for people with a condition or impairment**
 
 As my fifth and last Portfolio project with Code Institute, I built this content sharing platform with Django REST Framework and React.
 
