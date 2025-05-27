@@ -23,6 +23,11 @@ h5 {
   color: #ff820a;
 }
 
+.DropdownItem:hover {
+  background-color: #0c7bdc;
+  color:#ffffff;
+}
+
 video {
   max-width: 100%;
 }
