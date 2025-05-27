@@ -238,8 +238,110 @@ Visualising how a user might go about planning their journey, what consideration
 The ERD below illustrates the intended database design for our site, those with a checkmark represent the models and fields built into our application.
 ![Entity Relationship Diagram](documentation/images/off-i-go_erd-v0-2.png)
 
-<!-- ## Security Measures -->
+### Apps
+Below is a list of applications that make up the Off I Go API with a summary of their purpose and how their are used on the Front-end.
+
+#### Comments
+Purpose: records comments made by a user/profile against a given post, to be called back by user or post.
+
+Similar to the app created in the Code Institute walkthrough project, it records the body of text for the comment made, date it was created and last updated, as well as reactions made on the comment using a generic relation field.
+All fields are migrated to the database, however there is currently no front-end means of adding a reaction against the comment.
+
+**API endpoints:**
+- `/comments/` to list (GET) or create (POST) comments.
+- `/comments/<int:pk>/` to display (GET), update (PUT) or delete (DELETE) a single comment.
+
+#### Comment_reply
+Purpose: records comments as replies made by a user/profile to an existing comment on a post.
+
+Originally this was going to be a self-referring model, but in discussion with my mentor, I came to realise this could get messy quickly and if a user were to delete their reply, especially when I was considering having the Foreign key turn to Null on a parent deletion. After a discussion with my mentor, I decided to go for a comment reply model to record replies made to 1st line comments on the post for a safer structure.
+
+Similar to comments, it records a body of text of the reply, the date is was created and last updated, as well as reactions made on the reply using a generic relation field.
+
+All fields are migrated to the database, however this functionality is not available on the front-end yet.
+
+**API endpoints:**
+- `/comment-replies/` to list (GET) or create (POST) comment replies.
+- `/comment-replies/<int:pk>/` to display (GET), update (PUT) or delete (DELETE) a single comment reply.
+
+#### Followers
+Purpose: logs the followings between profiles to help filter posts by profiles others are interested in.
+
+Just like the app created in the Code Institute walkthrough project, it logs one way relations of a profile following another.
+
+**API endpoints:**
+- `/followers/` to list (GET) or create (POST) followings.
+- `/followers/<int:pk>/` to display (GET) or delete (DELETE) a single following.
+
+#### Medias
+Purpose: To log all media files a user uploads when the user creates a Post.
+
+Instead of creating a field in the Post model to track an image URL, I opted for a separate model to track instances of either photo or video, so that these were independent from a Post instance. This affords us the flexibility to:
+- use media files on objects other than Post instances, such as comments or messaging.
+- attach the image or video to more than one object so the user can reuse an image in their existing gallery.
+- if an object allows for, we can attach multiple files to a Post or Comment.
+
+The model logs the media type, the cloudinary URL for the file, a string of text for the user to add a description for the image and date created and last updated.
+
+Currently, all fields are migrated to the database, however the front-end form available can only log owner and images URL and is set to always assume the media type is an image.
+
+**API endpoints:**
+- `/medias/` to list (GET) or create (POST) media files.
+- `/medias/<int:pk>/` to display (GET), update (PUT) or delete (DELETE) a single following.
+
+#### Posts
+Purpose: holds data on Posts users can create to share information on the platform.
+
+Based on the app created in the Code Institute walkthrough project, it records a title and a body of text for the post content, date it was created and last updated, but also logs:
+- media files used, with a Many-to-many field through our own intermediary model (PostMedia).
+- listing type, so the user can create a post as draft, private, unlisted or published.
+- original post, when the user's post is making reference to an existing post.
+- reactions made on the post using a generic relation field.
+- tags, using django taggit framework.
+- latitude and longitude as FloatFields to log coordinates of the location the post is referring to.
+
+All fields are migrated to the database, however there is currently no front-end means of adding referening an existing post on reposting.
+
+**API endpoints:**
+- `/posts/` to list (GET) or create (POST) posts.
+- `/posts/<int:pk>/` to display (GET), update (PUT) or delete (DELETE) a single post.
+
+#### Profiles
+Purpose: holds data for the user that is easily customised by the user.
+
+Based on the app created in the Code Institute walkthrough project, it has a one-to-one relation to the User model, so upon registration, a profile is created automatically. The user can then log in and access a form to update the profile with a more details. It logs the user it is attached to, content, date created and last updated, as well as:
+- account_type - to distinguish the user the social users from Service/Support providers.
+- verified (status) - to log whether a profile is officially verified and a reliable source.
+- interests - which links to the django taggit framework, to match posts to relevant tags the user is interested in.
+- latitude and longitude - FloatFields to log the coordinates the user wants to name as home for them so we can filter posts relevant to their location.
+
+The location coordinates is only available on the API if the user to whom the profile belongs to is logged in.
+
+All fields migrated to the database, but currently the is no front-end form to for the user to change their account_type, request verification or add tags they are interested in.
+
+Spite creating the API view that allows deletion of a profile, this is not enabled on the front-end as we'd need to also enable deletion of the user from the auth model too.
+
+**API endpoints:**
+- `/profiles/` to list (GET) or create (POST) profiles.
+- `/profiles/<int:pk>/` to display (GET), update (PUT) or delete (DELETE) a single profile.
+
+#### Reactions
+Purpose: logs users' reactions to posts, comments and comment-replies.
+
+Users can only have one reaction per object and since this model can reference 3 other models in a Generic Foreign Key, it tracks content_type and object_id using Django's implicit Content_type model. The Unique_together parameter is set between user (as owner of reaction), content_type and object_id. The user can choose one of 8 types of reaction to have to another object.
+
+Though our detail API view is setup for GET, PUT and DELETE, the front-end is no set up to use the PUT call, this is due to a UX choice that should a user want to delete an existing reaction it is easier to just click on it to remove, rather than expand a menu to then delete.
+
+**API endpoints:**
+- `/reactions/` to list (GET) or create (POST) reactions.
+- `/reactions/<int:pk>/` to display (GET), update (PUT) or delete (DELETE) a single a single reaction.
+
+## Security Measures
 <!-- Details on security practices in the back-end, including handling of sensitive data -->
+To ensure all data serialised on an API call is relevant or permitted for viewing by the current user, I have implemented 2 forms of checks.
+- in Serializers I have it check if the user in the context request, is authenticated and is the owner of the instance being accessed before displaying the information.
+- in Serializers I have it catch integrity errors thrown from the model/database based on restrictions we put in place, such as `unique_together` or required fields.
+- in Generic views, permissions_classes has been provided with boolean outputs using rest_framework's permissions library.
 
 <!-- ## Deployment Process -->
 <!-- Instructions for deploying the Back-end application -->
