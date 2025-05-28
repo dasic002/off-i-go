@@ -527,6 +527,7 @@ However, building milestones, I'm an optimistic planner and underestimate the ti
 - [PawfectMatch project](https://github.com/Julia-Wagner/PawfectMatch-API/blob/main/medias/models.py) taught me about the simple implementation of CloudinaryVideoStorage to be able to upload videos without a lot more prep work like finding another library or implementing Cloudinary's Python SDK.
 - [Video on building User Stories](https://www.youtube.com/watch?v=7hoGqhb6qAs) - a different reference to help me get the mindset of the user story building.
 - Copilot AI within GitHub was used to help generate the basis of Acceptance Criteria and Tasks of our User Stories issues.
+- [Image alt text styling](https://piccalil.li/blog/you-can-style-alt-text-like-any-other-text/) so that if the animated logo fails to load, the browser renders hides the image logo and renders the alternative text logo instead, which is triggered with the onerror attribute.
 
 ### Content
 Advice for promoting inclusivity for disabled people and people with impairments referred to, from sites such as [Scope](https://www.scope.org.uk/advice-and-support/finding-accessible-transport), various articles at [Scope for business](https://business.scope.org.uk/), [nidirect](https://www.nidirect.gov.uk/articles/planning-trip-if-you-have-disability) and [CILNI](https://cilni.org/travel-with-ease-essential-tips-for-travelers-with-disabilities/).
