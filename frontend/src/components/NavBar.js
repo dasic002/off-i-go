@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Image } from "react-bootstrap";
 import styles from "../styles/NavBar.module.css";
 import { NavLink } from "react-router-dom";
 import {
@@ -153,7 +153,17 @@ const NavBar = () => {
       >
         <Container>
           <NavLink to="/">
-            <Navbar.Brand className={styles.Brand}>Off I Go</Navbar.Brand>
+            <Navbar.Brand className={styles.Brand}>
+              <Image
+                src="https://res.cloudinary.com/dnepttq4h/image/upload/v1748415238/off-i-go-logo-animation-bkMatched_ndbfrf.gif"
+                alt="Off I Go"
+                onError={(e) => {
+                  e.target.onerror = null; // prevents looping
+                  e.target.className = ''; // removes the image formatting so alt text logo can be displayed better
+                }}
+                className={styles.Logo}
+                />
+            </Navbar.Brand>
           </NavLink>
           {!mobile && (
             <>
