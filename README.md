@@ -221,8 +221,25 @@ The site validates user input and presents error messages to provide feedback on
 <!-- Component Usage -->
 <!-- Details on the use of React components, inc Architecture and component composition -->
 
-<!-- Deployment Process -->
+# Deployment Process
 <!-- Step-by-step guide on how to deploy the Front-end application -->
+<!-- Following the advice from Code Institute's walkthrough project, this project was first setup in VS Code using a template then linked to our own repository on GitHub. These were the steps taken:
+
+1. In VS Code, a new folder was created for our project **off-i-go**.
+1. Via the terminal, the command `node -v` was run to confirm Node.js v16 was installed and selected.
+1. Then, the dependencies used for the walkthrough project were installed, by entering the following command:
+    > `npx create-react-app . --template git+https://github.com/Code-Institute-Org/cra-template-moments.git --use-npm`<br>
+    This command uses code institute's template to install the dependencies. This step takes a while to install.
+1. Meanwhile, on GitHub a blank repository was created and titled **off-i-go**.
+1. Next, the commands on GitHub to "push an existing repository from the command line" were copied and run in VS Code, the commands included:
+    > `git remote add origin https://github.com/dasic002/off-i-go.git`<br>
+    > `git branch -M main`<br>
+    > `git push -u origin main`<br>
+1. Once run, a refresh of the page for the repository on GitHub to reveal the pushed files, confirmed the push was successful.
+1. Thereafter, version control was maintained throughout development using the following commands in the bash terminal of VS Code:
+    - `git add .` or `git add <filename>` to add modified files to the list of changes to commit.
+    - `git commit -m <description of change>` to save and generate the commit of the change on the local (VS Code) repository. If the change affected multiple features or required changes across many files, additional descriptions were appended to the command as `-m <further change breakdown>` to help describe the change in greater detail.
+    - `git push` to push all committed changes back to the repository on GitHub. -->
 
 # Back-End documentation
 ## API Overview
@@ -343,8 +360,66 @@ To ensure all data serialised on an API call is relevant or permitted for viewin
 - in Serializers I have it catch integrity errors thrown from the model/database based on restrictions we put in place, such as `unique_together` or required fields.
 - in Generic views, permissions_classes has been provided with boolean outputs using rest_framework's permissions library.
 
-<!-- ## Deployment Process -->
+## Setup and Deployment Process
 <!-- Instructions for deploying the Back-end application -->
+
+### Project Setup
+Having only just migrated from GitPod to VS Code, I opted to use CI's template on GitHub before linking it to my local repository in VS Code.
+
+1. In GitHub, I created a new repository using [Code Institute's template](https://github.com/Code-Institute-Org/ci-full-template) and named my new repository **off-i-go**.
+1. Then, in VS Code, I opened the folder where I intended to keep my local repository and via the terminal I ran the command, `git clone https://github.com/dasic002/off-i-go` to clone the repository on GitHub.
+1. After VS Code was done cloning the repository, I opened the folder in VS code for the project just downloaded and activated my virtual environment with the following steps:
+   1. Clicked the gear icon on the bottom left corner of the screen to open the Manage menu and selected Command Palette to open the VS Code command palette.
+   1. Typed "Create Environment" and selected the option "Python: Create Environment…"
+   1. Selected "Venv" for a virtual environment, then selected "Python 3.12.8" and clicked "OK" with none of the checkboxes for dependencies checked.
+   1. Once the virtual environment was created, I added ".venv" to the .gitignore file to avoid uploading the libraries to the repository, as they'll be installed in Heroku upon deployment.
+1. With the Virtual Environment setup, I then installed Django using the command `pip3 install 'django<4'`.
+1. Then, to start the project I used the command `django-admin startproject off_i_go . `.
+    > The ` . ` (dot) initialises the project in the current directory.<br>
+    > I didn't add a suffix of api to my project as my intent was to have a unified project to get around the CSRF issue logging in on iOS devices. This is because whilst the API is not under the same domain, the browser fails to generate the cookies so we can make the required API calls after user login.
+1. Installed the Cloudinary library using the command `pip install django-cloudinary-storage`, so we can link our project with our Cloudinary bank of images.
+1. Installed the Pillow library using the command `pip install Pillow`, which provides some image processing capabilities.
+1. Inside settings.py file, I added the newly installed apps, paying attention to the order of apps in the list:
+```python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'cloudinary_storage', # NOTE: storage listed above staticfiles
+    'django.contrib.staticfiles',
+    'cloudinary', # NOTE: cloudinary listed last here
+]
+```
+1. Created an env.py file in the top directory and added the following content:
+```python
+import os
+os.environ["CLOUDINARY_URL"] = "cloudinary://API KEY HERE" # sourced from my cloudinary portal
+```
+1. Back in settings.py, I set up my cloudinary credentials and defined both the media URL and default file storage as:
+```python
+import os
+
+if os.path.exists('env.py'):
+    import env
+
+CLOUDINARY_STORAGE = {
+    'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
+}
+MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = (
+    'cloudinary_storage.storage.MediaCloudinaryStorage'
+)
+```
+1. The project in VS Code at this point is now ready to be be developped upon, so I ran the commands:
+   - `git add .` to add modified files to the list of changes to commit.
+    - `git commit -m "Install django and cloudinary"` to save and generate the commit of the change on the local (VS Code) repository. 
+    - `git push` to push all committed changes back to the repository on GitHub. 
+
+### Deployment
+
+
 
 # Code Standards and Practices
 <!-- Front-end Code standards -->
