@@ -38,7 +38,7 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     tagged_interest = serializers.SerializerMethodField()
 
     media = serializers.PrimaryKeyRelatedField(
-        queryset = Media.objects.all(),
+        queryset=Media.objects.all(),
         many=True,
         required=False,
         default=None,
