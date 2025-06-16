@@ -16,6 +16,10 @@
 .NavMenu {
   background-color: #ffc20a;
   border-radius: 1rem 1rem 0px 0px;
+  padding-bottom: 10px;
+  margin-bottom: -10px;
+  margin-right: -5px;
+  z-index: -1;
 }
 
 .dropShadow {
@@ -49,7 +53,7 @@
   border-radius: 1rem;
   justify-content: end;
   padding: 0px;
-  margin: 3px;
+  margin: 3px 0;
 }
 
 .Toggle {
@@ -57,7 +61,7 @@
   border: none;
   color: #555555;
   padding: 3px;
-  margin: 5px;
+  margin: 5px 0;
 }
 
 .Toggle i {
