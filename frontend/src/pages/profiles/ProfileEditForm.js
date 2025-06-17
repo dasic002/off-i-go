@@ -31,8 +31,9 @@ const ProfileEditForm = () => {
     image: "",
     latitude: null,
     longitude: null,
+    interests: "",
   });
-  const { name, content, image, latitude, longitude } = profileData;
+  const { name, content, image, latitude, longitude, interests } = profileData;
 
   const [errors, setErrors] = useState({});
 
@@ -41,8 +42,16 @@ const ProfileEditForm = () => {
       if (currentUser?.profile_id?.toString() === id) {
         try {
           const { data } = await axiosReq.get(`/profiles/${id}/`);
-          const { name, content, image, latitude, longitude } = data;
-          setProfileData({ name, content, image, latitude, longitude });
+          const { name, content, image, latitude, longitude, interests } = data;
+
+          setProfileData({
+            name,
+            content,
+            image,
+            latitude,
+            longitude,
+            interests: interests.join(", ") || "",
+          });
         } catch (err) {
           console.log(err);
           history.push("/");
@@ -89,6 +98,10 @@ const ProfileEditForm = () => {
     formData.append("content", content);
     formData.append("latitude", latitude);
     formData.append("longitude", longitude);
+    for (let tag of interests.split(",")) {
+      tag = tag.trim();
+      formData.append("interests", tag);
+    }
 
     if (imageFile?.current?.files[0]) {
       formData.append("image", imageFile?.current?.files[0]);
@@ -154,6 +167,18 @@ const ProfileEditForm = () => {
           Get Live Location
         </Button>
       </div>
+
+      <Form.Group>
+        <Form.Label>Interests</Form.Label>
+        <Form.Control
+          type="text"
+          value={interests}
+          onChange={handleChange}
+          name="interests"
+          placeholder="Enter your interests, separated by commas"
+        />
+      </Form.Group>
+
       <Button
         className={`${btnStyles.Button} ${btnStyles.Blue}`}
         onClick={() => history.goBack()}
