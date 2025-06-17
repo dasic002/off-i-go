@@ -35,17 +35,24 @@ video {
 .TagInactive {
   background-color: #f8f8f8;
   border: 1px solid #00325f;
+  color: #000;
 }
 
 .TagActive {
   background-color: #ffc20a;
   border-color: transparent;
+  color: #000;
+}
+
+.ListingType {
+  background-color: #001b33;
+  color: #ffffff;
 }
 
 .TagInactive,
-.TagActive {
+.TagActive,
+.ListingType {
   font-size: 0.8rem;
-  color: #000;
   align-self: center;
   border-radius: 100px;
   padding: 4px 10px;

@@ -37,15 +37,27 @@ function ProfilePage() {
     const fetchData = async () => {
       try {
         const [{ data: pageProfile }, { data: profilePosts }] =
-          await Promise.all([
-            axiosReq.get(`/profiles/${id}/`),
-            profileView === "posts"
-              ? axiosReq.get(`/posts/?owner__profile=${id}`)
-              : profileView === "comments"
-              ? axiosReq.get(`/posts/?comments__owner__profile=${id}`)
-              : axiosReq.get(`/posts/?reactions__owner__profile=${id}`),
-            axiosReq.get(`/posts/?owner__profile=${id}`),
-          ]);
+          profileView === "posts" && currentUser?.profile_id == id
+            ? await Promise.all([
+                axiosReq.get(`/profiles/${id}/`),
+                axiosReq.get(`/posts/?owner__profile=${id}`),
+              ])
+            : profileView === "posts"
+            ? await Promise.all([
+                axiosReq.get(`/profiles/${id}/`),
+                axiosReq.get(
+                  `/posts/?owner__profile=${id}&listing_type__in=3,2`
+                ),
+              ])
+            : profileView === "comments"
+            ? await Promise.all([
+                axiosReq.get(`/profiles/${id}/`),
+                axiosReq.get(`/posts/?listing_type__in=3,2&comments__owner__profile=${id}`),
+              ])
+            : await Promise.all([
+                axiosReq.get(`/profiles/${id}/`),
+                axiosReq.get(`/posts/?listing_type__in=3,2&reactions__owner__profile=${id}`),
+              ]);
         setProfileData((prevState) => ({
           ...prevState,
           pageProfile: { results: [pageProfile] },

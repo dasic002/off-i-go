@@ -43,6 +43,7 @@ const Post = (props) => {
     longitude,
     latitude,
     tags,
+    listing_type,
   } = props;
 
   const currentUser = useCurrentUser();
@@ -168,6 +169,17 @@ const Post = (props) => {
             <Avatar src={profile_image} height={55} />
             {owner}
           </Link>
+          <div className="d-flex align-items-center">
+            {listing_type != 3 && (
+              <span className={styles.ListingType}>
+                {listing_type === 0
+                  ? "Draft"
+                  : listing_type === 1
+                  ? "Private"
+                  : "Unlisted"}
+              </span>
+            )}
+          </div>
           <div className="d-flex align-items-center">
             <span>{updated_at}</span>
             {is_owner && postPage && (

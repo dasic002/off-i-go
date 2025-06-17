@@ -35,7 +35,10 @@ function App() {
             exact
             path="/discover"
             render={() => (
-              <PostsPage message="No results found. Adjust the search keyword." />
+              <PostsPage
+                message="No results found. Adjust the search keyword."
+                filter={`listing_type=3`}
+              />
             )}
           />
           <Route
