@@ -34,10 +34,12 @@ video {
 
 .TagInactive {
   background-color: #f8f8f8;
+  border: 1px solid #00325f;
 }
 
 .TagActive {
   background-color: #ffc20a;
+  border-color: transparent;
 }
 
 .TagInactive,
@@ -46,7 +48,6 @@ video {
   color: #000;
   align-self: center;
   border-radius: 100px;
-  border-color: transparent;
   padding: 4px 10px;
   margin-left: 2px;
   margin-right: 2px;

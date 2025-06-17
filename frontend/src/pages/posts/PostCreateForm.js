@@ -167,7 +167,12 @@ function PostCreateForm() {
     formData.append("title", title);
     formData.append("body", body);
     if (medias) formData.append("media", medias);
-    if (tags) formData.append("tags", tags);
+    if (tags) {
+      for (let tag of tags.split(",")) {
+        tag = tag.trim();
+        formData.append("tags", tag);
+      }
+    }
     formData.append("listing_type", listing_type);
     if (latitude) formData.append("latitude", latitude);
     if (longitude) formData.append("longitude", longitude);
@@ -288,7 +293,7 @@ function PostCreateForm() {
             name="tags"
             value={tags}
             onChange={handleChange}
-            placeholder="separate tags with spaces"
+            placeholder="separate tags with commas"
           />
         </Col>
       </Form.Group>

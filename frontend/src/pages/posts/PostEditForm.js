@@ -69,7 +69,7 @@ function PostEditForm() {
               title,
               body,
               media,
-              tags,
+              tags: tags.join(", ") || "",
               listing_type,
               latitude,
               longitude,
@@ -230,7 +230,11 @@ function PostEditForm() {
     formData.append("body", body);
     console.log(medias);
     if (medias) formData.append("media", medias);
-    if (tags.length) formData.append("tags", tags);
+    for (let tag of tags.split(",")) {
+      tag = tag.trim();
+      if (tag) formData.append("tags", tag);
+    }
+
     formData.append("listing_type", listing_type);
     if (latitude) formData.append("latitude", latitude);
     if (longitude) formData.append("longitude", longitude);
@@ -350,7 +354,7 @@ function PostEditForm() {
             name="tags"
             value={tags}
             onChange={handleChange}
-            placeholder="separate tags with spaces"
+            placeholder="separate tags with commas"
           />
         </Col>
       </Form.Group>
@@ -416,7 +420,6 @@ function PostEditForm() {
                       src={mediaData.image}
                       rounded
                     />
-                    {/* <video className={appStyles.Image} src={media} controls /> */}
                   </figure>
                   <div>
                     <Form.Label
