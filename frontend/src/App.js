@@ -21,6 +21,7 @@ import WelcomePage from "./pages/WelcomePage";
 function App() {
   const currentUser = useCurrentUser();
   const profile_id = currentUser?.profile_id || "";
+  const profile_interests = currentUser?.profile_interests.toString() || '""';
 
   const { reach } = useGeoPosition();
 
@@ -43,7 +44,7 @@ function App() {
             render={() => (
               <PostsPage
                 message="No results found. Adjust the search keyword or follow a user."
-                filter={`owner__followed__owner__profile=${profile_id}&`}
+                filter={`owner__followed__owner__profile=${profile_id}`}
               />
             )}
           />
@@ -51,7 +52,10 @@ function App() {
             exact
             path="/for-me"
             render={() => (
-              <PostsPage message="No results found. Adjust the search keyword or add tags to your interests." />
+              <PostsPage
+                message="No results found. Adjust the search keyword or add tags to your interests."
+                filter={`tags__name__in=${profile_interests}`}
+              />
             )}
           />
           <Route

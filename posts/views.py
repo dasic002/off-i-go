@@ -5,7 +5,7 @@ from .models import Post
 from .serializers import PostSerializer
 from off_i_go.permissions import IsOwnerOrReadOnly
 import json
-from posts.filters import PostDistanceFilter
+from posts.filters import PostFilter
 
 
 class PostList(generics.ListCreateAPIView):
@@ -30,17 +30,8 @@ class PostList(generics.ListCreateAPIView):
         DjangoFilterBackend,
     ]
 
-    filterset_class = PostDistanceFilter
+    filterset_class = PostFilter
 
-    # filterset_fields = [
-    #     'owner__followed__owner__profile',
-    #     'reactions__owner__profile',
-    #     'owner__profile',
-    #     'tags__id',
-    #     'tags__slug',
-    #     'comments__owner__profile',
-    #     'comments__replies__owner__profile',
-    # ]
     search_fields = [
         'title',
         'owner__username',
