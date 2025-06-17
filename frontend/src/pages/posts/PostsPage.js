@@ -56,9 +56,15 @@ function PostsPage({ message, filter = "", nearMe }) {
     };
   }, [filter, pathname, query]);
 
+  const locationOptions = {
+    enableHighAccuracy: false,
+    timeout: 5000,
+    maximumAge: Infinity,
+  };
+
   function handleLiveLocationClick() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error);
+      navigator.geolocation.getCurrentPosition(success, error, locationOptions);
     } else {
       console.log("Geolocation is not supported by this browser.");
     }
