@@ -42,6 +42,7 @@ const Post = (props) => {
     setPosts,
     longitude,
     latitude,
+    tags,
   } = props;
 
   const currentUser = useCurrentUser();
@@ -217,6 +218,22 @@ const Post = (props) => {
         </Row>
 
         {body && <Card.Text>{body}</Card.Text>}
+        {tags && (
+          <div className={styles.Tags}>
+            {tags.map((tag, index) => (
+              <span
+                key={`tag-${index}`}
+                className={
+                  currentUser?.profile_interests.includes(tag)
+                    ? styles.TagActive
+                    : styles.TagInactive
+                }
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
         <div className={styles.PostBar}>
           {is_owner ? (
             <OverlayTrigger
