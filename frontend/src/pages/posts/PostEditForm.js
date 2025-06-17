@@ -264,14 +264,14 @@ function PostEditForm() {
         </Alert>
       ))}
       <Form.Group controlId="body">
-        <Form.Label>body</Form.Label>
+        <Form.Label>Content</Form.Label>
         <Form.Control
           as="textarea"
           name="body"
           rows={6}
           value={body}
           onChange={handleChange}
-          placeholder="Post body here"
+          placeholder="Post content here"
         />
       </Form.Group>
       {errors?.body?.map((message, idx) => (

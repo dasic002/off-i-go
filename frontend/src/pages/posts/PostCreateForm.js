@@ -23,7 +23,7 @@ function PostCreateForm() {
 
   const [postData, setPostData] = useState({
     title: "",
-    content: "",
+    body: "",
     media: "",
     tags: "",
     listing_type: 3,
@@ -31,7 +31,7 @@ function PostCreateForm() {
     longitude: "",
   });
 
-  const { title, content, media, tags, listing_type, latitude, longitude } =
+  const { title, body, media, tags, listing_type, latitude, longitude } =
     postData;
 
   const [coordsFetch, setCoordsFetch] = useState({
@@ -165,7 +165,7 @@ function PostCreateForm() {
     const formData = new FormData();
 
     formData.append("title", title);
-    formData.append("content", content);
+    formData.append("body", body);
     if (medias) formData.append("media", medias);
     if (tags) formData.append("tags", tags);
     formData.append("listing_type", listing_type);
@@ -201,18 +201,18 @@ function PostCreateForm() {
           {message}
         </Alert>
       ))}
-      <Form.Group controlId="Content">
+      <Form.Group controlId="body">
         <Form.Label>Content</Form.Label>
         <Form.Control
           as="textarea"
-          name="content"
+          name="body"
           rows={6}
-          value={content}
+          value={body}
           onChange={handleChange}
           placeholder="Post content here"
         />
       </Form.Group>
-      {errors?.content?.map((message, idx) => (
+      {errors?.body?.map((message, idx) => (
         <Alert variant="warning" key={idx}>
           {message}
         </Alert>
