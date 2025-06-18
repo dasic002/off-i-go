@@ -1335,10 +1335,23 @@ At this point the project is ready for to use with the frontend React app.
 
 ## Front-end Code standards
 <!-- Info on coding standards followed, e.g. JSX coding practices, modular component use -->
+### HTML validation
+![HTML Validation](documentation/images/html-validation.PNG)
+
+### CSS validation
+![CSS Validation](documentation/images/css_validation.PNG)
 
 
-## Back-end Code standards
+<!-- ## Back-end Code standards -->
 <!-- Python coding standards followed, adhering to PEP8 guidelines -->
+
+## Lighthouse testing
+
+### Mobile
+![Lighthouse Mobile](documentation/images/lighthouse-test-mobile.PNG)
+
+### Desktop
+![Lighthouse Desktop](documentation/images/lighthouse-test-desktop.PNG)
 
 # Testing and version Control
 
