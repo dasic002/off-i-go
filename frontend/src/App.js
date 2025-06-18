@@ -47,7 +47,7 @@ function App() {
             render={() => (
               <PostsPage
                 message="No results found. Adjust the search keyword or follow a user."
-                filter={`owner__followed__owner__profile=${profile_id}`}
+                filter={`listing_type__in=3,2&owner__followed__owner__profile=${profile_id}`}
               />
             )}
           />
@@ -57,7 +57,7 @@ function App() {
             render={() => (
               <PostsPage
                 message="No results found. Adjust the search keyword or add tags to your interests."
-                filter={`tags__name__in=${profile_interests}`}
+                filter={`listing_type__in=3&tags__name__in=${profile_interests}`}
               />
             )}
           />
@@ -67,7 +67,7 @@ function App() {
             render={() => (
               <PostsPage
                 message="No results found. Adjust the search keyword or select your live location or add a location to your profile."
-                filter={`latitude__range=${reach.latSouth},${reach.latNorth}&longitude__range=${reach.lonWest},${reach.lonEast}`}
+                filter={`listing_type__in=3&latitude__range=${reach.latSouth},${reach.latNorth}&longitude__range=${reach.lonWest},${reach.lonEast}`}
                 nearMe
               />
             )}

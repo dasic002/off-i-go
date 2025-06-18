@@ -46,7 +46,7 @@ function ProfilePage() {
             ? await Promise.all([
                 axiosReq.get(`/profiles/${id}/`),
                 axiosReq.get(
-                  `/posts/?owner__profile=${id}&listing_type__in=3,2`
+                  `/posts/?listing_type__in=3,2&owner__profile=${id}`
                 ),
               ])
             : profileView === "comments"
