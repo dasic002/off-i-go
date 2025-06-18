@@ -1333,16 +1333,153 @@ At this point the project is ready for to use with the frontend React app.
 
 # Code Standards and Practices
 
-<!-- Front-end Code standards -->
+## Front-end Code standards
 <!-- Info on coding standards followed, e.g. JSX coding practices, modular component use -->
 
-<!-- Back-end Code standards -->
+
+## Back-end Code standards
 <!-- Python coding standards followed, adhering to PEP8 guidelines -->
 
 # Testing and version Control
 
-<!-- Manual testing -->
+## Manual testing
 <!-- Documentation of manual testing procedures and results for both front end and back end -->
+
+|Feature|Action|Expected Behaviour|Pass/Fail|Notes|
+|---|---|---|---|---|
+|Google Fonts|Loading the page|Google fonts load|PASS||
+|Font Awesome icons|Loading the page|Icons appear as intended|PASS||
+|Images|Loading the page|Images appear as intended|PASS||
+|Content text|Loading the page|Text appears as intended|PASS||
+|Nav bar appearance|Loading the page|Nav bar appears as expected, when display width is above 992px wide, the icons and names are displayed.|PASS||
+|Nav bar appearance|Loading the page|Nav bar appears as expected, when display width is below 992px link names are hidden unless active.|PASS||
+|Nav bar appearance|Loading the page|Nav bar appears as expected, when display width is below 768px menu is collapsed into hamburger icon.|PASS||
+|Nav bar appearance|Loading the page|Nav bar appears as expected, when display width is below 500px Nav bar menu is moved to the bottom, into baseWidget, for mobile displays.|PASS||
+|Nav Button - hamburger icon|Click Hamburger icon|hamburger icon toggles to reveal and collapse nav menu|PASS||
+|Nav button - Active state|Click on any feeds or profile button in the Nav bar|Button highlights to show active state and when name has been hidden (< 992px wide), it is now revealed only on the active button.|PASS||
+|Nav button - Sign up|Click button ""Sign up"" just after loading the site|Loads sign up page|PASS||
+|Nav button - Sign in|Click button ""Sign in"" just after loading the site|Loads Sign in page|PASS||
+|Nav button - Sign out|Click button ""Sign out""|Returns user to landing page and nav links change to Home, sign in and sign up.|PASS||
+|Nav Button - Brand logo|Load page|Animated logo is rendered|PASS||
+|Nav Button - Brand logo|Load page when logo artwork is unreachable|Static text logo matching font and scale is rendered in place of animated logo|PASS||
+|Nav Button - Brand logo|Click brand ""Off I Go""|Returns user to landing page|PASS||
+|Nav Button - Home|Click button ""Home""|Returns user to landing page|PASS||
+|Nav Button - Add Post|Click button ""Add Post""|Loads form to create a new post|PASS||
+|Nav Button - Discover|Click button ""Discover""|Loads feed with all of the most recent posts created|PASS||
+|Nav Button - Feed|Click button ""Feed""|Loads feed with all of the most recent posts created by profiles the current user follows. Whilst user does not follow anyone, a ""No results"" message is displayed.|PASS||
+|Nav Button - For me|Click button ""For me""|Loads feed with all of the most recent posts created that match your current tagged interests|PASS|Django taggit was not working correctly, so currently it just displays all.|
+|Nav Button - Near me|Click button ""Near me""|Loads feed with all of the most recent posts created that have a global coordinates within a range from user's current coordinates.|PASS||
+|Nav Button - Profile Avatar|Click Profile Avatar|Loads profile page.|PASS||
+|Sign up - form - error messages|Submit with blank fields|Returns messages that field must not be blank|PASS||
+|Sign up - form - error messages|Enter existing username to register|Returns message that Username exists|PASS||
+|Sign up - form - error messages|Enter special characters into username to register|Returns message that Username is not valid|PASS||
+|Sign up - form - error messages|Enter password that does not match between fields|Returns message that password fields did not match|PASS||
+|Sign up - form - successful registration|Enter valid data to signup and submit|Redirects user to Sign in page|PASS||
+|Sign up - redirect user|navigate to sign up page when already logged in|Redirects user to ""discover"" feed|PASS||
+|Sign in - form - error messages|Submit with blank fields|Returns message must not be blank|PASS||
+|Sign in - form - error messages|Submit with incorrect username or password|Returns message unable to login with credentials|PASS||
+|Sign in - form - successful log in|Submit valid login details|Redirects user to previous page|PASS||
+|Landing page - Content|Load page|Includes brief intro to the site, a button inviting users to sign up and artwork|PASS||
+|Add Post - form|Click ""Add Post"" |Create post form renders as expected|PASS||
+|Add Post - form|Submit blank form|Error message only that the title field must not be blank|PASS||
+|Add Post - form|Submit form with just a title|Successfully adds a post with just a title|PASS||
+|Add Post - form|Click to upload an image|Opens file explorer to select image|PASS||
+|Add Post - form|Click ""Get Live Location""|Disables button whilst message advises it is retrieving location.|PASS||
+|Add Post - form|Browser unable to retrieve location|Browser times out after 30 seconds retrieving the coordinates, displays warning message to say so and offers another button to use ""Cached location"" instead, disappears after 3 seconds.|PASS||
+|Add Post - form|Click ""Try Cached Location""|If the browser has a cached location that is up to 10 minutes old, it will settle for this.|PASS||
+|Add Post - form|Submit form with image, title, content, location, tags and set to public|User is redirected to the page for the given new post.|PASS||
+|Add Post - form|Click ""Cancel""|Takes user to previous page|PASS||
+|Edit Post - form|Expand the dropdown menu on post and select ""Edit post""|Edit post form renders as expected populated with post data ready to edit.|PASS||
+|Edit Post - form|Replace image and submit|Successfully edits post, post is rendered with the new image.|PASS||
+|Edit Post - form|Click ""Get Live Location""|Disables button whilst message advises it is retrieving location.|PASS||
+|Edit Post - form|Browser unable to retrieve location|Browser times out after 30 seconds retrieving the coordinates, displays warning message to say so and offers another button to use ""Cached location"" instead, disappears after 3 seconds.|PASS||
+|Edit Post - form|Click ""Try Cached Location""|If the browser has a cached location that is up to 10 minutes old, it will settle for this.|PASS||
+|Edit Post - form|Submit form with changes to post|User is redirected to the page for the given changed post.|PASS||
+|Edit Post - form|Click ""Cancel""|Takes user to previous page|PASS||
+|Search posts bar in feed views|Typing text that's included in a profile name or post title.|Filters posts viewed that contain this text in either field.|PASS||
+|Search posts bar in feed views|Type text that purposefully returns no posts.|No results found message is displayed and advises user on actions to take.|PASS||
+|Feed view - Near Me - Radius field|Change value of radius.|Posts are filtered in or out as the radius increases or decreases.|PASS||
+|Feed view - Near Me - Location button|Click the home location button|Posts are filtered by radius to the coordinates the given user has set as home. If none set, home location is defaulted to The Royal Greenwich Observatory's coordinates.|PASS||
+|Most Followed profiles|Loading feeds or profile pages|A shortlist of most followed profiles is compiled, at 992px wide or above the list includes up to 10 profiles with a easy follow button on the side. Any narrower the list is reduced to 4 most followed without follow buttons.|PASS||
+|Profile page - Other users|Loading the page|Displays profile stats, button to follow/unfollow, listing of their public or unlisted posts, another view to see posts they have commented on and posts they have reacted to.|PASS||
+|Profile page - Current user profile|Loading the page|Displays profile stats, dropdown menu to manage account, listing of all their posts, another view to see posts they have commented on and posts they have reacted to.|PASS||
+|Post component|Loading feeds or profile pages|Post component displays Owner Profile Avatar, name and date posted, a badge to indicate whether it is Unlisted, Private or Draft. Displays the media linked to the post, title, content, number of reactions and comments and tags attached. Finally, buttons to add a reaction, comments or view the location attached to the post in Google maps.|PASS||
+|Post Page|Clicking post media or comment button|Loads page for single post listing all comments made on the given post.|PASS||
+|Post Page - comment form|Submit blank form|""Post"" button disabled|PASS||
+|Post Page - comment form|Submit form with comment|""Post"" button becomes enabled and comment successfully posted.|PASS||
+|Comment component|Loading Post page|Displays commenter Avatar, name, time since comment was made and content.|PASS||
+|Comment component - Dropdown menu|Loading Post page|If comment belongs to current user, dropdown menu appears to edit or delete the comment.|PASS||
+|Profile edit form|Loading the page|Form is populated with profile info|PASS||
+|Profile edit form|Click cancel|Returns to previous page|PASS||
+|Profile edit form|Click ""Get Live Location""|Disables button whilst message advises it is retrieving location.|PASS||
+|Profile edit form|Browser unable to retrieve location|Browser times out after 30 seconds retrieving the coordinates, displays warning message to say so and offers another button to use ""Cached location"" instead, disappears after 3 seconds.|PASS||
+|Profile edit form|Click ""Try Cached Location""|If the browser has a cached location, no matter how old, it will settle for this.|PASS||
+|Profile edit form|Submit form with image, bio, location and interests.|User is redirected to their profile page.|PASS||
+|Username edit form|Submit blank form|Error message field must not be blank.|PASS||
+|Username edit form|Submit changed username.|User redirected to profile page, username change is reflected in every mention of it and on login in the new username is needed.|PASS||
+|Password edit form|Submit blank form|Error message field must not be blank.|PASS||
+|Password edit form|Submit mismatching passwords|Error message two password fields do not match.|PASS||
+|Password edit form|Submit a password shorter than 8 characters|Error message password too short.|PASS||
+|Password edit form|Submit new password correctly|Successfully change, user is redirected to profile page and on log in new password is needed.|PASS||
+|Page scaling - mobile|Viewing the page on mobile display in portrait|Font size is legible and the page does not require scrolling on timed buttons. No overlapping text or images.|PASS||
+|Page scaling - mobile|Viewing the page on mobile display in landscape|Font size scales down to fit in the height of the display. Page includes left and right margins to keep content in the centre still.|PASS||
+|Page scaling - desktop|Viewing the page on a desktop/laptop display in landscape with the browser taking the width of the display|Font size scales down to fit in the height of the display. Page includes left and right margins to keep content in the centre still.|PASS||
+|Page scaling - desktop|Viewing the page on a desktop/laptop display in landscape with the browser taking the width of the display|Font size scales down to fit in the height of the display. Page includes left and right margins to keep content in the centre still.|PASS||
+
+
+## User Story testing
+
+|User Story|Priority|Link|Pass/Fail|Notes|
+|---|---|---|---|---|
+|As a **user** I can **see the nav bar from every page**, so that **I can easily navigate the site and find the various feeds and info**.|MUST have|[#1](https://github.com/dasic002/off-i-go/issues/1)|PASS||
+|As a **user** I can **easily find the navigation links on any size display**, so that **it is still easy to navigate the site**.|MUST have|[#/2](https://github.com/dasic002/off-i-go/issues/2)|PASS||
+|As a **user** I can **quickly navigate the website**, so that **content is displayed effortlessly**.|MUST have|[#/3](https://github.com/dasic002/off-i-go/issues/3)|PASS||
+|As a **user** I can **see other profiles' Avatar and username**, so that **can easily identify and view their profile page**.|MUST have|[#10](https://github.com/dasic002/off-i-go/issues/10)|PASS||
+|As a **logged out user** I can **see sign in/sign up links on the nav bar**, so that **I can sign back in or sign up**.|MUST have|[#11](https://github.com/dasic002/off-i-go/issues/11)|PASS||
+|As a **user** I can **sign up**, so that **I can access all the features available**.|MUST have|[#/5](https://github.com/dasic002/off-i-go/issues/5)|PASS||
+|As a **user** I can **sign in with my account details**, so that **I can use the functionalities available to me**.|MUST have|[#/6](https://github.com/dasic002/off-i-go/issues/6)|PASS||
+|As a **user** I can **see whether I'm logged in or not**, so that **I can log in if needed**.|MUST have|[#/7](https://github.com/dasic002/off-i-go/issues/7)|PASS||
+|As a **user** I can **remain logged in**, so that **I can log out when I choose to and not have a frustrating experience of the website**.|MUST have|[#/8](https://github.com/dasic002/off-i-go/issues/8)|PASS||
+|As a **logged in user** I can **create posts**, so that **I can share my thoughts of accessible facilities or services of a given site**.|MUST have|[#12](https://github.com/dasic002/off-i-go/issues/12)|PASS||
+|As a **user** I can **view the details of a single post**, so that **I can learn more about it**.|MUST have|[#13](https://github.com/dasic002/off-i-go/issues/13)|PASS||
+|As a **logged in user** I can **like a post**, so that **I can show my support for the posts that interest me**.|MUST have|[#14](https://github.com/dasic002/off-i-go/issues/14)|PASS||
+|As a **user** I can **view most recent posts first**, so that **I am up-to-date**.|MUST have|[#16](https://github.com/dasic002/off-i-go/issues/16)|PASS||
+|As a **user** I can **search for posts with a keyword**, so that **find content that interests me**.|MUST have|[#17](https://github.com/dasic002/off-i-go/issues/17)|PASS||
+|As a **logged in user** I can **view my posts I have liked before**, so that **I can find posts that I enjoyed**.|MUST have|[#18](https://github.com/dasic002/off-i-go/issues/18)|PASS||
+|As a **logged in user** I can **view all the posts from profiles I follow**, so that **I can stay updated on posts from the sources I enjoy the most**.|MUST have|[#19](https://github.com/dasic002/off-i-go/issues/19)|PASS||
+|As a **user** I can **keep scrolling through the posts and more are loaded for me automatically** so that **I don't have to click on ""next page""**.|MUST have|[#20](https://github.com/dasic002/off-i-go/issues/20)|PASS||
+|As a **user** I can **view the post's page** so that **I can read the comments about the post**.|MUST have|[#21](https://github.com/dasic002/off-i-go/issues/21)|PASS||
+|As a **post owner** I can **edit my post title and description** so that **I can make corrections or update my post after it was created**.|MUST have|[#22](https://github.com/dasic002/off-i-go/issues/22)|PASS||
+|As a **logged in user** I can **add comments to a post** so that **I can share my thoughts about the post**.|MUST have|[#23](https://github.com/dasic002/off-i-go/issues/23)|PASS||
+|As a **user** I can **see how long ago a comment was made** so that **I know how old a comment is**.|MUST have|[#24](https://github.com/dasic002/off-i-go/issues/24)|PASS||
+|As a **user** I can **read comments on posts** so that **I can read what other users think about the posts**.|MUST have|[#25](https://github.com/dasic002/off-i-go/issues/25)|PASS||
+|As an **owner of a comment** I can **delete my comment** so that **I can control removal of my comment from the application**.|MUST have|[#26](https://github.com/dasic002/off-i-go/issues/26)|PASS||
+|As an **owner of a comment** I can **edit my comment** so that **I can fix or update my existing comment**.|MUST have|[#27](https://github.com/dasic002/off-i-go/issues/27)|PASS||
+|As a **user** I can **view other users profiles** so that **I can see their posts and learn more about them**.|MUST have|[#28](https://github.com/dasic002/off-i-go/issues/28)|PASS||
+|As a **user** I can **view statistics about a specific user: bio, number of posts, follows and users followed** so that **I can learn more about them**.|MUST have|[#30](https://github.com/dasic002/off-i-go/issues/30)|PASS||
+|As a **logged in user** I can **follow and unfollow other users** so that **I can see and remove posts by specific users in my posts feed**.|MUST have|[#32](https://github.com/dasic002/off-i-go/issues/32)|PASS||
+|As a **user** I can **view all the posts by a specific user** so that **I can catch up on their latest posts, or decide I want to follow them**.|MUST have|[#33](https://github.com/dasic002/off-i-go/issues/33)|PASS|Django taggit was not working correctly, so currently it just displays all.|
+|As a **logged in user** I can **edit my profile**, so that **I can change my profile picture and bio**.|MUST have|[#34](https://github.com/dasic002/off-i-go/issues/34)|PASS||
+|As a **logged in user** I can **update my username and password**, so that **I can change my display name and keep my profile secure**.|MUST have|[#35](https://github.com/dasic002/off-i-go/issues/35)|PASS||
+|As a **user** I can **see a list of the recently most active profiles** so that **I can discover new profiles that may interest me**.|SHOULD have|[#29](https://github.com/dasic002/off-i-go/issues/29)|PASS||
+|As a **social user** I can **view statistics about a specific Service provider user: ratings on the platform, certification and verification** so that **I can gauge the commitment to providing accessibility**.|COULD have|[#31](https://github.com/dasic002/off-i-go/issues/31)|FAIL|EXCLUDED IN BUILD|
+|As a **user**, I can **select subjects and/or locations that interest me on signing up**, so that **I can see a feed of posts tailored to my interests and needs**.|SHOULD have|[#37](https://github.com/dasic002/off-i-go/issues/37)|FAIL|EXCLUDED IN BUILD|
+|As a **user**, I can **enter a username on signup and get immediate feedback if the name is available**, so that **I can reduce the number of attempts at registering**.|COULD have|[#38](https://github.com/dasic002/off-i-go/issues/38)|FAIL|EXCLUDED IN BUILD|
+|As a **logged in user**, I can **update my username and password and have my browser detect the change**, so that **I do not have to remember it on logging back in next time**.|COULD have|[#39](https://github.com/dasic002/off-i-go/issues/39)|FAIL|EXCLUDED IN BUILD|
+|As a **user**, I can **select whether I want to remain logged in for 24hrs**, so that **my account is not as easily compromised when sharing a device**.|COULD have|[#40](https://github.com/dasic002/off-i-go/issues/40)|FAIL|EXCLUDED IN BUILD|
+|As a **logged in user**, I can **have another reaction rather than like on a post**, so that **I can share my feelings on a post in just a couple of clicks**.|SHOULD have|[#41](https://github.com/dasic002/off-i-go/issues/41)|PASS||
+|As a **user**, I can **easily share a link to a post with others**, so that **I can make them aware of this piece of information**.|SHOULD have|[#42](https://github.com/dasic002/off-i-go/issues/42)|FAIL|EXCLUDED IN BUILD|
+|As a **logged in user**, I can **generate a post myself to share another user's post**, so that **I can make my followers aware of this piece of information**.|COULD have|[#43](https://github.com/dasic002/off-i-go/issues/43)|FAIL|EXCLUDED IN BUILD|
+|As a **logged in user**, I can **view the posts I have commented on**, so that **I can follow-up of further responses**.|COULD have|[#44](https://github.com/dasic002/off-i-go/issues/44)|PASS|Through profile page the user can filter posts they have previously commented on.|
+|As a **social user**, I can **book for assistance within my route planner**, so that **I don't have to look for contact details still and repeat all the same information supplied in my route planner**.|WON'T have|[#52](https://github.com/dasic002/off-i-go/issues/52)|FAIL|EXCLUDED IN BUILD|
+|As a **service provider**, I can **add contact information**, so that **a user can easily find the best means to book assistance or find out more information**.|SHOULD have|[#53](https://github.com/dasic002/off-i-go/issues/53)|FAIL|EXCLUDED IN BUILD|
+|As a **Service Provider**, I can **add sites to my profile**, so that **posts specific to location can be tagged and specific contact details can be linked to the post**.|SHOULD have|[#54](https://github.com/dasic002/off-i-go/issues/54)|FAIL|EXCLUDED IN BUILD|
+|As a **user**, I can **filter posts by location**, so that **I can find content relevant to my neighbourhood or journey**.|SHOULD have|[#36](https://github.com/dasic002/off-i-go/issues/36)|PASS||
+|As a **post owner**, I can **add a location on a map to my post**, so that **other users know where they may find the features/services mentioned in the post**.|MUST have|[#45](https://github.com/dasic002/off-i-go/issues/45)|PASS|Only as coordinates in text fields.|
+|As a **user**, I can **subscribe to saved location lists published by ""Off I go""**, so that **I can see them in my next route planning**.|SHOULD have|[#46](https://github.com/dasic002/off-i-go/issues/46)|FAIL|EXCLUDED IN BUILD|
+|As a **Google Maps user**, I can **toggle visibility of lists depending on my needs**, so that **I can see pins relevant to my journey**.|SHOULD have|[#47](https://github.com/dasic002/off-i-go/issues/47)|FAIL|EXCLUDED IN BUILD|
+|As a **social user**, I can **plan my route within an integrated map on the site**, so that **I can benefit from the accessibility considerations on this site**.|WON'T have|[#51](https://github.com/dasic002/off-i-go/issues/51)|FAIL|EXCLUDED IN BUILD|
+
 
 <!-- Version control -->
 <!-- Usage of Git and GitHub for version control, inc an explanation of commit message conventions and branch mgmt. -->
@@ -1355,7 +1492,7 @@ At this point the project is ready for to use with the frontend React app.
 
 - **NavBar links on a medium width display** - as the user is logged in, the navbar gets too cluttered on a medium width if the links include both icon and text, so I moved the text to spans that are hidden at the medium width using 'd-md-none', but I had wanted to make the text appear only if the parent element, the Nav.Link was active. So I used the useState to update a const 'pathname' to compare to the link's pathname and remove the 'd-md-none' from the className group should it match. This works to some extent, except if the user clicks on a link that does not set the constant. There should be a way of doing this with a custom Hook, however this is a minor issue and I can always fallback to a collapse navbar rather than displaying the icons.
 
-- **Django-taggit and TaggitSerializer no accepting blank fields** - testing creating Posts after implementing django taggit, it seems no matter if we pass _required=False_ in the taggitSerializer or not, it still throws an error specifying it cannot be blank. This is a commonly raised [issue](https://github.com/jazzband/django-taggit/issues/127) and I have not found a viable solution for it yet. For now, I may have to setup a default tag of 'none', so should a Post be created, the react app will set the tag as 'none' in the absence of any others.
+- **FIXED - Django-taggit and TaggitSerializer no accepting blank fields** - testing creating Posts after implementing django taggit, it seems no matter if we pass _required=False_ in the taggitSerializer or not, it still throws an error specifying it cannot be blank. This is a commonly raised [issue](https://github.com/jazzband/django-taggit/issues/127). Current workaround is by turning the array into a string in the frontend, then when appending to the form data for submission, it splits the comma separated tags and append each as a tag value.
 
 # Agile Project Management
 
@@ -1519,6 +1656,7 @@ However, building milestones, I'm an optimistic planner and underestimate the ti
 
 ### Code
 
+- Code Intitute's DRF_API walkthrough project, which this project is largely based on and customised to our needs.
 - [Django Docs](https://docs.djangoproject.com/en/3.2/) frequently referred to throughout the development of this project.
 - Tutorial from Code Institute's Moments walkthrough project was referred to often to remind me how we implemented a feature and why.
 - [Django taggit docs](https://django-taggit.readthedocs.io/en/latest/getting_started.html) referred to for implementation steps and a YouTube video by [BugBytes](https://youtu.be/iFE6nhst2r8?si=-P1Cp_u20TwoLs10) helped me understand the structure of the taggit models.
@@ -1543,6 +1681,6 @@ Advice for promoting inclusivity for disabled people and people with impairments
   <!-- License -->
   <!-- Information about the software license (if applicable) -->
 
-```
+### Acknoledgements
 
-```
+- My mentor Spencer Barriball for his insight, guidance and words of encouragement.

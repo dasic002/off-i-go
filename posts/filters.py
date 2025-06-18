@@ -17,7 +17,7 @@ class PostFilter(django_filters.FilterSet):
             'comments__owner__profile': ['exact'],
             'comments__replies__owner__profile': ['exact'],
             'media': ['exact'],
-            'listing_type': ['exact'],
+            'listing_type': ['exact', 'in'],
             'original_post': ['exact'],
             'latitude': ['range'],
             'longitude': ['range'],

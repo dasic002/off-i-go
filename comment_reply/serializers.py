@@ -23,40 +23,40 @@ class CommentReplySerializer(serializers.ModelSerializer):
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
-    
+
     def get_created_at(self, obj):
         return naturaltime(obj.created_at)
-    
+
     def get_updated_at(self, obj):
         return naturaltime(obj.updated_at)
-    
+
     def get_reaction_id(self, obj):
         user = self.context['request'].user
         if user.is_authenticated:
             reaction = obj.reactions.filter(owner=user).first()
             return reaction.id if reaction else None
         return None
-    
+
     def get_reaction_type_id(self, obj):
         user = self.context['request'].user
         if user.is_authenticated:
             reaction = obj.reactions.filter(owner=user).first()
             return reaction.reaction if reaction else None
         return None
-    
+
     def get_reaction_type(self, obj):
         user = self.context['request'].user
         if user.is_authenticated:
             reaction = obj.reactions.filter(owner=user).first()
             return reaction.get_reaction_display() if reaction else None
         return None
-    
+
     def get_popular_reactions(self, obj):
         reactions = obj.reactions.values('reaction').annotate(
             count=Count('reaction')
         ).order_by('-count')
         return reactions
-    
+
     class Meta:
         model = CommentReply
         fields = [

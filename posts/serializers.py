@@ -136,7 +136,7 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
         fields = [
             'content_type', 'id', 'owner', 'profile_id', 'profile_image',
             'title', 'body', 'media', 'listing_type', 'original_post',
-            'created_at','updated_at', 'is_owner', 'reaction_id',
+            'created_at', 'updated_at', 'is_owner', 'reaction_id',
             'reaction_type_id', 'reaction_type', 'reactions_count',
             'comments_count', 'popular_reactions', 'tags', 'tagged_interest',
             'latitude', 'longitude', 'distance'
