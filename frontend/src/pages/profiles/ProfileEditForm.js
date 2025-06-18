@@ -37,6 +37,11 @@ const ProfileEditForm = () => {
 
   const [errors, setErrors] = useState({});
 
+  const [coordsFetch, setCoordsFetch] = useState({
+    fetching: false,
+    error: "",
+  });
+
   useEffect(() => {
     const handleMount = async () => {
       if (currentUser?.profile_id?.toString() === id) {
@@ -71,11 +76,53 @@ const ProfileEditForm = () => {
     });
   };
 
+  const locationOptions = {
+    enableHighAccuracy: false,
+    timeout: 30000,
+    maximumAge: 5000,
+  };
+
+  const cachedLocationOptions = {
+    enableHighAccuracy: false,
+    maximumAge: Infinity,
+    timeout: 3000,
+  };
+
   function handleLiveLocationClick() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error);
+      navigator.geolocation.getCurrentPosition(success, error, locationOptions);
+      setCoordsFetch({
+        fetching: true,
+        error: "",
+      });
     } else {
       console.log("Geolocation is not supported by this browser.");
+      setCoordsFetch({
+        fetching: true,
+        error: "Geolocation is not supported by this browser.",
+      });
+      clearCoordsFetch();
+    }
+  }
+
+  function handleCachedLocationClick() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        success,
+        error,
+        cachedLocationOptions
+      );
+      setCoordsFetch({
+        fetching: true,
+        error: "",
+      });
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+      setCoordsFetch({
+        fetching: true,
+        error: "Geolocation is not supported by this browser.",
+      });
+      clearCoordsFetch();
     }
   }
 
@@ -85,10 +132,28 @@ const ProfileEditForm = () => {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
     });
+    setCoordsFetch({
+      fetching: false,
+      error: "",
+    });
   }
 
   function error() {
     console.log("Unable to retrieve your location.");
+    setCoordsFetch({
+      fetching: true,
+      error: "Unable to retrieve your location.",
+    });
+    clearCoordsFetch();
+  }
+
+  function clearCoordsFetch() {
+    setTimeout(() => {
+      setCoordsFetch({
+        fetching: false,
+        error: "",
+      });
+    }, 3000);
   }
 
   const handleSubmit = async (event) => {
@@ -131,7 +196,13 @@ const ProfileEditForm = () => {
           name="content"
           rows={7}
         />
+        {errors?.content?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
       </Form.Group>
+
       <Form.Group>
         <Form.Label>Home - latitude</Form.Label>
         <Form.Control
@@ -149,24 +220,50 @@ const ProfileEditForm = () => {
           name="longitude"
           placeholder="Longitude"
         />
+        {errors?.latitude?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
+        {errors?.longitude?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
+        <div className="my-2">
+          <Button
+            onClick={() => {
+              handleLiveLocationClick();
+            }}
+            className={`${btnStyles.Button} ${btnStyles.Blue}`}
+            aria-label="Get Live Location"
+            disabled={coordsFetch.fetching}
+          >
+            Get Live Location
+          </Button>
+          {coordsFetch.fetching &&
+            (coordsFetch.error === "" ? (
+              <Alert variant="info" key="location-alert" className="mt-2">
+                <i className="fa-solid fa-spinner fa-spin ms-2"></i>
+                Retrieving Location...
+              </Alert>
+            ) : (
+              <Alert variant="warning" key="location-alert" className="mt-2">
+                <i className="fa-solid fa-triangle-exclamation ms-2"></i>
+                {coordsFetch.error}
+                <Button
+                  className={`${btnStyles.Button} ${btnStyles.Blue} ms-2`}
+                  onClick={() => {
+                    handleCachedLocationClick();
+                  }}
+                  aria-label="Try Cached Location instead"
+                >
+                  Try Cached Location
+                </Button>
+              </Alert>
+            ))}
+        </div>
       </Form.Group>
-
-      {errors?.content?.map((message, idx) => (
-        <Alert variant="warning" key={idx}>
-          {message}
-        </Alert>
-      ))}
-      <div className="mb-2">
-        <Button
-          onClick={() => {
-            handleLiveLocationClick();
-          }}
-          className={`${btnStyles.Button} ${btnStyles.Blue}`}
-          aria-label="Get Live Location"
-        >
-          Get Live Location
-        </Button>
-      </div>
 
       <Form.Group>
         <Form.Label>Interests</Form.Label>
