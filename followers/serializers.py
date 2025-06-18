@@ -15,7 +15,7 @@ class FollowerSerializer(serializers.ModelSerializer):
     def get_is_follower(self, obj):
         request = self.context['request']
         return request.user == obj.owner
-    
+
     def get_is_followed(self, obj):
         request = self.context['request']
         return request.user == obj.followed
@@ -26,7 +26,7 @@ class FollowerSerializer(serializers.ModelSerializer):
             'id', 'owner', 'is_follower', 'followed', 'followed_name',
             'is_followed', 'created_at'
         ]
-    
+
     def create(self, validated_data):
         try:
             return super().create(validated_data)

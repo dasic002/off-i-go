@@ -16,10 +16,12 @@ import UsernameForm from "./pages/profiles/UsernameForm";
 import UserPasswordForm from "./pages/profiles/UserPasswordForm";
 import ProfileEditForm from "./pages/profiles/ProfileEditForm";
 import { useGeoPosition } from "./contexts/GeoPositionContext";
+import WelcomePage from "./pages/WelcomePage";
 
 function App() {
   const currentUser = useCurrentUser();
   const profile_id = currentUser?.profile_id || "";
+  const profile_interests = currentUser?.profile_interests.toString() || '""';
 
   const { reach } = useGeoPosition();
 
@@ -28,120 +30,15 @@ function App() {
       <NavBar />
       <Container className={styles.Main}>
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => {
-              return (
-                <div>
-                  <h1>Welcome to Off I Go!</h1>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aenean ut libero eleifend, laoreet lacus et, ultrices ante.
-                    Fusce nibh ante, fermentum non magna et, pulvinar sagittis
-                    lacus. Nullam laoreet, urna eu tincidunt eleifend, est nisl
-                    vulputate ex, nec tempor dui libero non massa. Praesent
-                    congue lectus vel fringilla bibendum. Cras scelerisque
-                    aliquam elit vel placerat. Mauris mollis eget erat efficitur
-                    eleifend. Curabitur in condimentum neque. Donec ac felis
-                    libero. Nulla augue nulla, facilisis ac lorem et, tristique
-                    suscipit sem. Nam et dolor maximus, condimentum ex non,
-                    auctor libero. Phasellus id imperdiet est, at iaculis felis.
-                    Curabitur vel ex id mi porttitor imperdiet. Curabitur mattis
-                    ante ac orci venenatis, et molestie nulla sagittis. Cras
-                    fringilla felis eget neque euismod blandit. Sed ac sapien
-                    non risus ornare lacinia bibendum eu leo. Vestibulum quis
-                    feugiat mauris. Phasellus at est a risus ornare
-                    sollicitudin. Nullam porttitor, eros ac finibus condimentum,
-                    odio arcu luctus mauris, tempor vulputate neque leo vel
-                    augue. Nunc commodo faucibus vestibulum. Nam pretium mattis
-                    lacus vitae sollicitudin. Pellentesque vitae dui vel urna
-                    varius tristique. Nunc consequat nec tellus et pellentesque.
-                    Duis id nisi ut risus lobortis interdum. Nam eget nunc eget
-                    ex luctus ullamcorper. Donec sodales mauris ut nisi tempus
-                    ullamcorper. Nam tincidunt, sapien et mollis auctor, massa
-                    enim posuere libero, quis rutrum metus sapien eget quam. Ut
-                    lectus elit, dignissim a venenatis vitae, sodales vitae
-                    lorem. Proin ultrices facilisis urna, et ultrices arcu
-                    pharetra vitae. Donec tincidunt quam ex, vitae congue tellus
-                    luctus id. Nunc at sapien nec enim egestas tempus. Donec
-                    lacinia metus nec dolor blandit, gravida feugiat sem
-                    aliquet. Integer lacinia eget diam non consectetur. Quisque
-                    in augue vitae turpis sodales fringilla. Pellentesque vel
-                    volutpat libero, ut lacinia nunc. Praesent vel tincidunt
-                    velit. Sed mollis nisl non velit dictum iaculis. Ut
-                    vestibulum ipsum erat, in feugiat lacus ultricies vel. Donec
-                    dapibus hendrerit metus eu lobortis. Donec fermentum
-                    imperdiet nulla, et lacinia velit laoreet quis. Sed ac
-                    tempus quam. Phasellus dictum felis eget nibh egestas
-                    ornare. Morbi id posuere velit. Nullam ac consectetur
-                    sapien. Nam condimentum ex iaculis hendrerit rutrum. Donec
-                    faucibus risus neque, eget egestas orci blandit eget.
-                    Curabitur consequat congue sem, id suscipit eros viverra
-                    non. Morbi eu lectus dolor. Ut luctus nisi leo, nec
-                    efficitur justo luctus nec. Cras rhoncus tempor nunc ut
-                    imperdiet. Donec eu tempus velit. Maecenas dictum dui id dui
-                    sodales, at eleifend est accumsan. Integer sed hendrerit
-                    enim.
-                  </p>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aenean ut libero eleifend, laoreet lacus et, ultrices ante.
-                    Fusce nibh ante, fermentum non magna et, pulvinar sagittis
-                    lacus. Nullam laoreet, urna eu tincidunt eleifend, est nisl
-                    vulputate ex, nec tempor dui libero non massa. Praesent
-                    congue lectus vel fringilla bibendum. Cras scelerisque
-                    aliquam elit vel placerat. Mauris mollis eget erat efficitur
-                    eleifend. Curabitur in condimentum neque. Donec ac felis
-                    libero. Nulla augue nulla, facilisis ac lorem et, tristique
-                    suscipit sem. Nam et dolor maximus, condimentum ex non,
-                    auctor libero. Phasellus id imperdiet est, at iaculis felis.
-                    Curabitur vel ex id mi porttitor imperdiet. Curabitur mattis
-                    ante ac orci venenatis, et molestie nulla sagittis. Cras
-                    fringilla felis eget neque euismod blandit. Sed ac sapien
-                    non risus ornare lacinia bibendum eu leo. Vestibulum quis
-                    feugiat mauris. Phasellus at est a risus ornare
-                    sollicitudin. Nullam porttitor, eros ac finibus condimentum,
-                    odio arcu luctus mauris, tempor vulputate neque leo vel
-                    augue. Nunc commodo faucibus vestibulum. Nam pretium mattis
-                    lacus vitae sollicitudin. Pellentesque vitae dui vel urna
-                    varius tristique. Nunc consequat nec tellus et pellentesque.
-                    Duis id nisi ut risus lobortis interdum. Nam eget nunc eget
-                    ex luctus ullamcorper. Donec sodales mauris ut nisi tempus
-                    ullamcorper. Nam tincidunt, sapien et mollis auctor, massa
-                    enim posuere libero, quis rutrum metus sapien eget quam. Ut
-                    lectus elit, dignissim a venenatis vitae, sodales vitae
-                    lorem. Proin ultrices facilisis urna, et ultrices arcu
-                    pharetra vitae. Donec tincidunt quam ex, vitae congue tellus
-                    luctus id. Nunc at sapien nec enim egestas tempus. Donec
-                    lacinia metus nec dolor blandit, gravida feugiat sem
-                    aliquet. Integer lacinia eget diam non consectetur. Quisque
-                    in augue vitae turpis sodales fringilla. Pellentesque vel
-                    volutpat libero, ut lacinia nunc. Praesent vel tincidunt
-                    velit. Sed mollis nisl non velit dictum iaculis. Ut
-                    vestibulum ipsum erat, in feugiat lacus ultricies vel. Donec
-                    dapibus hendrerit metus eu lobortis. Donec fermentum
-                    imperdiet nulla, et lacinia velit laoreet quis. Sed ac
-                    tempus quam. Phasellus dictum felis eget nibh egestas
-                    ornare. Morbi id posuere velit. Nullam ac consectetur
-                    sapien. Nam condimentum ex iaculis hendrerit rutrum. Donec
-                    faucibus risus neque, eget egestas orci blandit eget.
-                    Curabitur consequat congue sem, id suscipit eros viverra
-                    non. Morbi eu lectus dolor. Ut luctus nisi leo, nec
-                    efficitur justo luctus nec. Cras rhoncus tempor nunc ut
-                    imperdiet. Donec eu tempus velit. Maecenas dictum dui id dui
-                    sodales, at eleifend est accumsan. Integer sed hendrerit
-                    enim.
-                  </p>
-                </div>
-              );
-            }}
-          />
+          <Route exact path="/" render={() => <WelcomePage />} />
           <Route
             exact
             path="/discover"
             render={() => (
-              <PostsPage message="No results found. Adjust the search keyword." />
+              <PostsPage
+                message="No results found. Adjust the search keyword."
+                filter={`listing_type=3`}
+              />
             )}
           />
           <Route
@@ -150,7 +47,7 @@ function App() {
             render={() => (
               <PostsPage
                 message="No results found. Adjust the search keyword or follow a user."
-                filter={`owner__followed__owner__profile=${profile_id}&`}
+                filter={`listing_type=3&owner__followed__owner__profile=${profile_id}`}
               />
             )}
           />
@@ -158,7 +55,10 @@ function App() {
             exact
             path="/for-me"
             render={() => (
-              <PostsPage message="No results found. Adjust the search keyword or add tags to your interests." />
+              <PostsPage
+                message="No results found. Adjust the search keyword or add tags to your interests."
+                filter={`listing_type=3&tags__name__in=${profile_interests}`}
+              />
             )}
           />
           <Route
@@ -167,7 +67,7 @@ function App() {
             render={() => (
               <PostsPage
                 message="No results found. Adjust the search keyword or select your live location or add a location to your profile."
-                filter={`latitude__range=${reach.latSouth},${reach.latNorth}&longitude__range=${reach.lonWest},${reach.lonEast}`}
+                filter={`listing_type=3&latitude__range=${reach.latSouth},${reach.latNorth}&longitude__range=${reach.lonWest},${reach.lonEast}`}
                 nearMe
               />
             )}

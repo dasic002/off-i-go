@@ -37,7 +37,7 @@ class ReactionSerializer(serializers.ModelSerializer):
             'content_type', 'object_id', 'reaction', 'created_at',
             'updated_at', 'is_owner'
         ]
-    
+
     def create(self, validated_data):
         """
         Check for errors on create of a new reaction instance.
@@ -45,7 +45,7 @@ class ReactionSerializer(serializers.ModelSerializer):
         try:
             # Check if reaction is to a post
             if validated_data['content_type'].model == 'post':
-                id=validated_data['object_id']
+                id = validated_data['object_id']
 
                 if Post.objects.filter(id=id).exists() is False:
                     # Check if post exists
@@ -59,7 +59,7 @@ class ReactionSerializer(serializers.ModelSerializer):
                     )
             # Check if reaction is to a comment
             elif validated_data['content_type'].model == 'comment':
-                id=validated_data['object_id']
+                id = validated_data['object_id']
 
                 if Comment.objects.filter(id=id).exists() is False:
                     # Check if comment exists
@@ -71,10 +71,10 @@ class ReactionSerializer(serializers.ModelSerializer):
                     raise serializers.ValidationError(
                         {'detail': 'You cannot react to your own comment.'}
                     )
-                
+
             # Check if reaction is to a comment reply
             elif validated_data['content_type'].model == 'commentreply':
-                id=validated_data['object_id']
+                id = validated_data['object_id']
 
                 if CommentReply.objects.filter(id=id).exists() is False:
                     # Check if comment_reply exists
@@ -86,7 +86,7 @@ class ReactionSerializer(serializers.ModelSerializer):
                     raise serializers.ValidationError(
                         {'detail': 'You cannot react to your own comment reply.'}
                     )
-            
+
             return super().create(validated_data)
         except IntegrityError:
             # Check if user has already reacted to the post/comment
@@ -105,7 +105,7 @@ class ReactionSerializer(serializers.ModelSerializer):
                     )
                 }
             )
-        
+
 
 class ReactionDetailSerializer(ReactionSerializer):
     """

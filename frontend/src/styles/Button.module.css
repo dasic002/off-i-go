@@ -29,7 +29,7 @@
 .Button:hover,
 .SqButton:hover {
   opacity: 0.8;
-  border-color: 1px solid #0c7bdc;
+  border: 1px solid #0c7bdc;
   background-color: #ffffff;
   cursor: pointer;
 }
@@ -37,7 +37,7 @@
 .Button:active,
 .SqButton:active {
   background-color: #ffffff;
-  border-color: 1px solid #00325f !important;
+  border: 1px solid #00325f !important;
 }
 
 .Button:active i,

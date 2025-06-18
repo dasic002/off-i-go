@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Image } from "react-bootstrap";
 import styles from "../styles/NavBar.module.css";
 import { NavLink } from "react-router-dom";
 import {
@@ -37,6 +37,7 @@ const NavBar = () => {
         className={`${styles.NavLink} ${mobile ? "m-auto" : ""}`}
         activeClassName={styles.Active}
         to="/posts/create"
+        onClick={() => setPathname("/posts/create")}
       >
         <i className="fa-solid fa-square-plus"></i>
         <span className={mobile ? "d-none" : ""}>Add Post</span>
@@ -100,7 +101,14 @@ const NavBar = () => {
         </span>
         {/* <span className="d-md-none d-lg-inline">Near me</span> */}
       </NavLink>
-      <NavLink className={styles.NavLink} to="/" onClick={handleSignOut}>
+      <NavLink
+        className={styles.NavLink}
+        to="/"
+        onClick={() => {
+          setPathname("/");
+          handleSignOut();
+        }}
+      >
         <i className="fas fa-sign-out-alt"></i>
         <span className="d-md-none d-lg-inline">Sign out</span>
       </NavLink>
@@ -108,8 +116,13 @@ const NavBar = () => {
         className={styles.NavLink}
         activeClassName={styles.Active}
         to={`/profiles/${currentUser?.profile_id}`}
+        onClick={() => setPathname(`/profiles/${currentUser?.profile_id}`)}
       >
-        <Avatar src={currentUser?.profile_image} height={40} text="Profile" />
+        <Avatar
+          src={currentUser?.profile_image}
+          height={40}
+          text={`${currentUser?.username}`}
+        />
       </NavLink>
     </>
   );
@@ -152,8 +165,20 @@ const NavBar = () => {
         className={styles.NavBar}
       >
         <Container>
-          <NavLink to="/">
-            <Navbar.Brand className={styles.Brand}>Off I Go</Navbar.Brand>
+          <NavLink to="/" onClick={() => setPathname("/")}>
+            <Navbar.Brand className={styles.Brand}>
+              <span hidden>Off I Go</span>
+              <Image
+                src="https://res.cloudinary.com/dnepttq4h/image/upload/v1748415238/off-i-go-logo-animation-bkMatched_ndbfrf.gif"
+                alt="Off I Go"
+                onError={(e) => {
+                  e.target.onerror = null; // prevents looping
+                  e.target.setAttribute("style", "display: none;"); // hides the animated logo
+                  e.target.previousSibling.removeAttribute("hidden"); // displays the alt text logo
+                }}
+                className={styles.Logo}
+              />
+            </Navbar.Brand>
           </NavLink>
           {!mobile && (
             <>

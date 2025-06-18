@@ -56,7 +56,6 @@ export const ReactionDropdown = ({ handleReaction }) => {
       <Dropdown.Toggle as={ThumbsUp} />
 
       <Dropdown.Menu
-        className="text-center"
         popperConfig={{ strategy: "fixed" }}
       >
         {reactionOptions.map(({ reaction: reactionType, icon, meaning }) => (
@@ -67,6 +66,7 @@ export const ReactionDropdown = ({ handleReaction }) => {
             aria-label={`reaction-${meaning.toLowerCase()}`}
           >
             <i className={icon} />
+            <span>{meaning}</span>
           </Dropdown.Item>
         ))}
       </Dropdown.Menu>

@@ -8,6 +8,11 @@
     font-size: 2rem;
 }
 
+.Logo {
+    height: 3.2rem;
+    margin-top: -.69rem;
+}
+
 .NavLink {
     padding: 5px;
 }

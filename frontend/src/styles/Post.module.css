@@ -23,6 +23,40 @@ h5 {
   color: #ff820a;
 }
 
+.DropdownItem:hover {
+  background-color: #0c7bdc;
+  color:#ffffff;
+}
+
 video {
   max-width: 100%;
+}
+
+.TagInactive {
+  background-color: #f8f8f8;
+  border: 1px solid #00325f;
+  color: #000;
+}
+
+.TagActive {
+  background-color: #ffc20a;
+  border-color: transparent;
+  color: #000;
+}
+
+.ListingType {
+  background-color: #001b33;
+  color: #ffffff;
+}
+
+.TagInactive,
+.TagActive,
+.ListingType {
+  font-size: 0.8rem;
+  align-self: center;
+  border-radius: 100px;
+  padding: 4px 10px;
+  margin-left: 2px;
+  margin-right: 2px;
+  min-width: 75px;
 }

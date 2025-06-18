@@ -42,6 +42,8 @@ const Post = (props) => {
     setPosts,
     longitude,
     latitude,
+    tags,
+    listing_type,
   } = props;
 
   const currentUser = useCurrentUser();
@@ -168,6 +170,17 @@ const Post = (props) => {
             {owner}
           </Link>
           <div className="d-flex align-items-center">
+            {listing_type != 3 && (
+              <span className={styles.ListingType}>
+                {listing_type === 0
+                  ? "Draft"
+                  : listing_type === 1
+                  ? "Private"
+                  : "Unlisted"}
+              </span>
+            )}
+          </div>
+          <div className="d-flex align-items-center">
             <span>{updated_at}</span>
             {is_owner && postPage && (
               <MoreDropdown
@@ -217,6 +230,22 @@ const Post = (props) => {
         </Row>
 
         {body && <Card.Text>{body}</Card.Text>}
+        {tags && (
+          <div className={styles.Tags}>
+            {tags.map((tag, index) => (
+              <span
+                key={`tag-${index}`}
+                className={
+                  currentUser?.profile_interests.includes(tag)
+                    ? styles.TagActive
+                    : styles.TagInactive
+                }
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
         <div className={styles.PostBar}>
           {is_owner ? (
             <OverlayTrigger

@@ -23,16 +23,21 @@ function PostCreateForm() {
 
   const [postData, setPostData] = useState({
     title: "",
-    content: "",
+    body: "",
     media: "",
     tags: "",
     listing_type: 3,
-    latitude: null,
-    longitude: null,
+    latitude: "",
+    longitude: "",
   });
 
-  const { title, content, media, tags, listing_type, latitude, longitude } =
+  const { title, body, media, tags, listing_type, latitude, longitude } =
     postData;
+
+  const [coordsFetch, setCoordsFetch] = useState({
+    fetching: false,
+    error: "",
+  });
 
   const imageInput = useRef(null);
   const history = useHistory();
@@ -54,11 +59,53 @@ function PostCreateForm() {
     }
   };
 
+  const locationOptions = {
+    enableHighAccuracy: false,
+    timeout: 30000,
+    maximumAge: 5000,
+  };
+
+  const cachedLocationOptions = {
+    enableHighAccuracy: false,
+    maximumAge: 600000, // 10 minutes
+    timeout: 3000,
+  };
+
   function handleLiveLocationClick() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(success, error);
+      navigator.geolocation.getCurrentPosition(success, error, locationOptions);
+      setCoordsFetch({
+        fetching: true,
+        error: "",
+      });
     } else {
       console.log("Geolocation is not supported by this browser.");
+      setCoordsFetch({
+        fetching: true,
+        error: "Geolocation is not supported by this browser.",
+      });
+      clearCoordsFetch();
+    }
+  }
+
+  function handleCachedLocationClick() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        success,
+        error,
+        cachedLocationOptions
+      );
+      setCoordsFetch({
+        fetching: true,
+        error: "",
+      });
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+      setCoordsFetch({
+        fetching: true,
+        error: "Geolocation is not supported by this browser.",
+      });
+      clearCoordsFetch();
     }
   }
 
@@ -68,10 +115,28 @@ function PostCreateForm() {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
     });
+    setCoordsFetch({
+      fetching: false,
+      error: "",
+    });
   }
 
   function error() {
     console.log("Unable to retrieve your location.");
+    setCoordsFetch({
+      fetching: true,
+      error: "Unable to retrieve your location.",
+    });
+    clearCoordsFetch();
+  }
+
+  function clearCoordsFetch() {
+    setTimeout(() => {
+      setCoordsFetch({
+        fetching: false,
+        error: "",
+      });
+    }, 3000);
   }
 
   const handleSubmit = async (event) => {
@@ -100,12 +165,17 @@ function PostCreateForm() {
     const formData = new FormData();
 
     formData.append("title", title);
-    formData.append("content", content);
+    formData.append("body", body);
     if (medias) formData.append("media", medias);
-    if (tags) formData.append("tags", tags);
+    if (tags) {
+      for (let tag of tags.split(",")) {
+        tag = tag.trim();
+        formData.append("tags", tag);
+      }
+    }
     formData.append("listing_type", listing_type);
-    formData.append("latitude", latitude);
-    formData.append("longitude", longitude);
+    if (latitude) formData.append("latitude", latitude);
+    if (longitude) formData.append("longitude", longitude);
 
     try {
       const { data } = await axiosReq.post("/posts/", formData);
@@ -136,24 +206,24 @@ function PostCreateForm() {
           {message}
         </Alert>
       ))}
-      <Form.Group controlId="Content">
+      <Form.Group controlId="body">
         <Form.Label>Content</Form.Label>
         <Form.Control
           as="textarea"
-          name="content"
+          name="body"
           rows={6}
-          value={content}
+          value={body}
           onChange={handleChange}
           placeholder="Post content here"
         />
       </Form.Group>
-      {errors?.content?.map((message, idx) => (
+      {errors?.body?.map((message, idx) => (
         <Alert variant="warning" key={idx}>
           {message}
         </Alert>
       ))}
       <Form.Group>
-        <Form.Label>Home - latitude</Form.Label>
+        <Form.Label>Location - latitude</Form.Label>
         <Form.Control
           type="text"
           value={latitude}
@@ -161,7 +231,7 @@ function PostCreateForm() {
           name="latitude"
           placeholder="Latitude"
         />
-        <Form.Label>Home - longitude</Form.Label>
+        <Form.Label>Location - longitude</Form.Label>
         <Form.Control
           type="text"
           value={longitude}
@@ -186,9 +256,31 @@ function PostCreateForm() {
             }}
             className={`${btnStyles.Button} ${btnStyles.Blue}`}
             aria-label="Get Live Location"
+            disabled={coordsFetch.fetching}
           >
             Get Live Location
           </Button>
+          {coordsFetch.fetching &&
+            (coordsFetch.error === "" ? (
+              <Alert variant="info" key="location-alert" className="mt-2">
+                <i className="fa-solid fa-spinner fa-spin ms-2"></i>
+                Retrieving Location...
+              </Alert>
+            ) : (
+              <Alert variant="warning" key="location-alert" className="mt-2">
+                <i className="fa-solid fa-triangle-exclamation ms-2"></i>
+                {coordsFetch.error}
+                <Button
+                  className={`${btnStyles.Button} ${btnStyles.Blue} ms-2`}
+                  onClick={() => {
+                    handleCachedLocationClick();
+                  }}
+                  aria-label="Try Cached Location instead"
+                >
+                  Try Cached Location
+                </Button>
+              </Alert>
+            ))}
         </div>
       </Form.Group>
       <Form.Group as={Row} controlId="tags">
@@ -201,7 +293,7 @@ function PostCreateForm() {
             name="tags"
             value={tags}
             onChange={handleChange}
-            placeholder="separate tags with spaces"
+            placeholder="separate tags with commas"
           />
         </Col>
       </Form.Group>
