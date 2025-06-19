@@ -1445,14 +1445,14 @@ At this point the project is ready for to use with the frontend React app.
 |User Story|Priority|Link|Pass/Fail|Notes|
 |---|---|---|---|---|
 |As a **user** I can **see the nav bar from every page**, so that **I can easily navigate the site and find the various feeds and info**.|MUST have|[#1](https://github.com/dasic002/off-i-go/issues/1)|PASS||
-|As a **user** I can **easily find the navigation links on any size display**, so that **it is still easy to navigate the site**.|MUST have|[#/2](https://github.com/dasic002/off-i-go/issues/2)|PASS||
-|As a **user** I can **quickly navigate the website**, so that **content is displayed effortlessly**.|MUST have|[#/3](https://github.com/dasic002/off-i-go/issues/3)|PASS||
+|As a **user** I can **easily find the navigation links on any size display**, so that **it is still easy to navigate the site**.|MUST have|[#2](https://github.com/dasic002/off-i-go/issues/2)|PASS||
+|As a **user** I can **quickly navigate the website**, so that **content is displayed effortlessly**.|MUST have|[#3](https://github.com/dasic002/off-i-go/issues/3)|PASS||
 |As a **user** I can **see other profiles' Avatar and username**, so that **can easily identify and view their profile page**.|MUST have|[#10](https://github.com/dasic002/off-i-go/issues/10)|PASS||
 |As a **logged out user** I can **see sign in/sign up links on the nav bar**, so that **I can sign back in or sign up**.|MUST have|[#11](https://github.com/dasic002/off-i-go/issues/11)|PASS||
-|As a **user** I can **sign up**, so that **I can access all the features available**.|MUST have|[#/5](https://github.com/dasic002/off-i-go/issues/5)|PASS||
-|As a **user** I can **sign in with my account details**, so that **I can use the functionalities available to me**.|MUST have|[#/6](https://github.com/dasic002/off-i-go/issues/6)|PASS||
-|As a **user** I can **see whether I'm logged in or not**, so that **I can log in if needed**.|MUST have|[#/7](https://github.com/dasic002/off-i-go/issues/7)|PASS||
-|As a **user** I can **remain logged in**, so that **I can log out when I choose to and not have a frustrating experience of the website**.|MUST have|[#/8](https://github.com/dasic002/off-i-go/issues/8)|PASS||
+|As a **user** I can **sign up**, so that **I can access all the features available**.|MUST have|[#5](https://github.com/dasic002/off-i-go/issues/5)|PASS||
+|As a **user** I can **sign in with my account details**, so that **I can use the functionalities available to me**.|MUST have|[#6](https://github.com/dasic002/off-i-go/issues/6)|PASS||
+|As a **user** I can **see whether I'm logged in or not**, so that **I can log in if needed**.|MUST have|[#7](https://github.com/dasic002/off-i-go/issues/7)|PASS||
+|As a **user** I can **remain logged in**, so that **I can log out when I choose to and not have a frustrating experience of the website**.|MUST have|[#8](https://github.com/dasic002/off-i-go/issues/8)|PASS||
 |As a **logged in user** I can **create posts**, so that **I can share my thoughts of accessible facilities or services of a given site**.|MUST have|[#12](https://github.com/dasic002/off-i-go/issues/12)|PASS||
 |As a **user** I can **view the details of a single post**, so that **I can learn more about it**.|MUST have|[#13](https://github.com/dasic002/off-i-go/issues/13)|PASS||
 |As a **logged in user** I can **like a post**, so that **I can show my support for the posts that interest me**.|MUST have|[#14](https://github.com/dasic002/off-i-go/issues/14)|PASS||
